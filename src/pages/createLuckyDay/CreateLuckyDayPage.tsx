@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 import {
   SelectActivity,
@@ -7,14 +8,26 @@ import {
   SelectExceptDate,
   ProgressBar,
   ButtonLayout,
+  CreateLuckyDayModal,
 } from "components";
 import { ArrowIcon } from "assets";
 import { useModal, useToast } from "hooks";
-import { CreateLuckyDayModal } from "./container";
+import type { CreateLuckyDayForm } from "types";
 import * as S from "./CreateLuckyDayPage.styled";
 
 function CreateLuckyDayPage() {
   const [currentProgress, setCurrentProgress] = useState(0);
+
+  const { setValue, watch, handleSubmit } = useForm<CreateLuckyDayForm>({
+    defaultValues: {
+      actList: [],
+      customActList: [],
+      period: 0,
+      cnt: 0,
+      expDTList: [],
+    },
+    mode: "onTouched",
+  });
 
   const { handleOpenModal } = useModal();
   const { addToast } = useToast();
@@ -33,20 +46,30 @@ function CreateLuckyDayPage() {
   const changePage = (current: number): React.ReactNode => {
     switch (current) {
       case 0:
-        return <SelectActivity />;
+        return <SelectActivity setValue={setValue} watch={watch} />;
       case 1:
-        return <SelectPeriod />;
+        return <SelectPeriod setValue={setValue} watch={watch} />;
       case 2:
-        return <SelectCount />;
+        return <SelectCount setValue={setValue} watch={watch} />;
       case 3:
-        return <SelectExceptDate />;
+        return <SelectExceptDate setValue={setValue} watch={watch} />;
     }
   };
 
   const handleClickNextButton = () => {
+    if (currentProgress === 0 && !watch("actList").length) {
+      return addToast({ content: "최소 1개의 카테고리를 선택해 주세요." });
+    }
+
+    if (currentProgress === 1 && watch("period") === 0) {
+      return addToast({ content: "최소 1개의 기간을 선택해 주세요." });
+    }
+
     if (currentProgress !== 3) return changeCurrentProgress(+1)();
 
-    handleOpenModal(<CreateLuckyDayModal />);
+    handleOpenModal(
+      <CreateLuckyDayModal watch={watch} handleSubmit={handleSubmit} />
+    );
   };
 
   return (

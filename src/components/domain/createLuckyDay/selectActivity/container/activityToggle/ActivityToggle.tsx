@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
+import type { UseFormSetValue, UseFormWatch } from "react-hook-form";
 
 import { ArrowIcon, CheckIcon } from "assets";
-import type { Activities } from "types";
+import type { Activities, CreateLuckyDayForm } from "types";
 import * as S from "./ActivityToggle.styled";
 
 interface ActivityToggleProps {
@@ -9,7 +10,10 @@ interface ActivityToggleProps {
   data?: Activities;
   isOpen: boolean;
   toggle: string | null;
+  setValue: UseFormSetValue<CreateLuckyDayForm>;
+  watch: UseFormWatch<CreateLuckyDayForm>;
   handleToggle: (toggle: string | null) => void;
+  getSelectItems: (items: number[]) => void;
 }
 
 function ActivityToggle({
@@ -17,9 +21,13 @@ function ActivityToggle({
   data,
   isOpen,
   toggle,
+  setValue,
+  watch,
   handleToggle,
+  getSelectItems,
 }: ActivityToggleProps) {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const activityRef = useRef<HTMLButtonElement>(null);
 
   const handleToggleClick = (): void => {
     if (activity.label === toggle) {
@@ -29,14 +37,26 @@ function ActivityToggle({
     handleToggle(activity.label);
   };
 
+  const handleItemClick =
+    (actNo: number) =>
+    (e: React.MouseEvent): void => {
+      e.stopPropagation();
+      const updatedSelectedItems = watch("actList").includes(actNo)
+        ? watch("actList").filter((item) => item !== actNo)
+        : [...watch("actList"), actNo];
+
+      setValue("actList", updatedSelectedItems);
+      getSelectItems(updatedSelectedItems);
+    };
+
   useEffect(() => {
     const handleFocus = (e: MouseEvent): void => {
       if (
-        ref.current?.contains(e?.target as HTMLElement) ||
+        ref.current?.contains(e.target as HTMLElement) ||
         toggle !== activity.label
-      )
+      ) {
         return;
-
+      }
       handleToggle(null);
     };
 
@@ -44,7 +64,7 @@ function ActivityToggle({
     return () => {
       document.removeEventListener("mouseup", handleFocus);
     };
-  }, [handleToggle]);
+  }, [handleToggle, toggle, activity.label]);
 
   return (
     <S.ActivityButton
@@ -54,6 +74,7 @@ function ActivityToggle({
       onClick={handleToggleClick}
     >
       <S.Img
+        // TODO:innerShadow값이 있어 이미지로 따로 설정해줌
         src={
           isOpen
             ? "images/img_empty_mediumBox.png"
@@ -68,12 +89,21 @@ function ActivityToggle({
         </S.ActivityInfo>
         <S.Activities>
           {isOpen &&
-            data?.actList.map((item) => (
-              <S.Activity key={item.actNo}>
-                <CheckIcon css={S.icon} />
-                {item.keyword}
-              </S.Activity>
-            ))}
+            data?.actList?.map((item) => {
+              const isSelected = watch("actList")?.includes(item.actNo);
+
+              return (
+                <S.Activity
+                  isSelected={isSelected}
+                  ref={activityRef}
+                  key={item.actNo}
+                  onClick={handleItemClick(item.actNo)}
+                >
+                  <CheckIcon css={S.icon} />
+                  {item.keyword}
+                </S.Activity>
+              );
+            })}
         </S.Activities>
       </S.ActivityBox>
     </S.ActivityButton>

@@ -1,20 +1,43 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
+import type { UseFormSetValue, UseFormWatch } from "react-hook-form";
 
+import { SvgFrame } from "components";
+import { useToast } from "hooks";
+import { CircleBoxIcon, MinusIcon, PlusIcon } from "assets";
+import type { CreateLuckyDayForm } from "types";
 import * as S from "./SelectCount.styled";
 
-function SelectCount() {
+interface SelectCountProps {
+  watch: UseFormWatch<CreateLuckyDayForm>;
+  setValue: UseFormSetValue<CreateLuckyDayForm>;
+}
+
+function SelectCount({ watch, setValue }: SelectCountProps) {
   const [selectDates, setSelectDates] = useState(1);
 
-  const selectedPeriod = 4; //TODO: 임시데이터
+  const { addToast } = useToast();
 
-  const handleSelectCounts = (counts: number) => (): void => {
-    const currentCount = selectDates + counts;
+  const counts = [
+    { period: 7, value: 1 },
+    { period: 14, value: 2 },
+    { period: 30, value: 4 },
+    { period: 60, value: 7 },
+  ] as const;
 
-    if (currentCount <= 0 || currentCount > selectedPeriod)
-      return console.log("err");
+  const selectedPeriod =
+    counts.find((item) => item.period === watch("period"))?.value ?? 0;
 
-    setSelectDates(selectDates + counts);
+  const handleSelectCounts = (count: number) => (): void => {
+    const currentCount = selectDates + count;
+
+    if (currentCount <= 0)
+      return addToast({ content: `1개 이상의 개수를 선택해주세요` });
+    if (currentCount > selectedPeriod)
+      return addToast({ content: `${selectedPeriod}개 이내로 선택해주세요` });
+
+    setSelectDates(selectDates + count);
+    setValue("cnt", selectDates);
   };
 
   return (
@@ -29,15 +52,13 @@ function SelectCount() {
       </S.HeadLine>
       <S.SelectDatesWrapper>
         <S.SelectDatesButton onClick={handleSelectCounts(-1)}>
-          <S.Img src="images/img_small.png" />
-          <S.Icon>-</S.Icon>
-          {/* TODO: 아이콘 width, height 조절 이슈가 있어 임의로 설정 */}
+          <SvgFrame css={S.svgFrame} icon={<CircleBoxIcon />} />
+          <MinusIcon css={S.icon} />
         </S.SelectDatesButton>
         <S.SelectDatesBox>{selectDates}</S.SelectDatesBox>
         <S.SelectDatesButton onClick={handleSelectCounts(+1)}>
-          <S.Img src="images/img_small.png" />
-          <S.Icon>+</S.Icon>
-          {/* TODO: 아이콘 width, height 조절 이슈가 있어 임의로 설정 */}
+          <SvgFrame css={S.svgFrame} icon={<CircleBoxIcon />} />
+          <PlusIcon css={S.icon} />
         </S.SelectDatesButton>
       </S.SelectDatesWrapper>
       {!!selectedPeriod && (
