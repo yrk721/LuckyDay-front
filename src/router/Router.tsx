@@ -22,10 +22,6 @@ export default function Router({ children }: RouterProps) {
             path="viewLuckyDayActivity/:id"
             element={<P.ViewLuckyActivityPage />}
           />
-
-          {/* FIX: API 연결 후 제거할 예정입니다. */}
-          <Route path="luckyBoardBefore" element={<P.LuckyBoardBeforePage />} />
-          <Route path="luckyBoardAfter" element={<P.LuckyBoardAfterPage />} />
           <Route path="createLuckyDay" element={<P.CreateLuckyDayPage />} />
           <Route path="luckyDayArchive" element={<P.LuckyDayArchivePage />} />
           <Route path="404" element={<P.Error404Page />} />
