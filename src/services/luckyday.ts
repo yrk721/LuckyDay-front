@@ -4,6 +4,7 @@ import {
   getLuckyDaysActivities,
   postLuckyDay,
   deleteLuckyBoard,
+  getLuckyDayCycleInfo,
 } from "apis";
 import { CreateLuckyDayForm } from "types";
 
@@ -30,5 +31,12 @@ export const useGetLuckyDayDetail = (req: string) => {
 export const useDeleteLuckyBoard = () => {
   return useMutation({
     mutationFn: () => deleteLuckyBoard(),
+  });
+};
+
+export const useGetLuckyDayCycleInfo = (req: number) => {
+  return useQuery({
+    queryKey: ["luckyday"],
+    queryFn: () => getLuckyDayCycleInfo(req),
   });
 };
