@@ -2,7 +2,7 @@ import * as S from "./LuckyDayCycleListPage.styled";
 import { useNavigate } from "react-router-dom";
 import { useGetLuckyDayCycleList } from "services";
 import { GetLuckyDayCycleList } from "types";
-import { PageSpinner } from "components";
+import { PageSpinner, SingleButtonLayout } from "components";
 
 export default function LuckyDayCycleListPage() {
   const { data: cycles, error, isLoading } = useGetLuckyDayCycleList();
@@ -11,11 +11,7 @@ export default function LuckyDayCycleListPage() {
   console.log("Cycles:", cycles);
 
   if (isLoading) {
-    return (
-      <S.ErrorBox>
-        <PageSpinner />
-      </S.ErrorBox>
-    );
+    return <PageSpinner />;
   }
 
   if (error || !cycles || cycles.length === 0) {
@@ -28,7 +24,7 @@ export default function LuckyDayCycleListPage() {
   }
 
   return (
-    <>
+    <SingleButtonLayout>
       <S.TitleBox>럭키 데이 보관함</S.TitleBox>
       <S.ContentsBox>
         {cycles.map((cycle: GetLuckyDayCycleList) => (
@@ -40,6 +36,6 @@ export default function LuckyDayCycleListPage() {
           </S.MenuBox>
         ))}
       </S.ContentsBox>
-    </>
+    </SingleButtonLayout>
   );
 }

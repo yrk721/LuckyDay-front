@@ -1,7 +1,7 @@
 import * as S from "./LuckyDayCycleDetailPage.styled";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
-import { SvgButton } from "components";
+import { PageSpinner, SingleButtonLayout, SvgButton } from "components";
 import { CircleBoxIcon } from "assets";
 import { GetLuckyDayCycleDetail } from "types";
 import { useGetLuckyDayCycleDetails } from "services";
@@ -13,7 +13,7 @@ const LuckyDayCycleDetailPage = () => {
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <S.ErrorBox>로딩 중...</S.ErrorBox>; // NOTE: spinner 추가 예정입니다.
+    return <PageSpinner />;
   }
 
   if (error) {
@@ -33,7 +33,7 @@ const LuckyDayCycleDetailPage = () => {
   console.log("Labels:", labels);
 
   return (
-    <>
+    <SingleButtonLayout>
       <S.TitleBox>럭키 데이 보관함</S.TitleBox>
       <S.ContentsBox>
         <S.GridContainer>
@@ -51,7 +51,7 @@ const LuckyDayCycleDetailPage = () => {
           ))}
         </S.GridContainer>
       </S.ContentsBox>
-    </>
+    </SingleButtonLayout>
   );
 };
 
