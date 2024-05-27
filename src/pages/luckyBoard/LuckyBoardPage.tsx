@@ -13,6 +13,7 @@ import * as S from "./LuckyBoardPage.styled";
 
 const LuckyBoardPage: React.FC = () => {
   const hasLuckyday = sessionStorage.getItem("hasLuckyday")!;
+  const isExperienced = sessionStorage.getItem("isExperienced")!;
 
   const { data } = useGetLuckyDayCycle({
     hasLuckyday: +hasLuckyday,
@@ -45,8 +46,6 @@ const LuckyBoardPage: React.FC = () => {
     </p>
   );
 
-  console.log(data);
-
   const handleOpenLastLuckyDayModal = () => {
     if (!lastLuckyDays && !data?.[0].cyclNo) {
       return;
@@ -76,6 +75,7 @@ const LuckyBoardPage: React.FC = () => {
       variant="hasColor"
       firstLabel="지난 럭키데이"
       secondLabel="더보기"
+      isHideButtons={isExperienced === "0"}
       handleClickFirstButton={handleOpenLastLuckyDayModal}
       handleClickSecondButton={handleOpenCheckLuckyDayModal}
     >
