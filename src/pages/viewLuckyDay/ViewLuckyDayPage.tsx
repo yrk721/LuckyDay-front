@@ -1,14 +1,15 @@
 import * as S from "./ViewLuckyDayPage.styled";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useToast } from "hooks";
-import { useGetLuckyDayReview } from "services";
+import { useModal, useToast } from "hooks";
+import { useGetLuckyDayReview, useDeleteLuckyDayReview } from "services";
 import { GetLuckyDayDetail } from "types";
 import {
   SvgFrame,
   PageSpinner,
   ComponentSpinner,
   SingleButtonLayout,
+  DeleteReviewConfirmModal,
 } from "components";
 import { formatDate } from "utils";
 import { ShortBoxIcon, EditIcon, TrashIcon } from "assets";
@@ -16,8 +17,10 @@ import { ShortBoxIcon, EditIcon, TrashIcon } from "assets";
 export default function ViewLuckyDayPage() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { handleOpenModal, handleModalClose } = useModal();
   const { addToast } = useToast();
   const { data, isLoading, error } = useGetLuckyDayReview(id || "");
+  const deleteReviewMutation = useDeleteLuckyDayReview();
   const [imageLoading, setImageLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -28,6 +31,34 @@ export default function ViewLuckyDayPage() {
 
   const handleImageLoad = () => {
     setImageLoading(false);
+  };
+
+  const handleDeleteClick = () => {
+    handleOpenModal(
+      <DeleteReviewConfirmModal
+        onClose={handleModalClose}
+        onDelete={() => {
+          if (id) {
+            deleteReviewMutation.mutate(
+              { query: { dtlNo: Number(id) } },
+              {
+                onSuccess: () => {
+                  handleModalClose();
+                  navigate(`/luckydays/${id}`);
+                  addToast({ content: "기록이 성공적으로 삭제되었습니다." });
+                },
+                onError: () => {
+                  handleModalClose();
+                  addToast({
+                    content: "기록 삭제에 실패했습니다. 다시 시도해 주세요.",
+                  });
+                },
+              }
+            );
+          }
+        }}
+      />
+    );
   };
 
   if (isLoading) {
@@ -74,7 +105,7 @@ export default function ViewLuckyDayPage() {
         </S.ReviewBox>
 
         <S.ButtonWrapper>
-          <S.Button>
+          <S.Button onClick={handleDeleteClick}>
             <SvgFrame css={S.svgFrame} icon={<ShortBoxIcon />} />
             <span>
               삭제하기 <TrashIcon />

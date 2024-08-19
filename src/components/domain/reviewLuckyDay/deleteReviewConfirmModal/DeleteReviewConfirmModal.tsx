@@ -23,6 +23,7 @@ export default function DeleteReviewConfirmModal({
           <S.Text_h2>
             럭키데이 활동 기록이 삭제됩니다. <br />
             삭제된 정보는 복구할 수 없습니다. <br />
+            <br />
           </S.Text_h2>
           <S.ButtonBox>
             <SvgButton

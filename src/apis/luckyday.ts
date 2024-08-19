@@ -9,6 +9,7 @@ import type {
   GetLuckyDayCycleQueryModel,
   GetLuckyDayCycleServerModel,
   GetLuckyDayDetailServerModel,
+  DeleteLuckyDayReviewQueryModel,
 } from "types";
 
 export const getLuckyDaysActivities = async () => {
@@ -34,6 +35,13 @@ export const getLuckyDayReview = async (
   const { data } = await ax.get<GetLuckyDayDetailServerModel>(
     `/luckydays/${dtlNo}`
   );
+  return data;
+};
+
+export const deleteLuckyDayReview = async (
+  req: DeleteLuckyDayReviewQueryModel
+) => {
+  const { data } = await ax.delete(`/luckydays/review`, { params: req.query });
   return data;
 };
 

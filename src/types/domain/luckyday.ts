@@ -121,3 +121,9 @@ export interface LuckyDayDetail {
   dday: number | null;
   dtlNo: number;
 }
+
+export interface DeleteLuckyDayReviewQueryModel {
+  query: {
+    dtlNo: number;
+  };
+}

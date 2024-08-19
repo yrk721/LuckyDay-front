@@ -8,6 +8,7 @@ import {
   getLuckyDayCycleDetails,
   getLuckyDayCycle,
   getLuckyDayReview,
+  deleteLuckyDayReview,
   getLuckyDayCycleLastLuckyDays,
   getLuckyDayCycleList,
 } from "apis";
@@ -17,6 +18,7 @@ import {
   GetLuckyDayCycleList,
   GetLuckyDayCycleQueryModel,
   GetLuckyDayCycleLastLuckyDaysQueryModel,
+  DeleteLuckyDayReviewQueryModel,
 } from "types";
 
 export const useGetLuckyDaysActivities = () => {
@@ -44,6 +46,13 @@ export const useGetLuckyDayReview = (dtlNo: string) => {
     queryKey: ["luckyday", dtlNo],
     queryFn: () => getLuckyDayReview(dtlNo),
     enabled: !!dtlNo,
+  });
+};
+
+export const useDeleteLuckyDayReview = () => {
+  return useMutation({
+    mutationFn: (req: DeleteLuckyDayReviewQueryModel) =>
+      deleteLuckyDayReview(req),
   });
 };
 

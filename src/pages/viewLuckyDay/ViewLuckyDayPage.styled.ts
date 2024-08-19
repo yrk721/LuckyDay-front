@@ -134,8 +134,8 @@ export const Button = styled.button`
     & > span {
       position: absolute;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       width: 100%;
       top: 50%;
       left: 50%;
