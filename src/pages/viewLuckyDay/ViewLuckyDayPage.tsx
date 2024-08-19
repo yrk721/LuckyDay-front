@@ -4,12 +4,18 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useToast } from "hooks";
 import { useGetLuckyDayReview } from "services";
 import { GetLuckyDayDetail } from "types";
-import { ComponentSpinner, PageSpinner, SingleButtonLayout } from "components";
+import {
+  SvgFrame,
+  PageSpinner,
+  ComponentSpinner,
+  SingleButtonLayout,
+} from "components";
 import { formatDate } from "utils";
+import { ShortBoxIcon, EditIcon, TrashIcon } from "assets";
 
 export default function ViewLuckyDayPage() {
-  const { id } = useParams();
   const navigate = useNavigate();
+  const { id } = useParams();
   const { addToast } = useToast();
   const { data, isLoading, error } = useGetLuckyDayReview(id || "");
   const [imageLoading, setImageLoading] = useState<boolean>(true);
@@ -66,6 +72,21 @@ export default function ViewLuckyDayPage() {
           </S.ImageBox>
           <S.ReviewTextBox>{review}</S.ReviewTextBox>
         </S.ReviewBox>
+
+        <S.ButtonWrapper>
+          <S.Button>
+            <SvgFrame css={S.svgFrame} icon={<ShortBoxIcon />} />
+            <span>
+              삭제하기 <TrashIcon />
+            </span>
+          </S.Button>
+          <S.Button>
+            <SvgFrame css={S.svgFrame} icon={<ShortBoxIcon />} />
+            <span>
+              수정하기 <EditIcon />
+            </span>
+          </S.Button>
+        </S.ButtonWrapper>
       </S.Container>
     </SingleButtonLayout>
   );

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
+import { css, Theme } from "@emotion/react";
 
 export const Container = styled.div`
   display: flex;
@@ -106,4 +106,48 @@ export const SpinnerBox = styled.div`
     margin-bottom: -120px;
     background-color: ${theme.colors.lightBeige};
   `}
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 70%;
+  height: 60px;
+
+  @media (max-width: 380px) {
+    margin-top: -20px;
+  }
+`;
+
+export const Button = styled.button`
+  ${({ theme }) => css`
+    position: relative;
+    width: 110px;
+    height: 42px;
+
+    & > div {
+      width: 100%;
+      height: 100%;
+    }
+
+    & > span {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      ${theme.fonts.headline2};
+      column-gap: 4px;
+    }
+  `}
+`;
+
+export const svgFrame = (theme: Theme) => css`
+  path {
+    fill: ${theme.colors.beige};
+  }
 `;
