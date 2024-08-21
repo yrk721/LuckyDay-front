@@ -86,11 +86,12 @@ export const DefaultImage = styled.div`
 export const ReviewTextBox = styled.div`
   ${({ theme }) => css`
     display: flex;
+    align-items: center;
     justify-content: center;
     width: 270px;
-    height: 120px;
-    margin-top: -50px;
-    padding: 10px 20px;
+    height: 100px;
+    margin-top: -60px;
+    padding: 5px 20px;
     color: ${theme.colors.black};
     ${theme.fonts.headline2}
     word-break: break-word;

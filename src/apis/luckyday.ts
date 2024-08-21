@@ -61,6 +61,28 @@ export const createLuckyDayReview = async (
   return data;
 };
 
+export const updateLuckyDayReview = async (
+  req: CreateLuckyDayReviewQueryModel
+) => {
+  const formData = new FormData();
+  formData.append(
+    "reviewReqDto",
+    new Blob([JSON.stringify(req.body)], { type: "application/json" })
+  );
+
+  if (req.image) {
+    formData.append("image", req.image);
+  }
+
+  const { data } = await ax.put("/luckydays/review", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return data;
+};
+
 export const deleteLuckyDayReview = async (
   req: DeleteLuckyDayReviewQueryModel
 ) => {

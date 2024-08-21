@@ -15,25 +15,21 @@ import { formatDate } from "utils";
 import { ShortBoxIcon, EditIcon, TrashIcon } from "assets";
 
 export default function ViewLuckyDayPage() {
-  const navigate = useNavigate();
   const { id } = useParams();
-  const { handleOpenModal, handleModalClose } = useModal();
   const { addToast } = useToast();
+  const { handleOpenModal, handleModalClose } = useModal();
+
   const { data, isLoading, error } = useGetLuckyDayReview(id || "");
-  const deleteReviewMutation = useDeleteLuckyDayReview();
   const [imageLoading, setImageLoading] = useState<boolean>(true);
+  const deleteReviewMutation = useDeleteLuckyDayReview();
 
-  useEffect(() => {
-    if (data && data.resData && data.resData.review === null) {
-      navigate(`/luckydays/create/${id}`);
-    }
-  }, [data, id, navigate]);
+  const navigate = useNavigate();
 
-  const handleImageLoad = () => {
-    setImageLoading(false);
+  const handleMoveToReviewEdit = () => {
+    navigate(`/luckydays/create/${id}`);
   };
 
-  const handleDeleteClick = () => {
+  const handleReviewDelete = () => {
     handleOpenModal(
       <DeleteReviewConfirmModal
         onClose={handleModalClose}
@@ -59,6 +55,16 @@ export default function ViewLuckyDayPage() {
         }}
       />
     );
+  };
+
+  useEffect(() => {
+    if (data && data.resData && data.resData.review === null) {
+      navigate(`/luckydays/create/${id}`);
+    }
+  }, [data, id, navigate]);
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
   };
 
   if (isLoading) {
@@ -105,13 +111,13 @@ export default function ViewLuckyDayPage() {
         </S.ReviewBox>
 
         <S.ButtonWrapper>
-          <S.Button onClick={handleDeleteClick}>
+          <S.Button onClick={handleReviewDelete}>
             <SvgFrame css={S.svgFrame} icon={<ShortBoxIcon />} />
             <span>
               삭제하기 <TrashIcon />
             </span>
           </S.Button>
-          <S.Button>
+          <S.Button onClick={handleMoveToReviewEdit}>
             <SvgFrame css={S.svgFrame} icon={<ShortBoxIcon />} />
             <span>
               수정하기 <EditIcon />

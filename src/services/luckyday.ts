@@ -9,6 +9,7 @@ import {
   getLuckyDayCycle,
   getLuckyDayReview,
   createLuckyDayReview,
+  updateLuckyDayReview,
   deleteLuckyDayReview,
   getLuckyDayCycleLastLuckyDays,
   getLuckyDayCycleList,
@@ -55,6 +56,13 @@ export const useCreateLuckyDayReview = () => {
   return useMutation({
     mutationFn: (req: CreateLuckyDayReviewQueryModel) =>
       createLuckyDayReview(req),
+  });
+};
+
+export const useUpdateLuckyDayReview = () => {
+  return useMutation({
+    mutationFn: (req: CreateLuckyDayReviewQueryModel) =>
+      updateLuckyDayReview(req),
   });
 };
 

@@ -49,19 +49,23 @@ export const TextBox = styled.div`
 `;
 
 export const ReviewTextarea = styled.textarea`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 270px;
   height: 100px;
-  padding: 20px;
-  margin-top: 80px;
-  margin-bottom: 70px;
-  border: 0;
+  padding: 5px 20px;
+  margin-top: 100px;
+  margin-bottom: 60px;
   background-color: transparent;
-  text-align: center;
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.headline2};
+  border: 0;
   resize: none;
   overflow-y: auto;
   white-space: pre-wrap;
+
   &:focus {
     outline: none;
   }

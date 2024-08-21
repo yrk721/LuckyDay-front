@@ -2,7 +2,11 @@ import * as S from "./ReviewLuckyDayPage.styled";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "hooks";
-import { useGetLuckyDayDetail, useCreateLuckyDayReview } from "services";
+import {
+  useGetLuckyDayDetail,
+  useCreateLuckyDayReview,
+  useUpdateLuckyDayReview,
+} from "services";
 import {
   FileUploader,
   PageSpinner,
@@ -21,7 +25,9 @@ export default function ReviewLuckyDayPage() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [review, setReview] = useState<string>("");
   const [reviewError, setReviewError] = useState<string>("");
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const createReviewMutation = useCreateLuckyDayReview();
+  const updateReviewMutation = useUpdateLuckyDayReview();
 
   const navigate = useNavigate();
 
@@ -49,11 +55,17 @@ export default function ReviewLuckyDayPage() {
       review,
     };
 
-    createReviewMutation.mutate(
+    const mutationFn = isEditMode
+      ? updateReviewMutation.mutate
+      : createReviewMutation.mutate;
+
+    mutationFn(
       { body: reviewReqDto, image: uploadedFile || undefined },
       {
         onSuccess: () => {
-          addToast({ content: "저장되었습니다." });
+          addToast({
+            content: isEditMode ? "수정되었습니다." : "저장되었습니다.",
+          });
           navigate(`/luckydays/review/${id}`);
         },
         onError: (error) => {
@@ -77,9 +89,10 @@ export default function ReviewLuckyDayPage() {
 
   useEffect(() => {
     if (data && data.resData && data.resData.review !== null) {
-      navigate(`/luckydays/${id}`);
+      setReview(data.resData.review);
+      setIsEditMode(true);
     }
-  }, [data, id, navigate]);
+  }, [data]);
 
   if (isLoading) {
     return <PageSpinner />;
@@ -119,7 +132,7 @@ export default function ReviewLuckyDayPage() {
         </S.ReviewBox>
         <S.ButtonBox>
           <SvgButton
-            label="저장하기"
+            label={isEditMode ? "수정하기" : "저장하기"}
             icon={<ShortBoxIcon />}
             width="120px"
             height="50px"
