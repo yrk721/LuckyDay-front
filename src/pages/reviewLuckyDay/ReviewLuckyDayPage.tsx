@@ -2,7 +2,7 @@ import * as S from "./ReviewLuckyDayPage.styled";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "hooks";
-import { useGetLuckyDayDetail } from "services";
+import { useGetLuckyDayDetail, useCreateLuckyDayReview } from "services";
 import {
   FileUploader,
   PageSpinner,
@@ -11,18 +11,19 @@ import {
 } from "components";
 import { ShortBoxIcon } from "assets";
 import { formatDate } from "utils";
-import { ax } from "apis/axios";
 import axios from "axios";
 
 export default function ReviewLuckyDayPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { data, isLoading, error } = useGetLuckyDayDetail(id || "");
+  const { addToast } = useToast();
 
+  const { data, isLoading, error } = useGetLuckyDayDetail(id || "");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [review, setReview] = useState<string>("");
   const [reviewError, setReviewError] = useState<string>("");
-  const { addToast } = useToast();
+  const createReviewMutation = useCreateLuckyDayReview();
+
+  const navigate = useNavigate();
 
   const handleFileSelect = (file: File) => {
     setUploadedFile(file);
@@ -37,55 +38,41 @@ export default function ReviewLuckyDayPage() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!review) {
       addToast({ content: "내용을 입력해 주세요." });
       return;
     }
 
     const reviewReqDto = {
-      dtlNo: id || "0",
-      review: review,
+      dtlNo: id ? Number(id) : 0,
+      review,
     };
 
-    const formData = new FormData();
-    formData.append(
-      "reviewReqDto",
-      new Blob([JSON.stringify(reviewReqDto)], { type: "application/json" })
-    );
-
-    if (uploadedFile) {
-      formData.append("image", uploadedFile);
-    }
-
-    try {
-      const response = await ax.post("/luckydays/review", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+    createReviewMutation.mutate(
+      { body: reviewReqDto, image: uploadedFile || undefined },
+      {
+        onSuccess: () => {
+          addToast({ content: "저장되었습니다." });
+          navigate(`/luckydays/review/${id}`);
         },
-      });
-
-      if (response.status === 200) {
-        addToast({ content: "저장되었습니다." });
-        navigate(`/luckydays/review/${id}`);
-      } else {
-        addToast({ content: "저장에 실패했습니다." });
+        onError: (error) => {
+          if (axios.isAxiosError(error) && error.response) {
+            if (error.response.status === 2013) {
+              addToast({ content: "이미지 또는 내용을 입력해 주세요." });
+            } else {
+              addToast({
+                content: `저장 중 오류가 발생했습니다: ${
+                  error.response.data.message || error.response.status
+                }`,
+              });
+            }
+          } else {
+            addToast({ content: "저장 중 오류가 발생했습니다" });
+          }
+        },
       }
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        if (error.response.status === 2013) {
-          addToast({ content: "이미지 또는 내용을 입력해 주세요." });
-        } else {
-          addToast({
-            content: `저장 중 오류가 발생했습니다: ${
-              error.response.data.message || error.response.status
-            }`,
-          });
-        }
-      } else {
-        addToast({ content: "저장 중 오류가 발생했습니다" });
-      }
-    }
+    );
   };
 
   useEffect(() => {

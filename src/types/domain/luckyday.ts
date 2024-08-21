@@ -98,6 +98,22 @@ export interface GetLuckyDayCycleDetailResponse {
   resData: GetLuckyDayCycleDetail[] | null;
 }
 
+export interface ReviewReqDto {
+  dtlNo: number;
+  review: string;
+}
+
+export interface CreateLuckyDayReviewQueryModel {
+  body: ReviewReqDto;
+  image?: File;
+}
+
+export interface DeleteLuckyDayReviewQueryModel {
+  query: {
+    dtlNo: number;
+  };
+}
+
 export type LuckyBallType =
   | "LuckyBall_Dday"
   | "LuckyBall_D1"
@@ -120,10 +136,4 @@ export interface LuckyBallGrid {
 export interface LuckyDayDetail {
   dday: number | null;
   dtlNo: number;
-}
-
-export interface DeleteLuckyDayReviewQueryModel {
-  query: {
-    dtlNo: number;
-  };
 }
