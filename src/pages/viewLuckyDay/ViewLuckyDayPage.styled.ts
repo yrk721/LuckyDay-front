@@ -59,7 +59,7 @@ export const ImageBox = styled.div`
 export const Image = styled.div`
   width: 200px;
   height: 140px;
-  margin-top: 5px;
+  margin-top: 10px;
   margin-bottom: 100px;
 
   img {
@@ -89,13 +89,14 @@ export const ReviewTextBox = styled.div`
     align-items: center;
     justify-content: center;
     width: 270px;
-    height: 100px;
+    height: 120px;
+    padding: 20px;
     margin-top: -60px;
-    padding: 5px 20px;
     color: ${theme.colors.black};
     ${theme.fonts.headline2}
     word-break: break-word;
     white-space: pre-wrap;
+    overflow-y: auto;
   `}
 `;
 

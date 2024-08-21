@@ -105,7 +105,7 @@ export interface ReviewReqDto {
 
 export interface CreateLuckyDayReviewQueryModel {
   body: ReviewReqDto;
-  image?: File;
+  image?: File | null;
 }
 
 export interface DeleteLuckyDayReviewQueryModel {

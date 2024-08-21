@@ -8,10 +8,10 @@ import {
   useUpdateLuckyDayReview,
 } from "services";
 import {
-  FileUploader,
-  PageSpinner,
-  SingleButtonLayout,
   SvgButton,
+  SingleButtonLayout,
+  PageSpinner,
+  FileUploader,
 } from "components";
 import { ShortBoxIcon } from "assets";
 import { formatDate } from "utils";
@@ -25,7 +25,10 @@ export default function ReviewLuckyDayPage() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [review, setReview] = useState<string>("");
   const [reviewError, setReviewError] = useState<string>("");
+  const [existingImageUrl, setExistingImageUrl] = useState<string | null>(null);
+  const [isDefaultImage, setIsDefaultImage] = useState<boolean>(true);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const createReviewMutation = useCreateLuckyDayReview();
   const updateReviewMutation = useUpdateLuckyDayReview();
 
@@ -33,18 +36,22 @@ export default function ReviewLuckyDayPage() {
 
   const handleFileSelect = (file: File) => {
     setUploadedFile(file);
+    setIsDefaultImage(false);
+    setIsButtonDisabled(false);
   };
 
   const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length > 100) {
+    const newReview = e.target.value;
+    if (newReview.length > 100) {
       setReviewError("리뷰는 100자 이내로 작성해 주세요.");
     } else {
       setReviewError("");
-      setReview(e.target.value);
+      setReview(newReview);
+      setIsButtonDisabled(newReview === review && !uploadedFile);
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!review) {
       addToast({ content: "내용을 입력해 주세요." });
       return;
@@ -55,42 +62,69 @@ export default function ReviewLuckyDayPage() {
       review,
     };
 
+    let imageToUpload: File | null = uploadedFile;
+
+    if (!uploadedFile && existingImageUrl && !isDefaultImage) {
+      // 이미지를 변경하지 않은 경우, 기존 이미지를 다시 서버에 전송하기 위해 Blob 형태로 변환
+      const response = await fetch(existingImageUrl);
+      const blob = await response.blob();
+      imageToUpload = new File([blob], "existingImage.png", {
+        type: blob.type,
+      });
+    }
+
+    const mutationPayload = {
+      body: reviewReqDto,
+      image: imageToUpload,
+    };
+
+    console.log("Final Payload:", mutationPayload);
+
     const mutationFn = isEditMode
       ? updateReviewMutation.mutate
       : createReviewMutation.mutate;
 
-    mutationFn(
-      { body: reviewReqDto, image: uploadedFile || undefined },
-      {
-        onSuccess: () => {
-          addToast({
-            content: isEditMode ? "수정되었습니다." : "저장되었습니다.",
-          });
-          navigate(`/luckydays/review/${id}`);
-        },
-        onError: (error) => {
-          if (axios.isAxiosError(error) && error.response) {
-            if (error.response.status === 2013) {
-              addToast({ content: "이미지 또는 내용을 입력해 주세요." });
-            } else {
-              addToast({
-                content: `저장 중 오류가 발생했습니다: ${
-                  error.response.data.message || error.response.status
-                }`,
-              });
-            }
+    mutationFn(mutationPayload, {
+      onSuccess: () => {
+        addToast({
+          content: isEditMode ? "수정되었습니다." : "저장되었습니다.",
+        });
+        navigate(`/luckydays/review/${id}`);
+      },
+      onError: (error) => {
+        if (axios.isAxiosError(error) && error.response) {
+          if (error.response.status === 2013) {
+            addToast({ content: "이미지 또는 내용을 입력해 주세요." });
           } else {
-            addToast({ content: "저장 중 오류가 발생했습니다" });
+            addToast({
+              content: `저장 중 오류가 발생했습니다: ${
+                error.response.data.message || error.response.status
+              }`,
+            });
           }
-        },
-      }
-    );
+        } else {
+          addToast({ content: "저장 중 오류가 발생했습니다" });
+        }
+      },
+    });
   };
 
   useEffect(() => {
-    if (data && data.resData && data.resData.review !== null) {
-      setReview(data.resData.review);
-      setIsEditMode(true);
+    if (data && data.resData) {
+      if (data.resData.review !== null) {
+        setReview(data.resData.review);
+        setIsEditMode(true);
+      }
+
+      if (data.resData.imageUrl) {
+        const fullImageUrl = `${import.meta.env.VITE_BASE_URL}${
+          data.resData.imageUrl
+        }`;
+        setExistingImageUrl(fullImageUrl);
+        setIsDefaultImage(data.resData.imageUrl.includes("default"));
+      }
+
+      setIsButtonDisabled(true);
     }
   }, [data]);
 
@@ -111,15 +145,21 @@ export default function ReviewLuckyDayPage() {
         <S.ReviewBox>
           <S.TextBox>{actNm}</S.TextBox>
           <S.ImageUploadBox>
-            <FileUploader onFileSelect={handleFileSelect} />
-            {uploadedFile && (
+            {existingImageUrl && !isDefaultImage && !uploadedFile ? (
               <S.ImageBox>
-                <img
-                  src={URL.createObjectURL(uploadedFile)}
-                  alt="Uploaded preview"
-                />
+                <img src={existingImageUrl} alt="Saved preview" />
               </S.ImageBox>
+            ) : (
+              uploadedFile && (
+                <S.ImageBox>
+                  <img
+                    src={URL.createObjectURL(uploadedFile)}
+                    alt="Uploaded preview"
+                  />
+                </S.ImageBox>
+              )
             )}
+            <FileUploader onFileSelect={handleFileSelect} />
           </S.ImageUploadBox>
           <S.ReviewTextarea
             value={review}
@@ -137,6 +177,7 @@ export default function ReviewLuckyDayPage() {
             width="120px"
             height="50px"
             onClick={handleSubmit}
+            disabled={isButtonDisabled}
           />
         </S.ButtonBox>
       </S.Container>
