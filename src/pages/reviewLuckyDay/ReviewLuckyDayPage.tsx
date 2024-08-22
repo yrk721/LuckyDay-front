@@ -1,6 +1,8 @@
 import * as S from "./ReviewLuckyDayPage.styled";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { useToast } from "hooks";
 import {
   useGetLuckyDayDetail,
@@ -15,56 +17,60 @@ import {
 } from "components";
 import { ShortBoxIcon } from "assets";
 import { formatDate } from "utils";
-import axios from "axios";
 
 export default function ReviewLuckyDayPage() {
   const { id } = useParams();
   const { addToast } = useToast();
 
   const { data, isLoading, error } = useGetLuckyDayDetail(id || "");
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [review, setReview] = useState<string>("");
-  const [reviewError, setReviewError] = useState<string>("");
   const [existingImageUrl, setExistingImageUrl] = useState<string | null>(null);
   const [isDefaultImage, setIsDefaultImage] = useState<boolean>(true);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+
   const createReviewMutation = useCreateLuckyDayReview();
   const updateReviewMutation = useUpdateLuckyDayReview();
 
   const navigate = useNavigate();
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { isDirty, errors },
+  } = useForm({
+    defaultValues: {
+      review: "",
+      image: null as File | null,
+    },
+    mode: "onChange",
+  });
+
+  const watchReview = watch("review");
+  const watchImage = watch("image");
+
   const handleFileSelect = (file: File) => {
-    setUploadedFile(file);
+    setValue("image", file);
     setIsDefaultImage(false);
-    setIsButtonDisabled(false);
   };
 
   const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newReview = e.target.value;
-    if (newReview.length > 100) {
-      setReviewError("리뷰는 100자 이내로 작성해 주세요.");
-    } else {
-      setReviewError("");
-      setReview(newReview);
-      setIsButtonDisabled(newReview === review && !uploadedFile);
+    const value = e.target.value;
+    if (value.length <= 100) {
+      setValue("review", value, { shouldValidate: true });
     }
   };
 
-  const handleSubmit = async () => {
-    if (!review) {
-      addToast({ content: "내용을 입력해 주세요." });
-      return;
-    }
-
+  const onSubmit = async (data: { review: string; image: File | null }) => {
     const reviewReqDto = {
       dtlNo: id ? Number(id) : 0,
-      review,
+      review: data.review,
     };
 
-    let imageToUpload: File | null = uploadedFile;
+    let imageToUpload: File | null = data.image;
 
-    if (!uploadedFile && existingImageUrl && !isDefaultImage) {
+    if (!data.image && existingImageUrl && !isDefaultImage) {
       // 이미지를 변경하지 않은 경우, 기존 이미지를 다시 서버에 전송하기 위해 Blob 형태로 변환
       const response = await fetch(existingImageUrl);
       const blob = await response.blob();
@@ -77,8 +83,6 @@ export default function ReviewLuckyDayPage() {
       body: reviewReqDto,
       image: imageToUpload,
     };
-
-    console.log("Final Payload:", mutationPayload);
 
     const mutationFn = isEditMode
       ? updateReviewMutation.mutate
@@ -103,7 +107,7 @@ export default function ReviewLuckyDayPage() {
             });
           }
         } else {
-          addToast({ content: "저장 중 오류가 발생했습니다" });
+          addToast({ content: "저장 중 오류가 발생했습니다." });
         }
       },
     });
@@ -112,7 +116,7 @@ export default function ReviewLuckyDayPage() {
   useEffect(() => {
     if (data && data.resData) {
       if (data.resData.review !== null) {
-        setReview(data.resData.review);
+        setValue("review", data.resData.review);
         setIsEditMode(true);
       }
 
@@ -123,10 +127,17 @@ export default function ReviewLuckyDayPage() {
         setExistingImageUrl(fullImageUrl);
         setIsDefaultImage(data.resData.imageUrl.includes("default"));
       }
-
       setIsButtonDisabled(true);
     }
-  }, [data]);
+  }, [data, setValue]);
+
+  useEffect(() => {
+    if (watchReview && watchReview.length < 100 && (isDirty || watchImage)) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [watchReview, watchImage, isDirty]);
 
   if (isLoading) {
     return <PageSpinner />;
@@ -145,15 +156,15 @@ export default function ReviewLuckyDayPage() {
         <S.ReviewBox>
           <S.TextBox>{actNm}</S.TextBox>
           <S.ImageUploadBox>
-            {existingImageUrl && !isDefaultImage && !uploadedFile ? (
+            {existingImageUrl && !isDefaultImage && !watchImage ? (
               <S.ImageBox>
                 <img src={existingImageUrl} alt="Saved preview" />
               </S.ImageBox>
             ) : (
-              uploadedFile && (
+              watchImage && (
                 <S.ImageBox>
                   <img
-                    src={URL.createObjectURL(uploadedFile)}
+                    src={URL.createObjectURL(watchImage)}
                     alt="Uploaded preview"
                   />
                 </S.ImageBox>
@@ -162,21 +173,29 @@ export default function ReviewLuckyDayPage() {
             <FileUploader onFileSelect={handleFileSelect} />
           </S.ImageUploadBox>
           <S.ReviewTextarea
-            value={review}
-            onChange={handleReviewChange}
+            {...register("review", {
+              required: "리뷰를 작성해 주세요.",
+              maxLength: {
+                value: 100,
+                message: "리뷰는 100자 이내로 작성해 주세요.",
+              },
+              onChange: handleReviewChange,
+            })}
             placeholder={"100자 이내로 럭키 데이를 기록해 보세요:)"}
           />
           <S.ErrorContainer>
-            {reviewError && <S.ErrorText>{reviewError}</S.ErrorText>}
+            {errors.review && (
+              <S.ErrorText>{errors.review.message as string}</S.ErrorText>
+            )}
           </S.ErrorContainer>
         </S.ReviewBox>
         <S.ButtonBox>
           <SvgButton
+            onClick={handleSubmit(onSubmit)}
             label={isEditMode ? "수정하기" : "저장하기"}
             icon={<ShortBoxIcon />}
             width="120px"
             height="50px"
-            onClick={handleSubmit}
             disabled={isButtonDisabled}
           />
         </S.ButtonBox>
