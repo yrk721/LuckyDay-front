@@ -12,6 +12,7 @@ export { default as ViewLuckyActivityPage } from "./viewLuckyActivity/ViewLuckyA
 export { default as ReviewLuckyDayPage } from "./reviewLuckyDay/ReviewLuckyDayPage";
 export { default as ViewLuckyDayPage } from "./viewLuckyDay/ViewLuckyDayPage";
 export { default as NoticeBoardPage } from "./noticeBoard/NoticeBoardPage";
-export { default as NoticePage } from "./notice/NoticePage";
+export { default as NoticeListPage } from "./noticeList/NoticeListPage";
+export { default as NoticeDetailPage } from "./noticeDetail/NoticeDetailPage";
 export { default as InfoPage } from "./info/InfoPage";
 export { default as Error404Page } from "./404/Error404Page";

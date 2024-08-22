@@ -38,8 +38,12 @@ export default function Router({ children }: RouterProps) {
 
             <Route path="noticeboard">
               <Route index element={<P.NoticeBoardPage />} />
-              <Route path="notice" element={<P.NoticePage />} />
               <Route path="info" element={<P.InfoPage />} />
+            </Route>
+
+            <Route path="notice">
+              <Route index element={<P.NoticeListPage />} />
+              <Route path=":id" element={<P.NoticeDetailPage />} />
             </Route>
           </Route>
 
