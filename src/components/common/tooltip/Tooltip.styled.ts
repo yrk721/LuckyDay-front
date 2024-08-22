@@ -13,18 +13,19 @@ export const TooltipWrapper = styled.div`
 
 export const TooltipBox = styled.div<{
   flow: "up" | "down" | "left" | "right";
+  isVisible: boolean;
 }>`
-  ${({ theme, flow }) => css`
+  ${({ theme, flow, isVisible }) => css`
     position: absolute;
     text-align: center;
     padding: 10px;
     border-radius: 20px;
-    opacity: 0;
+    opacity: ${isVisible ? 1 : 0};
+    visibility: ${isVisible ? "visible" : "hidden"};
     color: white;
     white-space: nowrap;
-    visibility: hidden;
     background-color: ${theme.colors.gray};
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 1000;
 
     ${flow === "down" &&
