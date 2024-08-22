@@ -1,10 +1,10 @@
-import * as S from "./Profile.styled";
+import * as S from "./ProfilePage.styled";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SvgButton, SingleButtonLayout, Tooltip } from "components";
 import { InfoIcon, LongBoxIcon } from "assets";
 
-export default function Profile() {
+export default function ProfilePage() {
   const navigate = useNavigate();
   const [isLongEmail, setIsLongEmail] = useState(false);
 

@@ -16,7 +16,7 @@ export default function Router({ children }: RouterProps) {
           <Route index element={<P.LandingPage />} />
           <Route path="oauth2/kakao/callback" element={<P.Auth />} />
           <Route element={<AuthRoute />}>
-            <Route path="profile" element={<P.Profile />} />
+            <Route path="profile" element={<P.ProfilePage />} />
 
             <Route path="mypage">
               <Route index element={<P.MyPage />} />
