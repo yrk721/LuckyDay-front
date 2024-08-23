@@ -15,6 +15,7 @@ import {
   PageSpinner,
   FileUploader,
 } from "components";
+import { ReviewFormData } from "types";
 import { ShortBoxIcon } from "assets";
 import { formatDate } from "utils";
 
@@ -39,7 +40,7 @@ export default function ReviewLuckyDayPage() {
     watch,
     setValue,
     formState: { isDirty, errors },
-  } = useForm({
+  } = useForm<ReviewFormData>({
     defaultValues: {
       review: "",
       image: null as File | null,
@@ -62,7 +63,7 @@ export default function ReviewLuckyDayPage() {
     }
   };
 
-  const onSubmit = async (data: { review: string; image: File | null }) => {
+  const onSubmit = async (data: ReviewFormData) => {
     const reviewReqDto = {
       dtlNo: id ? Number(id) : 0,
       review: data.review,

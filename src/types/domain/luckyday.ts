@@ -103,6 +103,11 @@ export interface ReviewReqDto {
   review: string;
 }
 
+export interface ReviewFormData {
+  review: string;
+  image: File | null;
+}
+
 export interface CreateLuckyDayReviewQueryModel {
   body: ReviewReqDto;
   image?: File | null;
