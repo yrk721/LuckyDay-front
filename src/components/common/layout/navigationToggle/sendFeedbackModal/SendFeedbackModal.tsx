@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "@emotion/react";
 import { useToast } from "hooks";
 import { useSendFeedback } from "services";
+import { FeedbackFormValues } from "types";
 import { BaseModal, SvgButton, PageSpinner } from "components";
 import { ShortBoxIcon } from "assets";
 
@@ -21,22 +22,28 @@ export default function SendFeedbackModal({ onClose }: SendFeedbackModalProps) {
     formState: { errors },
     setError,
     clearErrors,
-  } = useForm<{ feedback: string }>();
+  } = useForm<FeedbackFormValues>({
+    mode: "onChange",
+    defaultValues: {
+      feedback: "",
+    },
+  });
 
   const feedbackValue = watch("feedback", "");
+  const feedbackError = errors.feedback;
 
-  if (feedbackValue.length > 160 && !errors.feedback) {
+  if (feedbackValue.length > 160 && !feedbackError) {
     setError("feedback", {
       type: "manual",
       message: "피드백은 160자 이내로 작성해 주세요.",
     });
-  } else if (feedbackValue.length <= 160 && errors.feedback) {
+  } else if (feedbackValue.length <= 160 && feedbackError) {
     clearErrors("feedback");
   }
 
   const sendFeedbackMutation = useSendFeedback();
 
-  const onSubmit = (data: { feedback: string }) => {
+  const onSubmit = (data: FeedbackFormValues) => {
     sendFeedbackMutation.mutate(
       { content: data.feedback },
       {

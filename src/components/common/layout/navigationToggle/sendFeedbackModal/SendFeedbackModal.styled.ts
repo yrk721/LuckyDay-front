@@ -22,7 +22,7 @@ export const Text_h1 = styled.div`
 export const Textarea = styled.textarea`
   ${({ theme }) => css`
     width: 210px;
-    height: 210px;
+    height: 200px;
     padding: 15px 0px;
     border: none;
     outline: none;
@@ -52,10 +52,11 @@ export const CharCount = styled.div`
 export const ErrorText = styled.div`
   ${({ theme }) => css`
     display: flex;
+    align-items: center;
     justify-content: center;
     width: 100%;
     height: 16px;
-    margin-top: 5px;
+    margin: 10px 0px 5px 0px;
     ${theme.fonts.body2};
     color: ${theme.colors.orange};
   `}

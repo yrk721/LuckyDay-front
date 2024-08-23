@@ -125,6 +125,9 @@ export interface LuckyDayDetail {
 export interface FeedbackForm {
   content: string;
 }
+export interface FeedbackFormValues {
+  feedback: string;
+}
 
 export interface FeedbackQueryModel {
   body: FeedbackForm;
