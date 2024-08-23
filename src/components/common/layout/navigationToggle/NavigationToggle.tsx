@@ -86,52 +86,51 @@ export default function NavigationToggle({
       <S.MenuIcon onClick={toggleNavigation} ref={menuIconRef}>
         <MenuIcon />
       </S.MenuIcon>
-      {isToggleVisible && (
-        <S.ToggleBox
-          ref={toggleRef}
-          style={{
-            top: `${toggleBoxPosition.top}px`,
-            left:
-              typeof toggleBoxPosition.left === "number"
-                ? `${toggleBoxPosition.left}px`
-                : toggleBoxPosition.left,
-            right:
-              toggleBoxPosition.right === "auto"
-                ? "auto"
-                : `${toggleBoxPosition.right}px`,
-          }}
-        >
-          <button onClick={toggleNavigation}></button>
-          <S.ToggleContentsBox>
-            <S.ProfileBox>
-              <S.ProfileImage imageUrl={profileImageUrl} />
-              {!nickname ? "사용자님" : `${nickname!.slice(0, 8)}님`}
-            </S.ProfileBox>
-            <S.ToggleMenuBox>
-              <Link
-                to="/luckydays/list"
-                onClick={() => setIsToggleVisible(false)}
-              >
-                <S.ToggleMenu>럭키 데이 보관함</S.ToggleMenu>
-              </Link>
-              <Link to="/mypage" onClick={() => setIsToggleVisible(false)}>
-                <S.ToggleMenu>마이페이지</S.ToggleMenu>
-              </Link>
-              <Link to="/notice" onClick={() => setIsToggleVisible(false)}>
-                <S.ToggleMenu>공지사항</S.ToggleMenu>
-              </Link>
-              <Link to="/noticeboard" onClick={() => setIsToggleVisible(false)}>
-                <S.ToggleMenu>게시판</S.ToggleMenu>
-              </Link>
-              <div onClick={() => setIsToggleVisible(false)}>
-                <S.ToggleMenuBottom onClick={openSendFeedbackModal}>
-                  피드백 보내기
-                </S.ToggleMenuBottom>
-              </div>
-            </S.ToggleMenuBox>
-          </S.ToggleContentsBox>
-        </S.ToggleBox>
-      )}
+      <S.ToggleBox
+        ref={toggleRef}
+        isVisible={isToggleVisible}
+        style={{
+          top: `${toggleBoxPosition.top}px`,
+          left:
+            typeof toggleBoxPosition.left === "number"
+              ? `${toggleBoxPosition.left}px`
+              : toggleBoxPosition.left,
+          right:
+            toggleBoxPosition.right === "auto"
+              ? "auto"
+              : `${toggleBoxPosition.right}px`,
+        }}
+      >
+        <button onClick={toggleNavigation}></button>
+        <S.ToggleContentsBox>
+          <S.ProfileBox>
+            <S.ProfileImage imageUrl={profileImageUrl} />
+            {!nickname ? "사용자님" : `${nickname!.slice(0, 8)}님`}
+          </S.ProfileBox>
+          <S.ToggleMenuBox>
+            <Link
+              to="/luckydays/list"
+              onClick={() => setIsToggleVisible(false)}
+            >
+              <S.ToggleMenu>럭키 데이 보관함</S.ToggleMenu>
+            </Link>
+            <Link to="/mypage" onClick={() => setIsToggleVisible(false)}>
+              <S.ToggleMenu>마이페이지</S.ToggleMenu>
+            </Link>
+            <Link to="/notice" onClick={() => setIsToggleVisible(false)}>
+              <S.ToggleMenu>공지사항</S.ToggleMenu>
+            </Link>
+            <Link to="/noticeboard" onClick={() => setIsToggleVisible(false)}>
+              <S.ToggleMenu>게시판</S.ToggleMenu>
+            </Link>
+            <div onClick={() => setIsToggleVisible(false)}>
+              <S.ToggleMenuBottom onClick={openSendFeedbackModal}>
+                피드백 보내기
+              </S.ToggleMenuBottom>
+            </div>
+          </S.ToggleMenuBox>
+        </S.ToggleContentsBox>
+      </S.ToggleBox>
     </>
   );
 }
