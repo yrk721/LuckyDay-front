@@ -20,7 +20,7 @@ export default function ViewLuckyDayPage() {
   const { handleOpenModal, handleModalClose } = useModal();
 
   const { data, isLoading, error } = useGetLuckyDayReview(id || "");
-  const [imageLoading, setImageLoading] = useState<boolean>(true);
+  const [imageLoading, setImageLoading] = useState(true);
   const deleteReviewMutation = useDeleteLuckyDayReview();
 
   const navigate = useNavigate();
@@ -29,30 +29,32 @@ export default function ViewLuckyDayPage() {
     navigate(`/luckydays/create/${id}`);
   };
 
-  const handleReviewDelete = () => {
+  const handleDeleteReview = () => {
+    if (id) {
+      deleteReviewMutation.mutate(
+        { query: { dtlNo: Number(id) } },
+        {
+          onSuccess: () => {
+            handleModalClose();
+            navigate(`/luckydays/${id}`);
+            addToast({ content: "기록이 성공적으로 삭제되었습니다." });
+          },
+          onError: () => {
+            handleModalClose();
+            addToast({
+              content: "기록 삭제에 실패했습니다. 다시 시도해 주세요.",
+            });
+          },
+        }
+      );
+    }
+  };
+
+  const handleDeleteReviewConfirmModal = () => {
     handleOpenModal(
       <DeleteReviewConfirmModal
         onClose={handleModalClose}
-        onDelete={() => {
-          if (id) {
-            deleteReviewMutation.mutate(
-              { query: { dtlNo: Number(id) } },
-              {
-                onSuccess: () => {
-                  handleModalClose();
-                  navigate(`/luckydays/${id}`);
-                  addToast({ content: "기록이 성공적으로 삭제되었습니다." });
-                },
-                onError: () => {
-                  handleModalClose();
-                  addToast({
-                    content: "기록 삭제에 실패했습니다. 다시 시도해 주세요.",
-                  });
-                },
-              }
-            );
-          }
-        }}
+        onDelete={handleDeleteReview}
       />
     );
   };
@@ -111,7 +113,7 @@ export default function ViewLuckyDayPage() {
         </S.ReviewBox>
 
         <S.ButtonWrapper>
-          <S.Button onClick={handleReviewDelete}>
+          <S.Button onClick={handleDeleteReviewConfirmModal}>
             <SvgFrame css={S.svgFrame} icon={<ShortBoxIcon />} />
             <span>
               삭제하기 <TrashIcon />
