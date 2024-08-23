@@ -1,6 +1,8 @@
 import * as S from "./NavigationToggle.styled";
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { SendFeedbackModal } from "./sendFeedbackModal";
+import { useModal } from "hooks";
 import { MenuIcon } from "assets";
 
 interface NavigationToggleProps {
@@ -19,6 +21,7 @@ const NavigationToggle: (props: NavigationToggleProps) => JSX.Element = ({
   const toggleRef = useRef<HTMLDivElement>(null);
   const menuIconRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const { handleOpenModal, handleModalClose } = useModal();
 
   const nickname = sessionStorage.getItem("nickname");
   const profileNumber = sessionStorage.getItem("profileNumber");
@@ -32,6 +35,10 @@ const NavigationToggle: (props: NavigationToggleProps) => JSX.Element = ({
   };
 
   const profileImageUrl = getProfileImageUrl(profileNumber);
+
+  const openSendFeedbackModal = () => {
+    handleOpenModal(<SendFeedbackModal onClose={handleModalClose} />);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -117,7 +124,9 @@ const NavigationToggle: (props: NavigationToggleProps) => JSX.Element = ({
                 <S.ToggleMenu>게시판</S.ToggleMenu>
               </Link>
               <div onClick={() => setIsToggleVisible(false)}>
-                <S.ToggleMenuBottom>피드백 보내기</S.ToggleMenuBottom>
+                <S.ToggleMenuBottom onClick={openSendFeedbackModal}>
+                  피드백 보내기
+                </S.ToggleMenuBottom>
               </div>
             </S.ToggleMenuBox>
           </S.ToggleContentsBox>

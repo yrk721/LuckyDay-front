@@ -10,6 +10,7 @@ import {
   getLuckyDayReview,
   getLuckyDayCycleLastLuckyDays,
   getLuckyDayCycleList,
+  sendFeedback,
 } from "apis";
 import {
   CreateLuckyDayForm,
@@ -17,6 +18,7 @@ import {
   GetLuckyDayCycleList,
   GetLuckyDayCycleQueryModel,
   GetLuckyDayCycleLastLuckyDaysQueryModel,
+  FeedbackForm,
 } from "types";
 
 export const useGetLuckyDaysActivities = () => {
@@ -91,5 +93,11 @@ export const useGetLuckyDayCycleDetails = (id: number) => {
     queryKey: ["luckyDayCycleDetails", id],
     queryFn: () => getLuckyDayCycleDetails(id),
     enabled: !!id,
+  });
+};
+
+export const useSendFeedback = () => {
+  return useMutation({
+    mutationFn: (req: FeedbackForm) => sendFeedback(req),
   });
 };
