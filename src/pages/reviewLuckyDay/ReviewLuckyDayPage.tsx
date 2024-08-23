@@ -24,9 +24,9 @@ export default function ReviewLuckyDayPage() {
 
   const { data, isLoading, error } = useGetLuckyDayDetail(id || "");
   const [existingImageUrl, setExistingImageUrl] = useState<string | null>(null);
-  const [isDefaultImage, setIsDefaultImage] = useState<boolean>(true);
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const [isDefaultImage, setIsDefaultImage] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const createReviewMutation = useCreateLuckyDayReview();
   const updateReviewMutation = useUpdateLuckyDayReview();
@@ -47,8 +47,8 @@ export default function ReviewLuckyDayPage() {
     mode: "onChange",
   });
 
-  const watchReview = watch("review");
-  const watchImage = watch("image");
+  const review = watch("review");
+  const image = watch("image");
 
   const handleFileSelect = (file: File) => {
     setValue("image", file);
@@ -132,12 +132,12 @@ export default function ReviewLuckyDayPage() {
   }, [data, setValue]);
 
   useEffect(() => {
-    if (watchReview && watchReview.length <= 100 && (isDirty || watchImage)) {
+    if (review && review.length <= 100 && (isDirty || image)) {
       setIsButtonDisabled(false);
     } else {
       setIsButtonDisabled(true);
     }
-  }, [watchReview, watchImage, isDirty]);
+  }, [review, image, isDirty]);
 
   if (isLoading) {
     return <PageSpinner />;
@@ -156,15 +156,15 @@ export default function ReviewLuckyDayPage() {
         <S.ReviewBox>
           <S.TextBox>{actNm}</S.TextBox>
           <S.ImageUploadBox>
-            {existingImageUrl && !isDefaultImage && !watchImage ? (
+            {existingImageUrl && !isDefaultImage && !image ? (
               <S.ImageBox>
                 <img src={existingImageUrl} alt="Saved preview" />
               </S.ImageBox>
             ) : (
-              watchImage && (
+              image && (
                 <S.ImageBox>
                   <img
-                    src={URL.createObjectURL(watchImage)}
+                    src={URL.createObjectURL(image)}
                     alt="Uploaded preview"
                   />
                 </S.ImageBox>
@@ -183,7 +183,7 @@ export default function ReviewLuckyDayPage() {
             })}
             placeholder={"100자 이내로 럭키 데이를 기록해 보세요:)"}
           />
-          <S.CharCount>{watchReview.length}/100</S.CharCount>
+          <S.CharCount>{review.length}/100</S.CharCount>
           <S.ErrorContainer>
             {errors.review && (
               <S.ErrorText>{errors.review.message as string}</S.ErrorText>
