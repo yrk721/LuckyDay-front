@@ -34,7 +34,7 @@ export const Textarea = styled.textarea`
 
     ::placeholder {
       ${theme.fonts.headline3};
-      color: ${theme.colors.black};
+      color: ${theme.colors.gray};
     }
   `}
 `;
