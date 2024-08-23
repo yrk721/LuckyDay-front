@@ -9,9 +9,9 @@ interface NavigationToggleProps {
   defaultOn?: boolean;
 }
 
-const NavigationToggle: (props: NavigationToggleProps) => JSX.Element = ({
+export default function NavigationToggle({
   defaultOn = false,
-}) => {
+}: NavigationToggleProps) {
   const [isToggleVisible, setIsToggleVisible] = useState(defaultOn);
   const [toggleBoxPosition, setToggleBoxPosition] = useState({
     top: 0,
@@ -134,6 +134,4 @@ const NavigationToggle: (props: NavigationToggleProps) => JSX.Element = ({
       )}
     </>
   );
-};
-
-export default NavigationToggle;
+}
