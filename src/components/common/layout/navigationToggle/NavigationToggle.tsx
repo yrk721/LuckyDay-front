@@ -36,6 +36,10 @@ export default function NavigationToggle({
 
   const profileImageUrl = getProfileImageUrl(profileNumber);
 
+  const closeToggle = () => {
+    setIsToggleVisible(false);
+  };
+
   const openSendFeedbackModal = () => {
     handleOpenModal(<SendFeedbackModal onClose={handleModalClose} />);
   };
@@ -46,7 +50,7 @@ export default function NavigationToggle({
         !toggleRef.current?.contains(event.target as Node) &&
         !menuIconRef.current?.contains(event.target as Node)
       ) {
-        setIsToggleVisible(false);
+        closeToggle();
       }
     };
 
@@ -78,8 +82,15 @@ export default function NavigationToggle({
   };
 
   useEffect(() => {
-    setIsToggleVisible(false);
+    closeToggle();
   }, [location]);
+
+  const menuItems = [
+    { label: "럭키 데이 보관함", to: "/luckydays/list" },
+    { label: "마이페이지", to: "/mypage" },
+    { label: "공지사항", to: "/notice" },
+    { label: "게시판", to: "/noticeboard" },
+  ];
 
   return (
     <>
@@ -108,22 +119,12 @@ export default function NavigationToggle({
             {!nickname ? "사용자님" : `${nickname!.slice(0, 8)}님`}
           </S.ProfileBox>
           <S.ToggleMenuBox>
-            <Link
-              to="/luckydays/list"
-              onClick={() => setIsToggleVisible(false)}
-            >
-              <S.ToggleMenu>럭키 데이 보관함</S.ToggleMenu>
-            </Link>
-            <Link to="/mypage" onClick={() => setIsToggleVisible(false)}>
-              <S.ToggleMenu>마이페이지</S.ToggleMenu>
-            </Link>
-            <Link to="/notice" onClick={() => setIsToggleVisible(false)}>
-              <S.ToggleMenu>공지사항</S.ToggleMenu>
-            </Link>
-            <Link to="/noticeboard" onClick={() => setIsToggleVisible(false)}>
-              <S.ToggleMenu>게시판</S.ToggleMenu>
-            </Link>
-            <div onClick={() => setIsToggleVisible(false)}>
+            {menuItems.map((item) => (
+              <Link key={item.to} to={item.to} onClick={closeToggle}>
+                <S.ToggleMenu>{item.label}</S.ToggleMenu>
+              </Link>
+            ))}
+            <div onClick={closeToggle}>
               <S.ToggleMenuBottom onClick={openSendFeedbackModal}>
                 피드백 보내기
               </S.ToggleMenuBottom>
