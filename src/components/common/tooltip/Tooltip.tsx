@@ -1,10 +1,11 @@
 import * as S from "./Tooltip.styled";
 import { useState } from "react";
 
+type TooltipFlow = "up" | "down" | "left" | "right";
 interface TooltipProps {
   content: React.ReactNode;
   children: React.ReactNode;
-  flow: "up" | "down" | "left" | "right";
+  flow: TooltipFlow;
 }
 
 export default function Tooltip({ content, flow, children }: TooltipProps) {
