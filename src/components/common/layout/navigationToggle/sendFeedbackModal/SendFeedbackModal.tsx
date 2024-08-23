@@ -67,7 +67,9 @@ export default function SendFeedbackModal({ onClose }: SendFeedbackModalProps) {
             placeholder="개선점이나 제안사항을 보내주시면, 럭키데이 서비스 발전에 큰 도움이 됩니다."
           />
           <S.ErrorText>
-            {errors.feedback ? errors.feedback.message : ""}
+            {errors.feedback && (
+              <S.ErrorText>{errors.feedback.message}</S.ErrorText>
+            )}
           </S.ErrorText>
           <S.CharCount>{feedbackValue.length}/160</S.CharCount>
           <S.ButtonBox>
