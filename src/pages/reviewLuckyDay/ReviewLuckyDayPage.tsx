@@ -132,7 +132,7 @@ export default function ReviewLuckyDayPage() {
   }, [data, setValue]);
 
   useEffect(() => {
-    if (watchReview && watchReview.length < 100 && (isDirty || watchImage)) {
+    if (watchReview && watchReview.length <= 100 && (isDirty || watchImage)) {
       setIsButtonDisabled(false);
     } else {
       setIsButtonDisabled(true);
@@ -183,6 +183,7 @@ export default function ReviewLuckyDayPage() {
             })}
             placeholder={"100자 이내로 럭키 데이를 기록해 보세요:)"}
           />
+          <S.CharCount>{watchReview.length}/100</S.CharCount>
           <S.ErrorContainer>
             {errors.review && (
               <S.ErrorText>{errors.review.message as string}</S.ErrorText>

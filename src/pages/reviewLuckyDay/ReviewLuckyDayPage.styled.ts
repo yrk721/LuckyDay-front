@@ -102,6 +102,17 @@ export const ButtonBox = styled.div`
   width: 100%;
 `;
 
+export const CharCount = styled.div`
+  ${({ theme }) => css`
+    position: relative;
+    align-self: flex-end;
+    right: 42px;
+    bottom: 35px;
+    ${theme.fonts.body1};
+    color: ${theme.colors.black};
+  `}
+`;
+
 export const ErrorContainer = styled.div`
   position: relative;
   display: flex;
