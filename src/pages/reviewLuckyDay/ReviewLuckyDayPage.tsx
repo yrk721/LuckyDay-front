@@ -56,13 +56,6 @@ export default function ReviewLuckyDayPage() {
     setIsDefaultImage(false);
   };
 
-  const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    if (value.length <= 100) {
-      setValue("review", value, { shouldValidate: true });
-    }
-  };
-
   const onSubmit = async (data: ReviewFormData) => {
     const reviewReqDto = {
       dtlNo: id ? Number(id) : 0,
@@ -180,7 +173,6 @@ export default function ReviewLuckyDayPage() {
                 value: 100,
                 message: "리뷰는 100자 이내로 작성해 주세요.",
               },
-              onChange: handleReviewChange,
             })}
             placeholder={"100자 이내로 럭키 데이를 기록해 보세요:)"}
           />

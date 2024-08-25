@@ -56,8 +56,8 @@ export const ReviewTextarea = styled.textarea`
   width: 270px;
   height: 120px;
   padding: 5px 20px;
-  margin-top: 100px;
-  margin-bottom: 60px;
+  margin-top: 70px;
+  margin-bottom: 35px;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.headline2};

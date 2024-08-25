@@ -91,7 +91,7 @@ export const ReviewTextBox = styled.div`
     width: 270px;
     height: 120px;
     padding: 20px;
-    margin-top: -60px;
+    margin-top: -65px;
     color: ${theme.colors.black};
     ${theme.fonts.headline2}
     word-break: break-word;
