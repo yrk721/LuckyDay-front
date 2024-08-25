@@ -14,6 +14,18 @@ export interface ActivitiesServerModel {
 }
 
 export interface CreateLuckyDayForm {
+  customActList?: string[];
+  period: number;
+  cnt: number;
+  expDTList?: string[];
+  acts: {
+    category: string;
+    actList?: number[];
+    checked: boolean;
+  }[];
+}
+
+export interface CreateLuckyDayQuery {
   actList: number[];
   customActList?: string[];
   period: number;
@@ -22,7 +34,7 @@ export interface CreateLuckyDayForm {
 }
 
 export interface CreateLuckyDayQueryModel {
-  body: CreateLuckyDayForm;
+  body: CreateLuckyDayQuery;
 }
 
 export interface GetLuckyDayDetail {
@@ -98,6 +110,27 @@ export interface GetLuckyDayCycleDetailResponse {
   resData: GetLuckyDayCycleDetail[] | null;
 }
 
+export interface ReviewReqDto {
+  dtlNo: number;
+  review: string;
+}
+
+export interface ReviewFormData {
+  review: string;
+  image: File | null;
+}
+
+export interface CreateLuckyDayReviewQueryModel {
+  body: ReviewReqDto;
+  image?: File | null;
+}
+
+export interface DeleteLuckyDayReviewQueryModel {
+  query: {
+    dtlNo: number;
+  };
+}
+
 export type LuckyBallType =
   | "LuckyBall_Dday"
   | "LuckyBall_D1"
@@ -120,4 +153,15 @@ export interface LuckyBallGrid {
 export interface LuckyDayDetail {
   dday: number | null;
   dtlNo: number;
+}
+
+export interface FeedbackForm {
+  content: string;
+}
+export interface FeedbackFormValues {
+  feedback: string;
+}
+
+export interface FeedbackQueryModel {
+  body: FeedbackForm;
 }
