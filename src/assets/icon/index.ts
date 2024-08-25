@@ -17,3 +17,4 @@ export { ReactComponent as ShortBoxIcon } from "./ic_shortBox.svg";
 export { ReactComponent as SmileIcon } from "./ic_smile.svg";
 export { ReactComponent as EditIcon } from "./ic_edit.svg";
 export { ReactComponent as TrashIcon } from "./ic_trash.svg";
+export { ReactComponent as InfoIcon } from "./ic_info.svg";

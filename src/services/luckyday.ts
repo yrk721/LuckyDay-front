@@ -13,27 +13,30 @@ import {
   deleteLuckyDayReview,
   getLuckyDayCycleLastLuckyDays,
   getLuckyDayCycleList,
+  sendFeedback,
 } from "apis";
 import {
-  CreateLuckyDayForm,
+  CreateLuckyDayQueryModel,
   GetLuckyDayCycleDetailResponse,
   GetLuckyDayCycleList,
   GetLuckyDayCycleQueryModel,
   GetLuckyDayCycleLastLuckyDaysQueryModel,
   CreateLuckyDayReviewQueryModel,
   DeleteLuckyDayReviewQueryModel,
+  FeedbackForm,
 } from "types";
 
 export const useGetLuckyDaysActivities = () => {
   return useQuery({
     queryKey: ["activities"],
     queryFn: () => getLuckyDaysActivities(),
+    staleTime: Infinity,
   });
 };
 
 export const useCreateLuckyDay = () => {
   return useMutation({
-    mutationFn: (req: CreateLuckyDayForm) => postLuckyDay(req),
+    mutationFn: (req: CreateLuckyDayQueryModel) => postLuckyDay(req),
   });
 };
 
@@ -117,5 +120,11 @@ export const useGetLuckyDayCycleDetails = (id: number) => {
     queryKey: ["luckyDayCycleDetails", id],
     queryFn: () => getLuckyDayCycleDetails(id),
     enabled: !!id,
+  });
+};
+
+export const useSendFeedback = () => {
+  return useMutation({
+    mutationFn: (req: FeedbackForm) => sendFeedback(req),
   });
 };
