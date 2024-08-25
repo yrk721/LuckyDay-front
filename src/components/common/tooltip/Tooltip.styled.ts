@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import { TooltipFlow } from "types";
 
 export const TooltipWrapper = styled.div`
   display: inline-flex;
@@ -12,7 +13,7 @@ export const TooltipWrapper = styled.div`
 `;
 
 export const TooltipBox = styled.div<{
-  flow: "up" | "down" | "left" | "right";
+  flow: TooltipFlow;
   isVisible: boolean;
 }>`
   ${({ theme, flow, isVisible }) => css`
@@ -56,7 +57,7 @@ export const TooltipBox = styled.div<{
 `;
 
 export const TooltipArrow = styled.div<{
-  flow: "up" | "down" | "left" | "right";
+  flow: TooltipFlow;
 }>`
   ${({ theme, flow }) => css`
     position: absolute;
