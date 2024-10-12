@@ -13,6 +13,7 @@ export const Container = styled.div`
     border-radius: 15px;
     background-color: ${theme.colors.black};
     cursor: pointer;
+    z-index: 500;
 
     @media (max-width: 375px) {
       width: 290px;
@@ -24,5 +25,6 @@ export const TextBox = styled.div`
   ${({ theme }) => css`
     ${theme.fonts.body1}
     color: ${theme.colors.white};
+    z-index: 500;
   `}
 `;
