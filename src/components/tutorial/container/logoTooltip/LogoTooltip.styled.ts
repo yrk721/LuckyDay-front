@@ -17,7 +17,7 @@ export const Tooltip = styled.div`
     width: 120px;
     height: 120px;
     padding: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     border-radius: 50%;
     background-color: ${theme.colors.black};
 

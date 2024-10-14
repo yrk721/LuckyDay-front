@@ -17,16 +17,19 @@ export default function TutorialTextBox({
     nextStep,
     currentStep: contextCurrentStep,
     endTutorial,
+    isLastStep,
   } = useTutorial();
 
   const handleClick = () => {
     console.log(`Current Step: ${contextCurrentStep}`);
     if (onClick) {
       onClick();
-    } else if (contextCurrentStep === 24) {
-      endTutorial();
     } else {
       nextStep();
+      if (isLastStep) {
+        console.log("튜토리얼 종료!!");
+        endTutorial();
+      }
     }
   };
 

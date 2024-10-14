@@ -37,10 +37,11 @@ export const TutorialContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
 export const TutorialTextBoxWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -49,8 +50,9 @@ export const TutorialTextBoxWrapper = styled.div`
 
 export const CloseButtonWrapper = styled.div`
   position: absolute;
-  top: 40px;
+  top: 4%;
   right: 25px;
+  z-index: 1001;
 `;
 
 export const CloseButton = styled.button`
@@ -73,6 +75,12 @@ export const CloseButton = styled.button`
     left: 50%;
     transform: translate(-50%, -50%);
   }
+`;
+
+export const HighlightedButtonWrapper = styled.div`
+  position: absolute;
+  cursor: pointer;
+  z-index: 1002;
 `;
 
 export const svgFrame = (theme: Theme) => css`
