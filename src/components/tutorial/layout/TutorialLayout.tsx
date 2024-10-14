@@ -2,6 +2,7 @@ import * as S from "./TutorialLayout.styled";
 import React, { useState, useContext } from "react";
 import { TutorialContext } from "../context/TutorialContext";
 import { useTutorial } from "components/tutorial/hooks";
+import { TUTORIAL_STEP_ORDER } from "../steps/tutorialSteps";
 import { TutorialTextBox, CloseTutorialConfirmModal } from "components";
 import { CloseIcon, CircleBoxIcon } from "assets";
 import { SvgFrame } from "components/common";
@@ -23,7 +24,8 @@ export default function TutorialLayout() {
 
   if (!isTutorialActive) return null;
 
-  const isSpecialStep = currentStep === 0 || currentStep === 24;
+  const isWelcomeOrFinishStep =
+    currentStep === 0 || currentStep === TUTORIAL_STEP_ORDER.length - 1;
 
   const renderCloseButton = () => (
     <S.CloseButtonWrapper>
@@ -39,13 +41,13 @@ export default function TutorialLayout() {
   const renderTutorialContent = () => (
     <S.TutorialContent>
       {renderCloseButton()}
-      {isSpecialStep && <TutorialPage />}
+      {isWelcomeOrFinishStep && <TutorialPage />}
     </S.TutorialContent>
   );
 
   const renderTutorialTextBox = () => (
     <S.TutorialTextBoxWrapper
-      style={isSpecialStep ? undefined : tutorialTextBoxPosition}
+      style={isWelcomeOrFinishStep ? undefined : tutorialTextBoxPosition}
     >
       <TutorialTextBox currentStep={currentStep} />
     </S.TutorialTextBoxWrapper>
@@ -71,11 +73,6 @@ export default function TutorialLayout() {
           width: `${rect.width}px`,
           height: `${rect.height}px`,
         };
-      } else {
-        console.log(
-          "Element not found with selector:",
-          highlightedButton.selector
-        );
       }
     } else if (highlightedButton.position) {
       style = { ...style, ...highlightedButton.position };
@@ -92,17 +89,16 @@ export default function TutorialLayout() {
 
   return (
     <>
-      {!isSpecialStep && (
+      {!isWelcomeOrFinishStep && (
         <S.TutorialFullPage>
           <TutorialPage />
         </S.TutorialFullPage>
       )}
       <S.TutorialOverlay>
         {renderTutorialContent()}
-        {isSpecialStep && renderTutorialTextBox()}
+        {renderTutorialTextBox()}
       </S.TutorialOverlay>
-      {!isSpecialStep && renderTutorialTextBox()}
-      {!isSpecialStep && renderHighlightedButton()}
+      {!isWelcomeOrFinishStep && renderHighlightedButton()}
       {showConfirmModal && (
         <CloseTutorialConfirmModal
           onClose={() => setShowConfirmModal(false)}

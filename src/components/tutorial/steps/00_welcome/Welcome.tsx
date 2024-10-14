@@ -1,6 +1,6 @@
 import { LogoTooltip, TutorialTextBox } from "components/tutorial";
 
-export default function Step0_Welcome() {
+export default function Welcome() {
   return (
     <>
       <LogoTooltip />

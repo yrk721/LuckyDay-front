@@ -1,20 +1,20 @@
-import * as S from "./Step1_CreateCycle1.styled";
+import * as S from "./BeforeBoard.styled";
 import { useContext, useEffect, useMemo } from "react";
-import { TutorialContext } from "../../context/TutorialContext";
-import { StepWrapper } from "../StepWrapper";
+import { TutorialContext } from "../../../context/TutorialContext";
+import { StepWrapper } from "../../StepWrapper";
 import { HighlightedButton } from "components/tutorial/type";
 import { CreateLuckyDayButton } from "components/domain/luckyBoard/createLuckyDayButton/CreateLuckyDayButton.styled";
 import { PlusIcon } from "assets";
 
-export default function Step1_CreateCycle1() {
+export default function BeforeBoard() {
   const {
+    currentStep,
     nextStep,
     setHighlightedButton,
     setTutorialTextBoxPosition,
-    currentStep,
   } = useContext(TutorialContext);
 
-  console.log("Step1_CreateCycle1 rendering, currentStep:", currentStep);
+  console.log("BeforeBoard, currentStep:", currentStep);
 
   const highlightedButton: HighlightedButton = useMemo(
     () => ({
@@ -43,9 +43,9 @@ export default function Step1_CreateCycle1() {
     };
   }, [
     currentStep,
+    highlightedButton,
     setHighlightedButton,
     setTutorialTextBoxPosition,
-    highlightedButton,
   ]);
 
   return (

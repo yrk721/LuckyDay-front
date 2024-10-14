@@ -5,10 +5,10 @@ import {
   useCallback,
   createContext,
 } from "react";
+import { TUTORIAL_STEP_ORDER } from "../steps/tutorialSteps";
 import { HighlightedButton, TutorialTextBoxPosition } from "../type";
 
-// 튜토리얼의 총 단계 수를 상수로 정의
-const TOTAL_STEPS = 25; // 0부터 24까지 (0: 시작, 24: 종료)
+const TOTAL_STEPS = TUTORIAL_STEP_ORDER.length;
 
 const DEFAULT_TEXT_BOX_POSITION: TutorialTextBoxPosition = { top: "15%" };
 

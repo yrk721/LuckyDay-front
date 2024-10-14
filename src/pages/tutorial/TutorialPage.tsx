@@ -6,17 +6,8 @@ export default function TutorialPage() {
   const { currentStep } = useTutorial();
 
   const renderCurrentStep = (): React.ReactNode => {
-    if (currentStep === 0) {
-      return <TutorialSteps.Step0_Welcome />;
-    } else if (currentStep === 24) {
-      return <TutorialSteps.Step24_Finish />;
-    } else {
-      const StepComponent =
-        TutorialSteps[
-          `Step${currentStep}_CreateCycle1` as keyof typeof TutorialSteps
-        ];
-      return StepComponent ? <StepComponent /> : null;
-    }
+    const CurrentStepComponent = TutorialSteps[currentStep];
+    return CurrentStepComponent ? <CurrentStepComponent /> : null;
   };
 
   return (
