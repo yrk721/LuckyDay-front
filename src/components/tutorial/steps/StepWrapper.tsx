@@ -1,6 +1,6 @@
 import { useEffect, useContext, useRef } from "react";
 import { TutorialContext } from "../context/TutorialContext";
-import { HighlightedButton, TutorialTextBoxPosition } from "../type";
+import { HighlightedButton, TutorialTextBoxPosition } from "types";
 
 interface StepWrapperProps {
   children: React.ReactNode;

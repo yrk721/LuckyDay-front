@@ -2,7 +2,7 @@ import * as S from "./BeforeBoard.styled";
 import { useContext, useEffect, useMemo } from "react";
 import { TutorialContext } from "../../../context/TutorialContext";
 import { StepWrapper } from "../../StepWrapper";
-import { HighlightedButton } from "components/tutorial/type";
+import { HighlightedButton } from "types";
 import { CreateLuckyDayButton } from "components/domain/luckyBoard/createLuckyDayButton/CreateLuckyDayButton.styled";
 import { PlusIcon } from "assets";
 

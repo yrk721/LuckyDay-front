@@ -6,7 +6,7 @@ import {
   createContext,
 } from "react";
 import { TUTORIAL_STEP_ORDER } from "../steps/tutorialSteps";
-import { HighlightedButton, TutorialTextBoxPosition } from "../type";
+import { HighlightedButton, TutorialTextBoxPosition } from "types";
 
 const TOTAL_STEPS = TUTORIAL_STEP_ORDER.length;
 
