@@ -14,7 +14,7 @@ const globalStyle = css`
   html {
     font-size: 62.5%; /* 1 rem = 10px */
     /* NOTE: 임의로 설정 추후 기본 폰트 확인 필요 */
-    font-family: "omyu", "sans-serif";
+    font-family: "omyu", sans-serif;
   }
   button {
     cursor: pointer;
