@@ -16,6 +16,14 @@ const globalStyle = css`
     /* NOTE: 임의로 설정 추후 기본 폰트 확인 필요 */
     font-family: "omyu", sans-serif;
   }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga", "kern";
+  }
+
   button {
     cursor: pointer;
     border: 0;
@@ -25,15 +33,18 @@ const globalStyle = css`
       cursor: not-allowed;
     }
   }
+
   input,
   button,
   textarea {
     font-family: "omyu", sans-serif;
   }
+
   textarea {
     resize: none;
     outline: 0;
   }
+
   a {
     text-decoration: none;
   }
