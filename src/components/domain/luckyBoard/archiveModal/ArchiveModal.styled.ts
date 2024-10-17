@@ -58,11 +58,11 @@ export const Button = styled.button`
     width: 100px;
 
     & > span {
-      ${theme.fonts.headline1};
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      ${theme.fonts.headline2};
       color: ${theme.colors.black};
     }
   `}
@@ -78,17 +78,17 @@ export const LuckyDayButtonWrapper = styled.div`
 export const LuckyDayButton = styled.button`
   ${({ theme }) => css`
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
 
     @media (max-width: 412px) {
-      width: 75px;
-      height: 75px;
+      width: 72px;
+      height: 72px;
     }
 
     @media (max-width: 405px) {
-      width: 70px;
-      height: 70px;
+      width: 68px;
+      height: 68px;
     }
 
     & > div {
@@ -97,17 +97,13 @@ export const LuckyDayButton = styled.button`
     }
 
     & > span {
-      ${theme.fonts.headline1};
       position: absolute;
       width: 100%;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      ${theme.fonts.headline2};
       color: ${theme.colors.white};
-
-      @media (max-width: 412px) {
-        ${theme.fonts.headline2};
-      }
     }
   `}
 `;
