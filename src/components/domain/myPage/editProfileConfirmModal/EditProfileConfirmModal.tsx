@@ -57,7 +57,7 @@ export default function EditProfileConfirmModal({
             fillColor={theme.colors.purple}
             width="100px"
             height="42px"
-          ></SvgButton>
+          />
         </S.ButtonBox>
       </S.ModalContainer>
     </BaseModal>
