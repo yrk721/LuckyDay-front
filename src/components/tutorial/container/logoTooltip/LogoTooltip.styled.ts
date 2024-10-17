@@ -1,5 +1,14 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { css, keyframes } from "@emotion/react";
+
+const bounceUpDown = keyframes`
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+`;
 
 export const TooltipContainer = styled.div`
   position: relative;
@@ -17,9 +26,10 @@ export const Tooltip = styled.div`
     width: 120px;
     height: 120px;
     padding: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     border-radius: 50%;
     background-color: ${theme.colors.black};
+    animation: ${bounceUpDown} 2s ease-in-out infinite;
 
     &::after {
       content: "";
