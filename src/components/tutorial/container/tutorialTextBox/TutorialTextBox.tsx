@@ -1,16 +1,19 @@
 import * as S from "./TutorialTextBox.styled";
 import { useTutorial } from "components/tutorial/hooks";
 import { tutorialTexts } from "components/tutorial/steps/tutorialTexts";
+import { ArrowIcon } from "assets";
 
 interface TutorialTextBoxProps {
   currentStep?: number;
   children?: React.ReactNode;
+  showNextIcon?: boolean;
   onClick?: () => void;
 }
 
 export default function TutorialTextBox({
   currentStep,
   children,
+  showNextIcon = false,
   onClick,
 }: TutorialTextBoxProps) {
   const {
@@ -43,6 +46,13 @@ export default function TutorialTextBox({
         <S.TextBox dangerouslySetInnerHTML={{ __html: content }} />
       ) : (
         <S.TextBox>{content}</S.TextBox>
+      )}
+      {showNextIcon && (
+        <S.NextIconWrapper>
+          <S.NextIcon>
+            <ArrowIcon />
+          </S.NextIcon>
+        </S.NextIconWrapper>
       )}
     </S.Container>
   );

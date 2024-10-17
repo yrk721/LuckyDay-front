@@ -14,8 +14,5 @@ export interface HighlightedButton {
 
 export interface TutorialTextBoxPosition {
   top?: string;
-  left?: string;
   bottom?: string;
-  right?: string;
-  transform?: string;
 }

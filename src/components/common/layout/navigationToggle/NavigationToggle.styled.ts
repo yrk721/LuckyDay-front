@@ -5,6 +5,7 @@ export const MenuIcon = styled.div`
   position: relative;
   margin-right: 20px;
   cursor: pointer;
+
   & > svg {
     width: 34px;
     height: 34px;
@@ -69,6 +70,7 @@ export const ToggleMenuBottom = styled.div`
     align-items: center;
     color: ${theme.colors.black};
     transition: color 0.2s ease;
+
     &:hover {
       color: ${theme.colors.orange};
     }
