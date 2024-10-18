@@ -1,4 +1,4 @@
-import { useEffect, useContext, useRef } from "react";
+import { useEffect, useContext } from "react";
 import { TutorialContext } from "../context/TutorialContext";
 import { HighlightedButton, TutorialTextBoxPosition } from "types";
 
@@ -18,15 +18,11 @@ export function StepWrapper({
   const { setTutorialTextBoxPosition, setHighlightedButton, currentStep } =
     useContext(TutorialContext);
 
-  const prevStepRef = useRef(currentStep);
-
   useEffect(() => {
-    if (currentStep === stepNumber && prevStepRef.current !== currentStep) {
+    if (currentStep === stepNumber) {
       setTutorialTextBoxPosition(tutorialTextBoxPosition || null);
       setHighlightedButton(highlightedButton || null);
     }
-
-    prevStepRef.current = currentStep;
 
     return () => {
       if (currentStep === stepNumber) {
@@ -34,7 +30,14 @@ export function StepWrapper({
         setHighlightedButton(null);
       }
     };
-  }, [currentStep, stepNumber]);
+  }, [
+    currentStep,
+    stepNumber,
+    tutorialTextBoxPosition,
+    highlightedButton,
+    setTutorialTextBoxPosition,
+    setHighlightedButton,
+  ]);
 
   return <>{children}</>;
 }

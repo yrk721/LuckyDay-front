@@ -18,7 +18,6 @@ interface TutorialContextType {
   startTutorial: () => void;
   endTutorial: () => void;
   nextStep: () => void;
-  prevStep: () => void;
   currentStep: number;
   isLastStep: boolean;
   tutorialTextBoxPosition: TutorialTextBoxPosition;
@@ -35,7 +34,6 @@ export const TutorialContext = createContext<TutorialContextType>({
   startTutorial: () => {},
   endTutorial: () => {},
   nextStep: () => {},
-  prevStep: () => {},
   currentStep: 0,
   isLastStep: false,
   tutorialTextBoxPosition: DEFAULT_TEXT_BOX_POSITION,
@@ -78,17 +76,12 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
     setCurrentStep((prev) => {
       const next =
         prev === TOTAL_STEPS - 1 ? 0 : Math.min(prev + 1, TOTAL_STEPS - 1);
-      // console.log("Next step:", next);
       if (next === 0) {
         endTutorial();
       }
       return next;
     });
   }, [endTutorial]);
-
-  const prevStep = useCallback(() => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
-  }, []);
 
   const setTutorialTextBoxPositionWithDefault = useCallback(
     (position: TutorialTextBoxPosition | null) => {
@@ -105,7 +98,6 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
         startTutorial,
         endTutorial,
         nextStep,
-        prevStep,
         currentStep,
         isLastStep,
         tutorialTextBoxPosition,
