@@ -23,7 +23,7 @@ export const ArchiveModal = styled.div<{
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    ${theme.fonts.headline1};
+    ${theme.fonts.headline2};
     row-gap: 30px;
     width: 100%;
     max-width: 430px;
@@ -36,10 +36,6 @@ export const ArchiveModal = styled.div<{
     animation: ${isVisible ? slideUp : ""} 0.3s ease forwards;
     background-color: ${theme.colors.lightBeige_opacity};
     filter: none;
-
-    @media (max-width: 375px) {
-      ${theme.fonts.headline2};
-    }
 
     & > div {
       padding-top: ${hasPadding && "35px"};
