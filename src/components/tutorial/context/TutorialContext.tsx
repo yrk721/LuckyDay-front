@@ -60,10 +60,10 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
     setIsLastStep(currentStep === TOTAL_STEPS - 1);
   }, [currentStep]);
 
-  const startTutorial = useCallback(() => {
+  const startTutorial = () => {
     setIsTutorialActive(true);
     setCurrentStep(0);
-  }, []);
+  };
 
   const endTutorial = useCallback(() => {
     setIsTutorialActive(false);
