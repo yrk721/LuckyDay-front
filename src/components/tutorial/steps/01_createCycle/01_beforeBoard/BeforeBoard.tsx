@@ -14,8 +14,6 @@ export default function BeforeBoard() {
     setTutorialTextBoxPosition,
   } = useContext(TutorialContext);
 
-  console.log("BeforeBoard, currentStep:", currentStep);
-
   const highlightedButton: HighlightedButton = useMemo(
     () => ({
       component: (

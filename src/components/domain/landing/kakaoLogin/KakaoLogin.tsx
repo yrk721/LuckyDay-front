@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import { SvgButton } from "components/common";
 import { LongBoxIcon } from "assets";
 
-const KakaoLogin = () => {
+export default function KakaoLogin() {
   const theme = useTheme();
 
   const handleLogin = () => {
@@ -16,8 +16,6 @@ const KakaoLogin = () => {
       onClick={handleLogin}
       icon={<LongBoxIcon />}
       fillColor={theme.colors.lightOrange}
-    ></SvgButton>
+    />
   );
-};
-
-export default KakaoLogin;
+}
