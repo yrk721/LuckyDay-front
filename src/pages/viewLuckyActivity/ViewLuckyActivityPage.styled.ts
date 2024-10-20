@@ -26,10 +26,7 @@ export const LuckydayInfo = styled.div`
     padding-top: 8%;
     gap: 8px;
 
-    span:first-of-type {
-      ${theme.fonts.headline1};
-    }
-
+    span:first-of-type,
     span:last-of-type {
       ${theme.fonts.headline1};
     }
