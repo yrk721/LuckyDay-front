@@ -13,8 +13,15 @@ export const Container = styled.div`
     padding: 15px;
     border-radius: 15px;
     background-color: ${theme.colors.black};
-    cursor: pointer;
     z-index: 500;
+
+    &[role="button"] {
+      cursor: pointer;
+    }
+
+    &[role="text"] {
+      cursor: default;
+    }
 
     @media (max-width: 375px) {
       width: 290px;

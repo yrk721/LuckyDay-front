@@ -7,6 +7,7 @@ interface TutorialTextBoxProps {
   currentStep?: number;
   children?: React.ReactNode;
   showNextIcon?: boolean;
+  isClickable?: boolean;
   onClick?: () => void;
 }
 
@@ -14,6 +15,7 @@ export default function TutorialTextBox({
   currentStep,
   children,
   showNextIcon = false,
+  isClickable = true,
   onClick,
 }: TutorialTextBoxProps) {
   const {
@@ -24,6 +26,8 @@ export default function TutorialTextBox({
   } = useTutorial();
 
   const handleClick = () => {
+    if (!isClickable) return;
+
     console.log(`Current Step: ${contextCurrentStep}`);
     if (onClick) {
       onClick();
@@ -36,12 +40,24 @@ export default function TutorialTextBox({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (isClickable && (e.key === "Enter" || e.key === " ")) {
+      handleClick();
+    }
+  };
+
   const content =
     children ||
     (currentStep !== undefined ? tutorialTexts[currentStep] || "" : "");
 
   return (
-    <S.Container onClick={handleClick}>
+    <S.Container
+      onClick={handleClick}
+      role={isClickable ? "button" : "text"}
+      tabIndex={isClickable ? 0 : undefined}
+      onKeyDown={handleKeyDown}
+      aria-label={isClickable ? "다음 단계로 이동" : undefined}
+    >
       {typeof content === "string" ? (
         <S.TextBox dangerouslySetInnerHTML={{ __html: content }} />
       ) : (
