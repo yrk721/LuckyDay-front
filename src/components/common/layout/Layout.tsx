@@ -1,8 +1,7 @@
 import * as S from "./Layout.styled";
 import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "./header";
-import { useTutorial } from "components/tutorial/hooks";
-import { TutorialLayout } from "components/tutorial/layout";
+import { TutorialLayout, useTutorial } from "components/tutorial";
 
 export default function Layout() {
   const { pathname } = useLocation();

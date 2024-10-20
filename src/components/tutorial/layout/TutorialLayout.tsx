@@ -27,32 +27,6 @@ export default function TutorialLayout() {
   const isWelcomeOrFinishStep =
     currentStep === 0 || currentStep === TUTORIAL_STEP_ORDER.length - 1;
 
-  const renderCloseButton = () => (
-    <S.CloseButtonWrapper>
-      <S.CloseButton onClick={handleCloseClick}>
-        <SvgFrame css={S.svgFrame} icon={<CircleBoxIcon />} />
-        <span>
-          <CloseIcon />
-        </span>
-      </S.CloseButton>
-    </S.CloseButtonWrapper>
-  );
-
-  const renderTutorialContent = () => (
-    <S.TutorialContent>
-      {renderCloseButton()}
-      {isWelcomeOrFinishStep && <TutorialPage />}
-    </S.TutorialContent>
-  );
-
-  const renderTutorialTextBox = () => (
-    <S.TutorialTextBoxWrapper
-      style={isWelcomeOrFinishStep ? undefined : tutorialTextBoxPosition}
-    >
-      <TutorialTextBox currentStep={currentStep} />
-    </S.TutorialTextBoxWrapper>
-  );
-
   const renderHighlightedButton = () => {
     console.log("Rendering highlighted button:", highlightedButton);
     if (!highlightedButton) return null;
@@ -95,8 +69,23 @@ export default function TutorialLayout() {
         </S.TutorialFullPage>
       )}
       <S.TutorialOverlay>
-        {renderTutorialContent()}
-        {renderTutorialTextBox()}
+        <S.TutorialContent>
+          <S.CloseButtonWrapper>
+            <S.CloseButton onClick={handleCloseClick}>
+              <SvgFrame css={S.svgFrame} icon={<CircleBoxIcon />} />
+              <span>
+                <CloseIcon />
+              </span>
+            </S.CloseButton>
+          </S.CloseButtonWrapper>
+          {isWelcomeOrFinishStep && <TutorialPage />}
+        </S.TutorialContent>
+
+        <S.TutorialTextBoxWrapper
+          style={isWelcomeOrFinishStep ? undefined : tutorialTextBoxPosition}
+        >
+          <TutorialTextBox currentStep={currentStep} />
+        </S.TutorialTextBoxWrapper>
       </S.TutorialOverlay>
       {!isWelcomeOrFinishStep && renderHighlightedButton()}
       {showConfirmModal && (
