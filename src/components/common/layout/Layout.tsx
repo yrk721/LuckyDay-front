@@ -13,6 +13,15 @@ export default function Layout() {
         {!(pathname === "/loading" || pathname === "/404") && <Header />}
         <Outlet />
         {isTutorialActive && <TutorialLayout />}
+
+        {!(pathname === "/404" || pathname === "/loading") && (
+          <S.HeaderContainer>
+            <Header />
+          </S.HeaderContainer>
+        )}
+        <S.Content>
+          <Outlet />
+        </S.Content>
       </S.Layout>
     </S.LayoutContainer>
   );
