@@ -7,14 +7,12 @@ export default function Layout() {
   const { pathname } = useLocation();
   const { isTutorialActive } = useTutorial();
 
+  const isHeaderVisible = !(pathname === "/404" || pathname === "/loading");
+
   return (
     <S.LayoutContainer>
       <S.Layout>
-        {!(pathname === "/loading" || pathname === "/404") && <Header />}
-        <Outlet />
-        {isTutorialActive && <TutorialLayout />}
-
-        {!(pathname === "/404" || pathname === "/loading") && (
+        {isHeaderVisible && (
           <S.HeaderContainer>
             <Header />
           </S.HeaderContainer>
@@ -22,6 +20,7 @@ export default function Layout() {
         <S.Content>
           <Outlet />
         </S.Content>
+        {isTutorialActive && <TutorialLayout />}
       </S.Layout>
     </S.LayoutContainer>
   );
