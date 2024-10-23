@@ -54,7 +54,7 @@
 
 ### 💛 멤버 소개
 
-|        |                  FE                  |                 FE                  |
+|        |               Frontend               |              Frontend               |
 | ------ | :----------------------------------: | :---------------------------------: |
 | NAME   |                김유래                |               이현진                |
 | GITHUB | [yoorae](https://github.com/yooleng) | [zinnli](https://github.com/zinnli) |

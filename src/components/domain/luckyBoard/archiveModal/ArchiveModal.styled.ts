@@ -125,7 +125,7 @@ export const BasicSvgFrame = (theme: Theme) => css`
   }
 `;
 
-export const PurplsvgFrame = (theme: Theme) => css`
+export const PurpleSvgFrame = (theme: Theme) => css`
   path {
     fill: ${theme.colors.purple};
   }

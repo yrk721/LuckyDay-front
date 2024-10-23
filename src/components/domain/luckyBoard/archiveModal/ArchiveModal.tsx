@@ -83,7 +83,7 @@ export default function ArchiveModal({
                   key={item.dtlNo}
                   onClick={moveToDetail(item.dtlNo)}
                 >
-                  <SvgFrame css={S.PurplsvgFrame} icon={<CircleBoxIcon />} />
+                  <SvgFrame css={S.PurpleSvgFrame} icon={<CircleBoxIcon />} />
                   <span>{item.date}</span>
                 </S.LuckyDayButton>
               ))}
@@ -106,7 +106,7 @@ export default function ArchiveModal({
         )}
         <S.Button onClick={closeModal}>
           <SvgFrame
-            css={isMoreInfoModal ? S.PurplsvgFrame : S.BasicSvgFrame}
+            css={isMoreInfoModal ? S.PurpleSvgFrame : S.BasicSvgFrame}
             icon={<ShortBoxIcon />}
           />
           <span>닫기</span>
