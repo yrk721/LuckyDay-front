@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node"],
     "module": "esnext",
     "skipLibCheck": true,
     "baseUrl": "src",
@@ -19,7 +20,11 @@
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,
     "jsxImportSource": "@emotion/react",
-    "typeRoots": ["./node_modules/@types", "./src/types/declare"]
+    "typeRoots": [
+      "./src/types/declare",
+      "./node_modules/@types",
+      "./node_modules"
+    ]
   },
   "include": ["src/**/*", "src/types/declare/*", "vite-env.d.ts"]
 }
