@@ -1,10 +1,14 @@
-import { LogoTooltip, TutorialTextBox } from "components/tutorial";
+import { useTutorialStep, LogoTooltip } from "components";
 
 export default function Welcome() {
-  return (
-    <>
-      <LogoTooltip />
-      <TutorialTextBox currentStep={0} />
-    </>
-  );
+  useTutorialStep(0, {
+    position: {
+      top: "50%",
+    },
+    textBoxProps: {
+      isClickable: true,
+    },
+  });
+
+  return <LogoTooltip />;
 }

@@ -12,6 +12,7 @@ const bounceUpDown = keyframes`
 
 export const TooltipContainer = styled.div`
   position: relative;
+  margin-bottom: 28%;
 `;
 
 export const Tooltip = styled.div`

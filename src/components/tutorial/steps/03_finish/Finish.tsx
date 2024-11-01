@@ -1,15 +1,59 @@
 import * as S from "./Finish.styled";
-import { TUTORIAL_STEP_ORDER } from "../tutorialSteps";
-import { LogoTooltip, TutorialTextBox } from "components/tutorial";
-import { StepWrapper } from "../StepWrapper";
+import {
+  KakaoLogin,
+  LogoTooltip,
+  useTutorialStep,
+  TutorialStartButton,
+} from "components";
+import { ArrowIcon } from "assets";
 
 export default function Finish() {
+  useTutorialStep(10, {
+    position: {
+      top: "50%",
+    },
+    textBoxProps: {
+      isClickable: true,
+    },
+    highlight: {
+      selector: ".kakao-login-button",
+      component: (
+        <>
+          <S.LogoTooltipWrapper>
+            <LogoTooltip />
+          </S.LogoTooltipWrapper>
+          <KakaoLogin />
+        </>
+      ),
+    },
+  });
+
   return (
-    <StepWrapper stepNumber={TUTORIAL_STEP_ORDER.length - 1}>
-      <S.FinishContainer>
-        <LogoTooltip />
-        <TutorialTextBox currentStep={TUTORIAL_STEP_ORDER.length - 1} />
-      </S.FinishContainer>
-    </StepWrapper>
+    <S.FinishContainer>
+      <S.ContentsBox>
+        <S.TextBox>
+          럭키 데이
+          <br />
+          무작위로 찾아오는 나만의 행운의 날
+        </S.TextBox>
+        <S.ImageWrapper>
+          <S.LandingImage src="/images/landing/landing-01.webp" />
+        </S.ImageWrapper>
+        <S.ButtonContainer>
+          <S.DotContainer>
+            {[...Array(6)].map((_, index) => (
+              <S.Dot key={index} active={index === 0} />
+            ))}
+          </S.DotContainer>
+          <S.NextButton>
+            <ArrowIcon css={S.NextArrowIcon} />
+          </S.NextButton>
+        </S.ButtonContainer>
+      </S.ContentsBox>
+      <div className="kakao-login-button">
+        <KakaoLogin />
+      </div>
+      <TutorialStartButton />
+    </S.FinishContainer>
   );
 }
