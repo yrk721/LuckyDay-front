@@ -5,10 +5,12 @@ import {
   useCallback,
   createContext,
 } from "react";
-import { TUTORIAL_STEP_ORDER, TUTORIAL_CONFIG } from "components";
-import { HighlightedButton, TutorialTextBoxPosition } from "types";
-
-const TOTAL_STEPS = TUTORIAL_STEP_ORDER.length;
+import { TOTAL_STEPS } from "components";
+import {
+  HighlightedButton,
+  TutorialTextBoxPosition,
+  DEFAULT_TUTORIAL_POSITION,
+} from "types";
 
 interface TutorialContextType {
   isTutorialActive: boolean;
@@ -40,7 +42,7 @@ export const TutorialContext = createContext<TutorialContextType>({
   handleSubStepClick: () => {},
   currentStep: 0,
   isLastStep: false,
-  tutorialTextBoxPosition: TUTORIAL_CONFIG.position.default,
+  tutorialTextBoxPosition: DEFAULT_TUTORIAL_POSITION,
   setTutorialTextBoxPosition: () => {},
   highlightedButton: null,
   setHighlightedButton: () => {},
@@ -56,7 +58,7 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
   const [isLastStep, setIsLastStep] = useState(false);
   const [subStep, setSubStep] = useState(1);
   const [tutorialTextBoxPosition, setTutorialTextBoxPosition] =
-    useState<TutorialTextBoxPosition>(TUTORIAL_CONFIG.position.default);
+    useState<TutorialTextBoxPosition>(DEFAULT_TUTORIAL_POSITION);
   const [highlightedButton, setHighlightedButton] =
     useState<HighlightedButton | null>(null);
 
@@ -73,7 +75,7 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
     setIsTutorialActive(false);
     setCurrentStep(0);
     setSubStep(1);
-    setTutorialTextBoxPosition(TUTORIAL_CONFIG.position.default);
+    setTutorialTextBoxPosition(DEFAULT_TUTORIAL_POSITION);
     setHighlightedButton(null);
   }, []);
 
@@ -103,7 +105,7 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
 
   const setTutorialTextBoxPositionWithDefault = useCallback(
     (position: TutorialTextBoxPosition | null) => {
-      setTutorialTextBoxPosition(position || TUTORIAL_CONFIG.position.default);
+      setTutorialTextBoxPosition(position || DEFAULT_TUTORIAL_POSITION);
     },
     []
   );

@@ -1,15 +1,15 @@
 import { useMemo, useEffect, useRef } from "react";
 import { useTutorial } from ".";
 import {
+  TUTORIAL_TEXTS,
   TUTORIAL_STEPS,
   TUTORIAL_STEP_ORDER,
-  TUTORIAL_CONFIG,
-  TUTORIAL_TEXTS,
 } from "components";
 import {
   TutorialStepConfig,
   TutorialTextBoxPosition,
   HighlightedButton,
+  DEFAULT_TUTORIAL_POSITION,
 } from "types";
 
 export default function useTutorialStep(
@@ -49,7 +49,7 @@ export default function useTutorialStep(
     });
 
     const position: TutorialTextBoxPosition = {
-      ...TUTORIAL_CONFIG.position.default,
+      ...DEFAULT_TUTORIAL_POSITION,
       ...(configRef.current.position || {}),
     };
 

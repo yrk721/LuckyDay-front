@@ -35,8 +35,6 @@ export const TUTORIAL_STEP_ORDER = [
   TUTORIAL_STEPS.FINISH,
 ];
 
-export type TutorialStepKey = (typeof TUTORIAL_STEP_ORDER)[number];
-
 // 컴포넌트 매핑
 export const TUTORIAL_COMPONENTS: Record<TUTORIAL_STEPS, React.ComponentType> =
   {
@@ -70,3 +68,6 @@ export const TUTORIAL_COMPONENTS: Record<TUTORIAL_STEPS, React.ComponentType> =
     // ),
     [TUTORIAL_STEPS.FINISH]: React.lazy(() => import("./03_finish/Finish")),
   };
+
+export const TOTAL_STEPS = TUTORIAL_STEP_ORDER.length;
+export type TutorialStepKey = (typeof TUTORIAL_STEP_ORDER)[number];
