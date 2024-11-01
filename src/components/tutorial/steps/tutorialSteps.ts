@@ -3,47 +3,32 @@ import React from "react";
 export const TUTORIAL_STEPS = {
   WELCOME: "0",
   CREATE_CYCLE: {
-    EMPTY_BOARD: "1",
-    SELECT_ACTIVITY: {
-      STEP_1: "2.1",
-      STEP_2: "2.2",
-      // ...
-      STEP_8: "2.8",
-    },
-    SET_DATE: {
-      STEP_1: "3.1",
-      STEP_2: "3.2",
-      STEP_3: "3.3",
-    },
-    SET_NUMBER: {
-      STEP_1: "4.1",
-      STEP_2: "4.2",
-    },
-    EXCEPT_DATE: {
-      STEP_1: "5.1",
-      STEP_2: "5.2",
-    },
+    BEFORE_BOARD: "1",
+    SELECT_ACTIVITY: "2",
+    SET_DATE: "3",
+    SET_NUMBER: "4",
+    EXCEPT_DATE: "5",
     CONFIRM: "6",
-    ANIMATION: "7",
   },
   CHECK: {
-    FILLED_BOARD: {
-      STEP_1: "8.1",
-      STEP_2: "8.2",
-      STEP_3: "8.3",
-    },
-    VIEW_ACTIVITY: "9",
-    REVIEW: "10",
+    AFTER_BOARD: "7",
+    VIEW_ACTIVITY: "8",
+    REVIEW: "9",
   },
-  FINISH: "11",
+  FINISH: "10",
 } as const;
 
 export const TUTORIAL_STEP_ORDER = [
   TUTORIAL_STEPS.WELCOME,
-  TUTORIAL_STEPS.CREATE_CYCLE.EMPTY_BOARD,
-  // TUTORIAL_STEPS.CREATE_CYCLE.SELECT_ACTIVITY.STEP_1,
-  // TUTORIAL_STEPS.CREATE_CYCLE.SELECT_ACTIVITY.STEP_2,
-  // NOTE: ...  나머지 모든 단계 순서대로 나열
+  TUTORIAL_STEPS.CREATE_CYCLE.BEFORE_BOARD,
+  // TUTORIAL_STEPS.CREATE_CYCLE.SELECT_ACTIVITY,
+  // TUTORIAL_STEPS.CREATE_CYCLE.SET_DATE,
+  // TUTORIAL_STEPS.CREATE_CYCLE.SET_NUMBER,
+  // TUTORIAL_STEPS.CREATE_CYCLE.EXCEPT_DATE,
+  // TUTORIAL_STEPS.CREATE_CYCLE.CONFIRM,
+  TUTORIAL_STEPS.CHECK.AFTER_BOARD,
+  // TUTORIAL_STEPS.CHECK.VIEW_ACTIVITY,
+  // TUTORIAL_STEPS.CHECK.REVIEW,
   TUTORIAL_STEPS.FINISH,
 ];
 
@@ -56,8 +41,15 @@ export const TUTORIAL_COMPONENTS: Record<TutorialStepKey, React.ComponentType> =
     "1": React.lazy(
       () => import("./01_createCycle/01_beforeBoard/BeforeBoard")
     ),
-    // "2.1": React.lazy(() => import("./01_createCycle/02_selectActivity/Step1")),
-    // "2.2": React.lazy(() => import("./01_createCycle/02_selectActivity/Step2")),
-    // NOTE: ... 나머지 모든 단계에 대한 컴포넌트 매핑
-    "11": React.lazy(() => import("./03_finish/Finish")),
+    // "2": React.lazy(
+    //   () => import("./01_createCycle/02_selectActivity/SelectActivity")
+    // ),
+    // "3": React.lazy(() => import("./01_createCycle/03_setDate/SetDate")),
+    // "4": React.lazy(() => import("./01_createCycle/04_setNumber/SetNumber")),
+    // "5": React.lazy(() => import("./01_createCycle/05_exceptDate/ExceptDate")),
+    // "6": React.lazy(() => import("./01_createCycle/06_confirm/Confirm")),
+    "7": React.lazy(() => import("./02_check/01_afterBoard/AfterBoard")),
+    // "8": React.lazy(() => import("./02_check/02_viewActivity/ViewActivity")),
+    // "9": React.lazy(() => import("./02_check/03_review/Review")),
+    "10": React.lazy(() => import("./03_finish/Finish")),
   };
