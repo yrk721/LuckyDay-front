@@ -1,15 +1,8 @@
 import * as S from "./TutorialTextBox.styled";
 import { useMemo } from "react";
 import { useTutorial, TUTORIAL_STEPS, TUTORIAL_TEXTS } from "components";
+import { TutorialTextBoxProps } from "types";
 import { ArrowIcon } from "assets";
-
-interface TutorialTextBoxProps {
-  currentStep?: TUTORIAL_STEPS;
-  children?: React.ReactNode;
-  showNextIcon?: boolean;
-  isClickable?: boolean;
-  onClick?: () => void;
-}
 
 export default function TutorialTextBox({
   currentStep,

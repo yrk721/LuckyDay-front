@@ -1,5 +1,7 @@
 import * as S from "./AfterBoard.styled";
 import {
+  TUTORIAL_STEPS,
+  TUTORIAL_STEP_ORDER,
   useTutorial,
   useTutorialStep,
   SvgFrame,
@@ -9,9 +11,16 @@ import { CircleBoxIcon, ShortBoxIcon } from "assets";
 import dayjs from "dayjs";
 
 export default function AfterBoard() {
-  const { handleSubStepClick } = useTutorial();
+  const { handleSubStepClick, currentStep, subStep, nextStep } = useTutorial();
+  console.log("Tutorial State:", { currentStep, subStep });
 
-  useTutorialStep(7, {
+  const isLastSubStep =
+    TUTORIAL_STEP_ORDER[currentStep] === TUTORIAL_STEPS.CHECK_AFTER_BOARD &&
+    subStep === 3;
+
+  console.log("isLastSubStep:", isLastSubStep);
+
+  useTutorialStep(TUTORIAL_STEPS.CHECK_AFTER_BOARD, {
     position: {
       top: "17%",
     },
@@ -19,6 +28,14 @@ export default function AfterBoard() {
       isClickable: true,
       showNextIcon: true,
       onClick: () => handleSubStepClick(3),
+    },
+    highlight: {
+      selector: ".dday-ball",
+      component: (
+        <CenteredSvgFrame label="D-day" onClick={nextStep}>
+          <SvgFrame css={S.LuckyBall_Dday} icon={<CircleBoxIcon />} />
+        </CenteredSvgFrame>
+      ),
     },
   });
 
@@ -33,10 +50,17 @@ export default function AfterBoard() {
       );
     }
 
+    const isDdayBall = isLastSubStep && index === 3;
+
     return (
-      <CenteredSvgFrame key={index} label="D-?">
-        <SvgFrame css={S.LuckyBall_unknown} icon={<CircleBoxIcon />} />
-      </CenteredSvgFrame>
+      <div key={index} className={isDdayBall ? "dday-ball" : ""}>
+        <CenteredSvgFrame label={isDdayBall ? "D-day" : "D-?"}>
+          <SvgFrame
+            css={isDdayBall ? S.LuckyBall_Dday : S.LuckyBall_unknown}
+            icon={<CircleBoxIcon />}
+          />
+        </CenteredSvgFrame>
+      </div>
     );
   };
 

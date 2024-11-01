@@ -4,17 +4,8 @@ import { TUTORIAL_STEPS } from "components";
 export interface TutorialStepConfig {
   stepNumber?: TUTORIAL_STEPS;
   content: string | string[];
-  position?: {
-    top?: string;
-    bottom?: string;
-    left?: string;
-    transform?: string;
-  };
-  textBoxProps?: {
-    isClickable?: boolean;
-    showNextIcon?: boolean;
-    onClick?: () => void;
-  };
+  position?: TutorialTextBoxPosition;
+  textBoxProps?: TutorialTextBoxProps;
   highlight?: {
     selector?: string;
     component?: ReactNode;
@@ -45,6 +36,14 @@ export interface HighlightedButton {
     selector?: string;
     component?: ReactNode;
   };
+}
+
+export interface TutorialTextBoxProps {
+  currentStep?: TUTORIAL_STEPS;
+  children?: React.ReactNode;
+  showNextIcon?: boolean;
+  isClickable?: boolean;
+  onClick?: () => void;
 }
 
 export interface TutorialTextBoxPosition {
