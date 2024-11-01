@@ -5,12 +5,11 @@ import {
   useCallback,
   createContext,
 } from "react";
+import { TUTORIAL_CONFIG } from "../config";
 import { TUTORIAL_STEP_ORDER } from "../steps/tutorialSteps";
 import { HighlightedButton, TutorialTextBoxPosition } from "types";
 
 const TOTAL_STEPS = TUTORIAL_STEP_ORDER.length;
-
-const DEFAULT_TEXT_BOX_POSITION: TutorialTextBoxPosition = { top: "15%" };
 
 interface TutorialContextType {
   isTutorialActive: boolean;
@@ -18,6 +17,9 @@ interface TutorialContextType {
   startTutorial: () => void;
   endTutorial: () => void;
   nextStep: () => void;
+  subStep: number;
+  setSubStep: (value: number) => void;
+  handleSubStepClick: (maxSubSteps: number) => void;
   currentStep: number;
   isLastStep: boolean;
   tutorialTextBoxPosition: TutorialTextBoxPosition;
@@ -34,9 +36,12 @@ export const TutorialContext = createContext<TutorialContextType>({
   startTutorial: () => {},
   endTutorial: () => {},
   nextStep: () => {},
+  subStep: 1,
+  setSubStep: () => {},
+  handleSubStepClick: () => {},
   currentStep: 0,
   isLastStep: false,
-  tutorialTextBoxPosition: DEFAULT_TEXT_BOX_POSITION,
+  tutorialTextBoxPosition: TUTORIAL_CONFIG.position.default,
   setTutorialTextBoxPosition: () => {},
   highlightedButton: null,
   setHighlightedButton: () => {},
@@ -50,12 +55,12 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
   const [isTutorialActive, setIsTutorialActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
+  const [subStep, setSubStep] = useState(1);
   const [tutorialTextBoxPosition, setTutorialTextBoxPosition] =
-    useState<TutorialTextBoxPosition>(DEFAULT_TEXT_BOX_POSITION);
+    useState<TutorialTextBoxPosition>(TUTORIAL_CONFIG.position.default);
   const [highlightedButton, setHighlightedButton] =
     useState<HighlightedButton | null>(null);
 
-  // NOTE: currentStep이 변경될 때마다 isLastStep 업데이트
   useEffect(() => {
     setIsLastStep(currentStep === TOTAL_STEPS - 1);
   }, [currentStep]);
@@ -68,7 +73,8 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
   const endTutorial = useCallback(() => {
     setIsTutorialActive(false);
     setCurrentStep(0);
-    setTutorialTextBoxPosition(DEFAULT_TEXT_BOX_POSITION);
+    setSubStep(1);
+    setTutorialTextBoxPosition(TUTORIAL_CONFIG.position.default);
     setHighlightedButton(null);
   }, []);
 
@@ -83,9 +89,22 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
     });
   }, [endTutorial]);
 
+  const handleSubStepClick = useCallback(
+    (maxSubSteps: number) => {
+      setSubStep((prev) => {
+        if (prev >= maxSubSteps) {
+          nextStep();
+          return 1;
+        }
+        return prev + 1;
+      });
+    },
+    [nextStep]
+  );
+
   const setTutorialTextBoxPositionWithDefault = useCallback(
     (position: TutorialTextBoxPosition | null) => {
-      setTutorialTextBoxPosition(position || DEFAULT_TEXT_BOX_POSITION);
+      setTutorialTextBoxPosition(position || TUTORIAL_CONFIG.position.default);
     },
     []
   );
@@ -98,6 +117,9 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
         startTutorial,
         endTutorial,
         nextStep,
+        subStep,
+        setSubStep,
+        handleSubStepClick,
         currentStep,
         isLastStep,
         tutorialTextBoxPosition,
