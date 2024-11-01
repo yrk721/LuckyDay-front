@@ -1,7 +1,8 @@
+import { TUTORIAL_STEPS } from "components/tutorial/steps/tutorialSteps";
 import { ReactNode } from "react";
 
 export interface TutorialStepConfig {
-  stepNumber?: string;
+  stepNumber?: TUTORIAL_STEPS;
   content: string | string[];
   position?: {
     top?: string;
@@ -21,7 +22,7 @@ export interface TutorialStepConfig {
 }
 
 export interface TutorialStep {
-  stepNumber: number;
+  stepNumber?: TUTORIAL_STEPS;
   config: TutorialStepConfig;
 }
 

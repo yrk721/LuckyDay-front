@@ -2,10 +2,11 @@ import * as S from "./TutorialTextBox.styled";
 import { useMemo } from "react";
 import { useTutorial } from "components";
 import { tutorialTexts } from "components/tutorial/steps/tutorialTexts";
+import { TUTORIAL_STEPS } from "components/tutorial/steps/tutorialSteps";
 import { ArrowIcon } from "assets";
 
 interface TutorialTextBoxProps {
-  currentStep?: string | number;
+  currentStep?: TUTORIAL_STEPS;
   children?: React.ReactNode;
   showNextIcon?: boolean;
   isClickable?: boolean;
@@ -52,7 +53,7 @@ export default function TutorialTextBox({
     if (children) return children;
     if (!currentStep) return "";
 
-    const stepText = tutorialTexts[currentStep.toString()];
+    const stepText = tutorialTexts[currentStep as TUTORIAL_STEPS];
 
     if (typeof stepText === "object" && stepText !== null) {
       const subStepMatch = currentStep.toString().match(/\d+\.(\d+)/);

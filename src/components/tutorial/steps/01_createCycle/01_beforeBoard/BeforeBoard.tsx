@@ -1,12 +1,13 @@
 import * as S from "./BeforeBoard.styled";
 import { useTutorial, useTutorialStep } from "components";
+import { TUTORIAL_STEPS } from "../../tutorialSteps";
 import { CreateLuckyDayButton } from "components/domain/luckyBoard/createLuckyDayButton/CreateLuckyDayButton.styled";
 import { PlusIcon } from "assets";
 
 export default function BeforeBoard() {
   const { nextStep } = useTutorial();
 
-  useTutorialStep(1, {
+  useTutorialStep(TUTORIAL_STEPS.CREATE_CYCLE_BEFORE_BOARD, {
     position: {
       top: "40%",
     },

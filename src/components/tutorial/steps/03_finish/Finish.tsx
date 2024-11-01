@@ -5,10 +5,11 @@ import {
   useTutorialStep,
   TutorialStartButton,
 } from "components";
+import { TUTORIAL_STEPS } from "../tutorialSteps";
 import { ArrowIcon } from "assets";
 
 export default function Finish() {
-  useTutorialStep(10, {
+  useTutorialStep(TUTORIAL_STEPS.FINISH, {
     position: {
       top: "50%",
     },

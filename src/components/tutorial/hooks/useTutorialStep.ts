@@ -7,10 +7,10 @@ import {
 import { useTutorial } from ".";
 import { tutorialTexts } from "../steps/tutorialTexts";
 import { TUTORIAL_CONFIG } from "../config";
-import { TUTORIAL_STEP_ORDER } from "../steps/tutorialSteps";
+import { TUTORIAL_STEPS, TUTORIAL_STEP_ORDER } from "../steps/tutorialSteps";
 
 export const useTutorialStep = (
-  stepNumber: number,
+  stepNumber: TUTORIAL_STEPS,
   config: Partial<TutorialStepConfig>
 ) => {
   const {
@@ -24,12 +24,12 @@ export const useTutorialStep = (
 
   const isActiveStep = useMemo(() => {
     const currentStepValue = TUTORIAL_STEP_ORDER[currentStep];
-    return currentStepValue === stepNumber.toString();
+    return currentStepValue === stepNumber;
   }, [currentStep, stepNumber]);
 
   const { stepConfig, highlightedButton } = useMemo(() => {
     let content = "";
-    const stepText = tutorialTexts[stepNumber.toString()];
+    const stepText = tutorialTexts[stepNumber];
 
     if (typeof stepText === "object" && stepText !== null) {
       content = stepText[subStep.toString()] || "";
@@ -51,7 +51,7 @@ export const useTutorialStep = (
     };
 
     const tutorialConfig: TutorialStepConfig = {
-      stepNumber: stepNumber.toString(),
+      stepNumber,
       content,
       position,
       textBoxProps: {
