@@ -1,2 +1,2 @@
 export { default as useTutorial } from "./useTutorial";
-export { useTutorialStep } from "./useTutorialStep";
+export { default as useTutorialStep } from "./useTutorialStep";

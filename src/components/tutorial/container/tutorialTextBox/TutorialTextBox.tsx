@@ -1,8 +1,6 @@
 import * as S from "./TutorialTextBox.styled";
 import { useMemo } from "react";
-import { useTutorial } from "components";
-import { tutorialTexts } from "components/tutorial/steps/tutorialTexts";
-import { TUTORIAL_STEPS } from "components/tutorial/steps/tutorialSteps";
+import { useTutorial, TUTORIAL_STEPS, TUTORIAL_TEXTS } from "components";
 import { ArrowIcon } from "assets";
 
 interface TutorialTextBoxProps {
@@ -53,7 +51,7 @@ export default function TutorialTextBox({
     if (children) return children;
     if (!currentStep) return "";
 
-    const stepText = tutorialTexts[currentStep as TUTORIAL_STEPS];
+    const stepText = TUTORIAL_TEXTS[currentStep as TUTORIAL_STEPS];
 
     if (typeof stepText === "object" && stepText !== null) {
       const subStepMatch = currentStep.toString().match(/\d+\.(\d+)/);

@@ -1,10 +1,10 @@
-import { TUTORIAL_STEPS } from "./tutorialSteps";
+import { TUTORIAL_STEPS } from "components";
 
 type TutorialTextType = {
   [key in TUTORIAL_STEPS]?: string | { [key: string]: string };
 };
 
-export const tutorialTexts: TutorialTextType = {
+export const TUTORIAL_TEXTS: TutorialTextType = {
   [TUTORIAL_STEPS.WELCOME]: `안녕하세요! <br />
             럭키 데이에 오신 것을 환영해요. <br /> <br />
             제가 럭키 데이를 만드는 방법을 보여드릴까요? <br />

@@ -1,18 +1,21 @@
 import { useMemo, useEffect, useRef } from "react";
+import { useTutorial } from ".";
+import {
+  TUTORIAL_STEPS,
+  TUTORIAL_STEP_ORDER,
+  TUTORIAL_CONFIG,
+  TUTORIAL_TEXTS,
+} from "components";
 import {
   TutorialStepConfig,
   TutorialTextBoxPosition,
   HighlightedButton,
 } from "types";
-import { useTutorial } from ".";
-import { tutorialTexts } from "../steps/tutorialTexts";
-import { TUTORIAL_CONFIG } from "../config";
-import { TUTORIAL_STEPS, TUTORIAL_STEP_ORDER } from "../steps/tutorialSteps";
 
-export const useTutorialStep = (
+export default function useTutorialStep(
   stepNumber: TUTORIAL_STEPS,
   config: Partial<TutorialStepConfig>
-) => {
+) {
   const {
     currentStep,
     subStep,
@@ -29,7 +32,7 @@ export const useTutorialStep = (
 
   const { stepConfig, highlightedButton } = useMemo(() => {
     let content = "";
-    const stepText = tutorialTexts[stepNumber];
+    const stepText = TUTORIAL_TEXTS[stepNumber];
 
     if (typeof stepText === "object" && stepText !== null) {
       content = stepText[subStep.toString()] || "";
@@ -104,4 +107,4 @@ export const useTutorialStep = (
     stepConfig,
     highlightedButton,
   };
-};
+}

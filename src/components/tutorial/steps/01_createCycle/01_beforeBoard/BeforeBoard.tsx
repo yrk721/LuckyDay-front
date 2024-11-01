@@ -1,6 +1,5 @@
 import * as S from "./BeforeBoard.styled";
-import { useTutorial, useTutorialStep } from "components";
-import { TUTORIAL_STEPS } from "../../tutorialSteps";
+import { useTutorial, useTutorialStep, TUTORIAL_STEPS } from "components";
 import { CreateLuckyDayButton } from "components/domain/luckyBoard/createLuckyDayButton/CreateLuckyDayButton.styled";
 import { PlusIcon } from "assets";
 

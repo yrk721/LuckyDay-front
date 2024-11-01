@@ -1,11 +1,11 @@
 import * as S from "./Finish.styled";
 import {
+  TUTORIAL_STEPS,
   KakaoLogin,
   LogoTooltip,
   useTutorialStep,
   TutorialStartButton,
 } from "components";
-import { TUTORIAL_STEPS } from "../tutorialSteps";
 import { ArrowIcon } from "assets";
 
 export default function Finish() {

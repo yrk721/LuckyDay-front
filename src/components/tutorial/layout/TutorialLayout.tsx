@@ -1,10 +1,13 @@
 import * as S from "./TutorialLayout.styled";
 import React, { useState, useContext } from "react";
 import { TutorialContext } from "../context/TutorialContext";
-import { useTutorial } from "components/tutorial/hooks";
-import { TutorialTextBox, CloseTutorialConfirmModal } from "components";
+import {
+  useTutorial,
+  TutorialTextBox,
+  CloseTutorialConfirmModal,
+  SvgFrame,
+} from "components";
 import { CloseIcon, CircleBoxIcon } from "assets";
-import { SvgFrame } from "components/common";
 import TutorialPage from "pages/tutorial/TutorialPage";
 
 export default function TutorialLayout() {

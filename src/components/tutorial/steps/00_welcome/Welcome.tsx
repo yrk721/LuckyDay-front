@@ -1,5 +1,4 @@
-import { useTutorialStep, LogoTooltip } from "components";
-import { TUTORIAL_STEPS } from "../tutorialSteps";
+import { TUTORIAL_STEPS, useTutorialStep, LogoTooltip } from "components";
 
 export default function Welcome() {
   useTutorialStep(TUTORIAL_STEPS.WELCOME, {

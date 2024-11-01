@@ -1,4 +1,4 @@
-import { TUTORIAL_STEP_ORDER } from "./steps/tutorialSteps";
+import { TUTORIAL_STEP_ORDER } from "components";
 
 export const TUTORIAL_CONFIG = {
   position: {

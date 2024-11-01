@@ -1,5 +1,5 @@
-import { TUTORIAL_STEPS } from "components/tutorial/steps/tutorialSteps";
 import { ReactNode } from "react";
+import { TUTORIAL_STEPS } from "components";
 
 export interface TutorialStepConfig {
   stepNumber?: TUTORIAL_STEPS;

@@ -5,8 +5,7 @@ import {
   useCallback,
   createContext,
 } from "react";
-import { TUTORIAL_CONFIG } from "../config";
-import { TUTORIAL_STEP_ORDER } from "../steps/tutorialSteps";
+import { TUTORIAL_STEP_ORDER, TUTORIAL_CONFIG } from "components";
 import { HighlightedButton, TutorialTextBoxPosition } from "types";
 
 const TOTAL_STEPS = TUTORIAL_STEP_ORDER.length;
