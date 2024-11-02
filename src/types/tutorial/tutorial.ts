@@ -27,11 +27,7 @@ export interface HighlightedButton {
     height?: string;
   };
   textBoxes?: string[];
-  textBoxProps?: {
-    isClickable?: boolean;
-    showNextIcon?: boolean;
-    onClick?: () => void;
-  };
+  textBoxProps?: TutorialTextBoxProps;
   highlightTarget?: {
     selector?: string;
     component?: ReactNode;
