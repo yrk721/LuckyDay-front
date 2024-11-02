@@ -60,13 +60,5 @@ export default function Auth() {
     return () => clearInterval(interval);
   }, [expirationTime, navigate, addToast]);
 
-  return (
-    <div>
-      {token ? (
-        <div>로그인 진행 중입니다.</div>
-      ) : (
-        <div>로그인이 필요합니다.</div>
-      )}
-    </div>
-  );
+  return !token ? <div>로그인이 필요합니다.</div> : null;
 }

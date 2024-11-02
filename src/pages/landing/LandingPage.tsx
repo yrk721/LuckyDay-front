@@ -37,7 +37,7 @@ export default function LandingPage() {
       <S.ContentsBox>
         <Carousel images={images} texts={texts} />
         {!Cookies.get("accessToken") && <KakaoLogin />}
-        {/* <TutorialStartButton /> // 배포 전 임시 주석 처리*/}
+        {/* <TutorialStartButton /> // 배포 전 임시 주석 처리 */}
       </S.ContentsBox>
     </S.Landing>
   );
