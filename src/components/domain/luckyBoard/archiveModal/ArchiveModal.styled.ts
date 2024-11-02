@@ -63,8 +63,8 @@ export const Button = styled.button`
   ${({ theme }) => css`
     flex: 0 0 auto;
     position: relative;
-    width: 110px;
-    height: 48px;
+    width: 105px;
+    height: 42px;
     margin: 0 5px;
 
     & > span {
@@ -91,6 +91,7 @@ export const LuckyDayButton = styled.button`
     position: relative;
     width: 75px;
     height: 75px;
+    margin: 8px 4px;
 
     @media (max-width: 412px) {
       width: 72px;

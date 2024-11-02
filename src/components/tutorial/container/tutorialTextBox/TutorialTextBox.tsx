@@ -1,15 +1,8 @@
 import * as S from "./TutorialTextBox.styled";
-import { useTutorial } from "components/tutorial/hooks";
-import { tutorialTexts } from "components/tutorial/steps/tutorialTexts";
+import { useMemo } from "react";
+import { useTutorial, TUTORIAL_STEPS, TUTORIAL_TEXTS } from "components";
+import { TutorialTextBoxProps } from "types";
 import { ArrowIcon } from "assets";
-
-interface TutorialTextBoxProps {
-  currentStep?: number;
-  children?: React.ReactNode;
-  showNextIcon?: boolean;
-  isClickable?: boolean;
-  onClick?: () => void;
-}
 
 export default function TutorialTextBox({
   currentStep,
@@ -32,10 +25,11 @@ export default function TutorialTextBox({
     if (onClick) {
       onClick();
     } else {
-      nextStep();
       if (isLastStep) {
         console.log("튜토리얼 종료!!");
         endTutorial();
+      } else {
+        nextStep();
       }
     }
   };
@@ -46,9 +40,22 @@ export default function TutorialTextBox({
     }
   };
 
-  const content =
-    children ||
-    (currentStep !== undefined ? tutorialTexts[currentStep] || "" : "");
+  const content = useMemo(() => {
+    if (children) return children;
+    if (!currentStep) return "";
+
+    const stepText = TUTORIAL_TEXTS[currentStep as TUTORIAL_STEPS];
+
+    if (typeof stepText === "object" && stepText !== null) {
+      const subStepMatch = currentStep.toString().match(/\d+\.(\d+)/);
+      if (subStepMatch) {
+        return stepText[subStepMatch[1]] || "";
+      }
+      return stepText["1"] || "";
+    }
+
+    return stepText || "";
+  }, [children, currentStep]);
 
   return (
     <S.Container
@@ -58,11 +65,7 @@ export default function TutorialTextBox({
       onKeyDown={handleKeyDown}
       aria-label={isClickable ? "다음 단계로 이동" : undefined}
     >
-      {typeof content === "string" ? (
-        <S.TextBox dangerouslySetInnerHTML={{ __html: content }} />
-      ) : (
-        <S.TextBox>{content}</S.TextBox>
-      )}
+      <S.TextBox dangerouslySetInnerHTML={{ __html: content }} />
       {showNextIcon && (
         <S.NextIconWrapper>
           <S.NextIcon>

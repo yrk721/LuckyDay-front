@@ -12,7 +12,7 @@ export const TutorialFullPage = styled.div`
   background-size: cover;
   background-position: center;
   background-image: url("/images/background.webp");
-  z-index: 50;
+  z-index: 100;
 `;
 
 export const TutorialOverlay = styled.div`
@@ -26,8 +26,8 @@ export const TutorialOverlay = styled.div`
   width: 100%;
   max-width: 430px;
   height: 100vh;
-  background: rgba(160, 159, 159, 0.3);
-  z-index: 99;
+  background: rgba(160, 159, 159, 0.5);
+  z-index: 200;
 `;
 
 export const TutorialContent = styled.div`
@@ -45,14 +45,14 @@ export const TutorialTextBoxWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 300;
 `;
 
 export const CloseButtonWrapper = styled.div`
   position: absolute;
   top: 4%;
   right: 25px;
-  z-index: 1001;
+  z-index: 400;
 `;
 
 export const CloseButton = styled.button`
@@ -80,11 +80,34 @@ export const CloseButton = styled.button`
 export const HighlightedButtonWrapper = styled.div`
   position: absolute;
   cursor: pointer;
-  z-index: 1002;
+  z-index: 300;
 `;
 
 export const svgFrame = (theme: Theme) => css`
   path {
-    fill: ${theme.colors.white};
+    fill: ${theme.colors.lightBeige};
   }
+`;
+
+export const LogoBox = styled.div`
+  ${({ theme }) => css`
+    position: fixed;
+    top: 3%;
+    left: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    ${theme.fonts.logo};
+    color: ${theme.colors.black};
+  `}
+`;
+
+export const Logo_Basic = styled.div`
+  width: 30px;
+  height: 30px;
+  margin: 0px 10px 0px 24px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("/images/logo.webp");
 `;
