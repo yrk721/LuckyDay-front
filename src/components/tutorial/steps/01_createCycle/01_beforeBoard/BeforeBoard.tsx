@@ -1,5 +1,5 @@
 import * as S from "./BeforeBoard.styled";
-import { useTutorial, useTutorialStep, TUTORIAL_STEPS } from "components";
+import { TUTORIAL_STEPS, useTutorial, useTutorialStep } from "components";
 import { CreateLuckyDayButton } from "components/domain/luckyBoard/createLuckyDayButton/CreateLuckyDayButton.styled";
 import { PlusIcon } from "assets";
 
@@ -11,7 +11,7 @@ export default function BeforeBoard() {
       top: "40%",
     },
     textBoxProps: {
-      isClickable: true,
+      isClickable: false,
     },
     highlight: {
       selector: ".create-cycle-button",
