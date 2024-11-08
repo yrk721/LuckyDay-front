@@ -26,17 +26,17 @@ export const TUTORIAL_TEXTS: TutorialTextType = {
           오늘의 럭키 데이 활동을 확인해볼까요?`,
   },
 
-  //   [TUTORIAL_STEPS.CHECK_VIEW_ACTIVITY]: `혼자 영화관 가기!<br />
-  //             요즘 너무 바빴는데, 오랜만에 여유를 즐기러 가야겠어요.<br /><br />
-  //             럭키 데이를 확인한 후,<br />
-  //             아래 기록하기 버튼을 클릭하면 짧은 기록을 남길 수 있어요.`,
+  [TUTORIAL_STEPS.CHECK_VIEW_ACTIVITY]: `혼자 영화관 가기!<br />
+              요즘 너무 바빴는데, 오랜만에 여유를 즐기러 가야겠어요.<br /><br />
+              럭키 데이를 확인한 후,<br />
+              아래 기록하기 버튼을 클릭하면 짧은 기록을 남길 수 있어요.`,
 
-  //   [TUTORIAL_STEPS.CHECK_REVIEW]: `나의 기록은 [럭키 데이 보관함]에서<br />
-  //             언제든지 찾아볼 수 있어요.<br /><br />
-  //             럭키 데이 튜토리얼은 여기까지예요!`,
+  [TUTORIAL_STEPS.CHECK_REVIEW]: `나의 기록은 [럭키 데이 보관함]에서<br />
+              언제든지 찾아볼 수 있어요.<br /><br />
+              럭키 데이 튜토리얼은 여기까지예요!`,
 
   [TUTORIAL_STEPS.FINISH]: `저와 함께해 주셔서 감사해요!<br /><br />
             이제 여러분만의<br />
             럭키 데이를 즐길 시간이에요.<br />
-            <br />이 텍스트 박스를 클릭하면 시작할 수 있어요.`,
+            <br />아래 로그인 버튼을 클릭하면 시작할 수 있어요.`,
 };

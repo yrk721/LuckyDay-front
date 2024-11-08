@@ -6,8 +6,8 @@ import BeforeBoard from "./01_createCycle/01_beforeBoard/BeforeBoard";
 // import ExceptDate from "./01_createCycle/05_exceptDate/ExceptDate";
 // import Confirm from "./01_createCycle/06_confirm/Confirm";
 import AfterBoard from "./02_check/01_afterBoard/AfterBoard";
-// import ViewActivity from "./02_check/02_viewActivity/ViewActivity";
-// import Review from "./02_check/03_review/Review";
+import ViewActivity from "./02_check/02_viewActivity/ViewActivity";
+import Review from "./02_check/03_review/Review";
 import Finish from "./03_finish/Finish";
 
 export const TutorialSteps = [
@@ -19,7 +19,7 @@ export const TutorialSteps = [
   // ExceptDate,
   // Confirm,
   AfterBoard,
-  // ViewActivity,
-  // Review,
+  ViewActivity,
+  Review,
   Finish,
 ];
