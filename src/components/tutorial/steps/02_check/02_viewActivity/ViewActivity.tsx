@@ -1,7 +1,12 @@
 import * as S from "./ViewActivity.styled";
-import { useTutorial, useTutorialStep, TUTORIAL_STEPS } from "components";
+import {
+  TUTORIAL_STEPS,
+  useTutorial,
+  useTutorialStep,
+  BackButton,
+} from "components";
 import { SvgFrame } from "components";
-import { ShortBoxIcon, ArrowIcon, CircleBoxIcon, BookIcon } from "assets";
+import { ShortBoxIcon, BookIcon } from "assets";
 import dayjs from "dayjs";
 
 export default function ViewActivity() {
@@ -12,7 +17,7 @@ export default function ViewActivity() {
       top: "20%",
     },
     textBoxProps: {
-      isClickable: true,
+      isClickable: false,
     },
     highlight: {
       selector: ".record-button",
@@ -48,10 +53,7 @@ export default function ViewActivity() {
         </S.LuckydayDetailInfo>
         <div className="record-button" />
       </S.ViewActivity>
-      <S.BackButton>
-        <SvgFrame css={S.svgFrameBack} icon={<CircleBoxIcon />} />
-        <ArrowIcon css={S.arrowIcon} />
-      </S.BackButton>
+      <BackButton />
     </S.Container>
   );
 }
