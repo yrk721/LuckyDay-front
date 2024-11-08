@@ -12,31 +12,30 @@ import dayjs from "dayjs";
 
 export default function AfterBoard() {
   const { handleSubStepClick, currentStep, subStep, nextStep } = useTutorial();
-  console.log("Tutorial State:", { currentStep, subStep });
 
   const isLastSubStep =
     TUTORIAL_STEP_ORDER[currentStep] === TUTORIAL_STEPS.CHECK_AFTER_BOARD &&
     subStep === 3;
-
-  console.log("isLastSubStep:", isLastSubStep);
 
   useTutorialStep(TUTORIAL_STEPS.CHECK_AFTER_BOARD, {
     position: {
       top: "17%",
     },
     textBoxProps: {
-      isClickable: true,
-      showNextIcon: true,
+      isClickable: subStep !== 3,
+      showNextIcon: subStep === 1 || subStep === 2,
       onClick: () => handleSubStepClick(3),
     },
-    highlight: {
-      selector: ".dday-ball",
-      component: (
-        <CenteredSvgFrame label="D-day" onClick={nextStep}>
-          <SvgFrame css={S.LuckyBall_Dday} icon={<CircleBoxIcon />} />
-        </CenteredSvgFrame>
-      ),
-    },
+    ...(isLastSubStep && {
+      highlight: {
+        selector: ".dday-ball",
+        component: (
+          <CenteredSvgFrame label="D-day" onClick={nextStep}>
+            <SvgFrame css={S.LuckyBall_Dday} icon={<CircleBoxIcon />} />
+          </CenteredSvgFrame>
+        ),
+      },
+    }),
   });
 
   const renderLuckyBall = (type: string, index: number) => {
