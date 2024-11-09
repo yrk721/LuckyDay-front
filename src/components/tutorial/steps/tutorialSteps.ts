@@ -14,8 +14,8 @@ export enum TUTORIAL_STEPS {
 
   // Check
   CHECK_AFTER_BOARD = 201,
-  // CHECK_VIEW_ACTIVITY = 202,
-  // CHECK_REVIEW = 203,
+  CHECK_VIEW_ACTIVITY = 202,
+  CHECK_REVIEW = 203,
 
   // Finish
   FINISH = 300,
@@ -30,8 +30,8 @@ export const TUTORIAL_STEP_ORDER = [
   // TUTORIAL_STEPS.CREATE_CYCLE_EXCEPT_DATE,
   // TUTORIAL_STEPS.CREATE_CYCLE_CONFIRM,
   TUTORIAL_STEPS.CHECK_AFTER_BOARD,
-  // TUTORIAL_STEPS.CHECK_VIEW_ACTIVITY,
-  // TUTORIAL_STEPS.CHECK_REVIEW,
+  TUTORIAL_STEPS.CHECK_VIEW_ACTIVITY,
+  TUTORIAL_STEPS.CHECK_REVIEW,
   TUTORIAL_STEPS.FINISH,
 ];
 
@@ -60,12 +60,12 @@ export const TUTORIAL_COMPONENTS: Record<TUTORIAL_STEPS, React.ComponentType> =
     [TUTORIAL_STEPS.CHECK_AFTER_BOARD]: React.lazy(
       () => import("./02_check/01_afterBoard/AfterBoard")
     ),
-    // [TUTORIAL_STEPS.CHECK_VIEW_ACTIVITY]: React.lazy(
-    //   () => import("./02_check/02_viewActivity/ViewActivity")
-    // ),
-    // [TUTORIAL_STEPS.CHECK_REVIEW]: React.lazy(
-    //   () => import("./02_check/03_review/Review")
-    // ),
+    [TUTORIAL_STEPS.CHECK_VIEW_ACTIVITY]: React.lazy(
+      () => import("./02_check/02_viewActivity/ViewActivity")
+    ),
+    [TUTORIAL_STEPS.CHECK_REVIEW]: React.lazy(
+      () => import("./02_check/03_review/Review")
+    ),
     [TUTORIAL_STEPS.FINISH]: React.lazy(() => import("./03_finish/Finish")),
   };
 

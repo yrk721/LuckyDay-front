@@ -53,7 +53,7 @@ export const TextBox = styled.div`
     ${theme.fonts.logo};
     color: ${theme.colors.black};
 
-    @media (max-height: 700px) {
+    @media (max-height: 810px) {
       margin: 0px;
     }
   `}
@@ -71,7 +71,7 @@ export const ButtonContainer = styled.div`
     width: 88%;
   }
 
-  @media (max-height: 700px) {
+  @media (max-height: 810px) {
     margin: 4% 0px;
   }
 `;

@@ -4859,6 +4859,7 @@ __metadata:
     typescript: "npm:^5.2.2"
     vite: "npm:^5.2.0"
     vite-plugin-pwa: "npm:^0.20.5"
+    vite-plugin-remove-console: "npm:^2.2.0"
     vite-plugin-svgr: "npm:^4.2.0"
     vite-tsconfig-paths: "npm:^5.0.1"
     workbox-build: "npm:^7.1.0"
@@ -6570,6 +6571,13 @@ __metadata:
     "@vite-pwa/assets-generator":
       optional: true
   checksum: 10c0/b0b26fab553d758185608941652cccdf7a6365fa3c749120edc83e1173de8103bf948d2ed52a159eea6b3ffe08b983077b68e78593fb2bf0e307fc517dc09065
+  languageName: node
+  linkType: hard
+
+"vite-plugin-remove-console@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "vite-plugin-remove-console@npm:2.2.0"
+  checksum: 10c0/b97e77f68e52196bdae468161103217aaa6325bdb88e59dfd18fbe6ed0e4f8e4487708fb091f8780174b104c03c47cf94e7408fbe1d9360256f45bc35ccde0f7
   languageName: node
   linkType: hard
 

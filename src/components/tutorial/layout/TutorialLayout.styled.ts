@@ -8,10 +8,8 @@ export const TutorialFullPage = styled.div`
   transform: translateX(-50%);
   width: 100%;
   max-width: 430px;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-image: url("/images/background.webp");
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
   z-index: 100;
 `;
 
@@ -25,7 +23,7 @@ export const TutorialOverlay = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 430px;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background: rgba(160, 159, 159, 0.5);
   z-index: 200;
 `;
@@ -50,8 +48,8 @@ export const TutorialTextBoxWrapper = styled.div`
 
 export const CloseButtonWrapper = styled.div`
   position: absolute;
-  top: 4%;
-  right: 25px;
+  top: 3%;
+  right: 5%;
   z-index: 400;
 `;
 

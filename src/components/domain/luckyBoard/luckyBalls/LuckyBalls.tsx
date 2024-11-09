@@ -72,9 +72,17 @@ export default function LuckyBalls() {
           row3: shuffledData.slice(5, 7),
         });
 
-        const faceImages = shuffledData
-          .filter((ball) => ball.type === "LuckyBallFace")
-          .map((_, index) => `/images/face-0${index + 1}.webp`);
+        const faceCount = shuffledData.filter(
+          (ball) => ball.type === "LuckyBallFace"
+        ).length;
+        const faceImageNumbers = Array.from(
+          { length: faceCount },
+          (_, i) => i + 1
+        ).sort(() => Math.random() - 0.5);
+
+        const faceImages = faceImageNumbers.map(
+          (num) => `/images/face-0${num}.webp`
+        );
         setLuckyBallFaceImages(faceImages);
       } catch (error) {
         addToast({ content: "오류가 발생했습니다." });
@@ -86,10 +94,15 @@ export default function LuckyBalls() {
 
   const renderLuckyBall = (ball: LuckyBallDetail, index: number) => {
     if (ball.type === "LuckyBallFace") {
+      const faceIndex = luckyBallData.row1
+        .concat(luckyBallData.row2, luckyBallData.row3)
+        .filter((b) => b.type === "LuckyBallFace")
+        .findIndex((b) => b === ball);
+
       return (
         <S.LuckyBallFace
           key={index}
-          imageUrl={luckyBallFaceImages[index % luckyBallFaceImages.length]}
+          imageUrl={luckyBallFaceImages[faceIndex]}
         />
       );
     }

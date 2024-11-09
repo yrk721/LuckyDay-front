@@ -17,7 +17,7 @@ export const ButtonWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 0 10%;
-  margin: 20px 0px -50px 0px;
+  margin: 3% 0px -4% 0px;
   background: transparent;
 `;
 
