@@ -7,7 +7,7 @@ import { formatDate } from "utils";
 import { ShortBoxIcon, activities } from "assets";
 import * as S from "./ViewLuckyActivityPage.styled";
 
-function ViewLuckyActivityPage() {
+export default function ViewLuckyActivityPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isLongText, setIsLongText] = useState(false);
@@ -62,5 +62,3 @@ function ViewLuckyActivityPage() {
     </SingleButtonLayout>
   );
 }
-
-export default ViewLuckyActivityPage;

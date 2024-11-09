@@ -33,8 +33,7 @@ export default function Finish() {
     <S.FinishContainer>
       <S.ContentsBox>
         <S.TextBox>
-          럭키 데이
-          <br />
+          럭키 데이 <br />
           무작위로 찾아오는 나만의 행운의 날
         </S.TextBox>
         <S.ImageWrapper>

@@ -9,18 +9,15 @@ export const TutorialLayoutContainer = styled.div`
     width: 100%;
     height: calc(var(--vh, 1vh) * 100);
     background-color: ${theme.colors.background};
-
-    @media (min-height: 1024px) {
-      min-height: 100vh;
-    }
   `}
 `;
 
 export const Layout = styled.div`
   max-width: 430px;
   width: 100%;
-  height: auto;
+  height: 100%;
   background-size: cover;
   background-position: center;
   background-image: url("/images/background.webp");
+  overflow-y: auto;
 `;
