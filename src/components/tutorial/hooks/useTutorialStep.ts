@@ -71,7 +71,6 @@ export default function useTutorialStep(
       ...(configRef.current.position || {}),
     };
 
-    // NOTE: 개발용 로그, 배포 시 제거
     console.log("Step content:", {
       stepNumber,
       content,

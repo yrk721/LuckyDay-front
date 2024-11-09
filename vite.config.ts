@@ -3,15 +3,20 @@ import svgr from "@svgr/rollup";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 // NOTE: src 경로 설정을 위해 추가
 // (https://velog.io/@otterji/Vite-typescript-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-path-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0 참고)
-import { defineConfig } from "vite";
+import { defineConfig, ConfigEnv, UserConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import removeConsole from "vite-plugin-remove-console";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
+export default defineConfig((env: ConfigEnv): UserConfig => {
+  const plugins = [
     react(),
     svgr(),
     viteTsconfigPaths(),
+    env.command === "build" &&
+      removeConsole({
+        includes: ["log", "warn", "error"],
+      }),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
@@ -93,9 +98,13 @@ export default defineConfig({
         ],
       },
     }),
-  ],
-  cacheDir: "./.vite",
-  build: {
-    chunkSizeWarningLimit: 1000,
-  },
+  ].filter(Boolean) as Plugin[];
+
+  return {
+    plugins,
+    cacheDir: "./.vite",
+    build: {
+      chunkSizeWarningLimit: 1000,
+    },
+  };
 });
