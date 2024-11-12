@@ -5,7 +5,8 @@ export const ContentsBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 15px 25px;
+  padding: 10px 25px 25px 25px;
+  overflow-y: scroll;
 `;
 
 export const TitleBox = styled.div`
