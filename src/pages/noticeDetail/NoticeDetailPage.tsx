@@ -60,7 +60,11 @@ export default function NoticeDetailPage() {
           게시판의 [만족도 설문 보러가기] 목록을 통해 참여 가능합니다. <br />
           <br /> <br />
           👉🏻 피드백 남기러 가기 <br />
-          <a href="https://forms.gle/UmPyPXtDNfBpZzzW6">
+          <a
+            href="https://forms.gle/UmPyPXtDNfBpZzzW6"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             (https://forms.gle/UmPyPXtDNfBpZzzW6)
           </a>
           <br /> <br />
