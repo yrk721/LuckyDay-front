@@ -72,15 +72,16 @@ export default function LuckyBalls() {
           row3: shuffledData.slice(5, 7),
         });
 
+        const allFaceNumbers = Array.from({ length: 7 }, (_, i) => i + 1).sort(
+          () => Math.random() - 0.5
+        );
+
         const faceCount = shuffledData.filter(
           (ball) => ball.type === "LuckyBallFace"
         ).length;
-        const faceImageNumbers = Array.from(
-          { length: faceCount },
-          (_, i) => i + 1
-        ).sort(() => Math.random() - 0.5);
+        const selectedFaceNumbers = allFaceNumbers.slice(0, faceCount);
 
-        const faceImages = faceImageNumbers.map(
+        const faceImages = selectedFaceNumbers.map(
           (num) => `/images/face-0${num}.webp`
         );
         setLuckyBallFaceImages(faceImages);

@@ -13,7 +13,8 @@ export const CarouselContainer = styled.div`
 export const SlideContainer = styled.div<{ activeIndex: number }>`
   display: flex;
   max-width: 300px;
-  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.45, 0, 0.25, 1);
   transform: ${({ activeIndex }) => `translateX(-${activeIndex * 100}%)`};
 `;
 
@@ -25,6 +26,8 @@ export const Slide = styled.div<SlideProps>`
   flex: 0 0 100%;
   justify-content: center;
   align-items: center;
+  opacity: ${({ active }) => (active ? 1 : 0.2)};
+  transition: opacity 0.4s ease-in-out;
 `;
 
 export const Image = styled.img`
@@ -33,6 +36,8 @@ export const Image = styled.img`
   max-height: 414px;
   object-fit: contain;
   margin-bottom: 5%;
+  transition: transform 0.6s ease-in-out;
+  transform-origin: center center;
 
   @media (max-width: 405px) {
     max-height: 310px;
@@ -132,5 +137,7 @@ export const Dot = styled.li<DotProps>`
     margin: 0 5px;
     border-radius: 50%;
     background-color: ${active ? theme.colors.black : theme.colors.gray};
+    transition: all 0.4s ease-in-out;
+    transform: ${active ? "scale(1.1)" : "scale(1)"};
   `}
 `;
