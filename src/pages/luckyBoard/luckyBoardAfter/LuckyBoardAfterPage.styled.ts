@@ -23,9 +23,8 @@ export const TextBox = styled.div`
     text-align: center;
     white-space: pre-wrap;
 
-    @media (max-height: 700px) {
+    @media (max-height: 805px) {
       margin: 8px;
-    }
   `}
 `;
 
@@ -57,7 +56,7 @@ export const LuckyMachine = styled.div`
     object-fit: contain;
   }
 
-  @media (max-width: 412px) {
+  @media (max-width: 412px), (max-height: 805px) {
     width: 390px;
   }
 

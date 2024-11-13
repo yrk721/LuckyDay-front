@@ -26,6 +26,10 @@ export const TextBox = styled.div`
       ${theme.fonts.headline2};
       margin: 0;
     }
+
+    @media (max-height: 805px) {
+      margin: 8px 0px 0px 0px;
+    }
   `}
 `;
 
@@ -57,7 +61,7 @@ export const LuckyMachine = styled.div`
     object-fit: contain;
   }
 
-  @media (max-width: 412px) {
+  @media (max-width: 412px), (max-height: 805px) {
     width: 390px;
   }
 

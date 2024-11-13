@@ -30,7 +30,7 @@ export const LuckyBallFace = styled.div<{ imageUrl: string }>`
   background-image: url(${(props) => props.imageUrl});
   cursor: default;
 
-  @media (max-width: 412px) {
+  @media (max-width: 412px), (max-height: 805px) {
     width: 95px;
     height: 95px;
     margin: 8px;
@@ -58,7 +58,7 @@ export const svgFrame = (theme: Theme) => css`
     pointer-events: auto;
     ${theme.fonts.luckyBall2}
 
-    @media (max-width: 412px) {
+    @media (max-width: 412px), (max-height: 805px) {
       width: 95px;
       height: 95px;
       margin: 8px;
