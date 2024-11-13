@@ -5,7 +5,7 @@ export const ContentsBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 25px;
+  padding: 20px 25px 25px 25px;
   overflow-y: scroll;
 `;
 
@@ -73,7 +73,7 @@ export const NoticeContent = styled.div`
     }
 
     li {
-      margin: 10px 0px;
+      margin: 8px 0px;
     }
   `}
 `;

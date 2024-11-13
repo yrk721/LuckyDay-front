@@ -1,6 +1,6 @@
 import * as S from "./NoticeDetailPage.styled";
-import { SingleButtonLayout } from "components";
 import { useParams } from "react-router-dom";
+import { SingleButtonLayout } from "components";
 
 export default function NoticeDetailPage() {
   const { id } = useParams();
@@ -33,8 +33,7 @@ export default function NoticeDetailPage() {
               데이를 보내 보아요.
             </li>
           </ul>
-          <br />
-          <br />
+          <br /> <br />
           여러분의 일상에 특별함을 더할 수 있도록, <br />
           럭키데이는 계속해서 새로운 기능들이 추가될 예정입니다. <br /> <br />
           많은 관심과 피드백 부탁드려요. 🧡
@@ -56,18 +55,48 @@ export default function NoticeDetailPage() {
           만족도 설문 조사를 통해 좋은 피드백을 남겨주신 분들 중 <br />
           추첨을 통해 매달 1일 한 분께 소정의 <span>기프티콘</span>을
           보내드립니다.
-          <br />
-          <br />
+          <br /> <br />
           만족도 설문 조사는 아래 링크 또는 <br />
           게시판의 [만족도 설문 보러가기] 목록을 통해 참여 가능합니다. <br />
           <br /> <br />
-          👉🏻 피드백 남기러 가기
-          <a href="https://forms.gle/UmPyPXtDNfBpZzzW6">
+          👉🏻 피드백 남기러 가기 <br />
+          <a
+            href="https://forms.gle/UmPyPXtDNfBpZzzW6"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             (https://forms.gle/UmPyPXtDNfBpZzzW6)
           </a>
-          <br />
-          <br />
+          <br /> <br />
           감사합니다.😊
+        </>
+      ),
+    },
+    {
+      id: "3",
+      title: " 튜토리얼 기능이 추가되었어요.",
+      date: "2024년 11월 12일",
+      content: (
+        <>
+          안녕하세요! 가을 단풍과 함께 찾아온 팀 럭키데이 입니다. <br />
+          <br /> <br />
+          럭키데이를 처음 만나는 분들, 더 잘 활용하고 싶은 분들을 위해 <br />
+          <span>튜토리얼 기능</span>을 추가하였습니다! 👏 <br />
+          <br />
+          튜토리얼에서는, <br />
+          <ul>
+            <li>럭키데이 서비스를 전체적으로 살펴볼 수 있어요.</li>
+            <li>럭키데이 생성 과정을 따라가며 활용 방법을 알 수 있어요.</li>
+            <li>D-Day! 럭키데이 당일 어떻게 확인할 수 있는지 알 수 있어요.</li>
+          </ul>
+          <br /> <br />
+          로그인 이전 화면에서 <span>‘튜토리얼 체험하기’ </span>버튼을 누르면
+          <br />
+          튜토리얼을 만나볼 수 있어요! <br />
+          {/* 그리고 아래 버튼을 눌러도 바로 연결됩니다. <br />  */}
+          <br />
+          오늘도 럭키한 하루 되시길 바랍니다. <br />
+          감사합니다 🍀
         </>
       ),
     },
