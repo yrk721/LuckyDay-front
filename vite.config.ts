@@ -19,7 +19,13 @@ export default defineConfig((env: ConfigEnv): UserConfig => {
       }),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
+      includeAssets: [
+        "/icons/favicon.ico",
+        "/icons/favicon-16x16.png",
+        "/icons/favicon-32x32.png",
+        "/icons/apple-icon-180x180.png",
+        "robots.txt",
+      ],
       manifest: {
         name: "Lucky Day",
         short_name: "Lucky Day",
@@ -33,43 +39,55 @@ export default defineConfig((env: ConfigEnv): UserConfig => {
         dir: "ltr",
         icons: [
           {
-            src: "/images/icons/icon_48.png",
+            src: "/icons/icon_48.png",
             type: "image/png",
             sizes: "48x48",
             purpose: "maskable",
           },
           {
-            src: "/images/icons/icon_72.png",
+            src: "/icons/icon_72.png",
             type: "image/png",
             sizes: "72x72",
             purpose: "maskable",
           },
           {
-            src: "/images/icons/icon_96.png",
+            src: "/icons/icon_96.png",
             type: "image/png",
             sizes: "96x96",
             purpose: "maskable",
           },
           {
-            src: "/images/icons/icon_144.png",
+            src: "/icons/icon_144.png",
             type: "image/png",
             sizes: "144x144",
             purpose: "maskable",
           },
           {
-            src: "/images/icons/icon_152.png",
+            src: "/icons/icon_152.png",
             type: "image/png",
             sizes: "152x152",
             purpose: "maskable",
           },
           {
-            src: "/images/icons/icon_192.png",
+            src: "/icons/icon_192.png",
+            type: "image/png",
+            sizes: "192x192",
+            purpose: "any",
+          },
+          {
+            src: "/icons/icon_192.png",
             type: "image/png",
             sizes: "192x192",
             purpose: "maskable",
           },
           {
-            src: "/images/icons/icon_512.png",
+            src: "/icons/icon_512.png",
+            type: "image/png",
+            sizes: "512x512",
+            purpose: "any",
+          },
+          {
+            src: "/icons/icon_512.png",
             type: "image/png",
             sizes: "512x512",
             purpose: "maskable",
