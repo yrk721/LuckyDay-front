@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react";
-import viteTsconfigPaths from "vite-tsconfig-paths";
 import svgr from "@svgr/rollup";
+import viteTsconfigPaths from "vite-tsconfig-paths";
 import {
   defineConfig,
   ConfigEnv,
@@ -21,84 +21,37 @@ export default defineConfig((env: ConfigEnv): UserConfig => {
       }),
     VitePWA({
       registerType: "autoUpdate",
+      injectRegister: "auto",
+      strategies: "generateSW",
       includeAssets: [
         "/icons/favicon.ico",
         "/icons/favicon-16x16.png",
         "/icons/favicon-32x32.png",
         "/icons/apple-icon-180x180.png",
+        "/splash_screens/*.png",
         "robots.txt",
       ],
-      manifest: {
-        name: "Lucky Day",
-        short_name: "Lucky Day",
-        description: "무작위로 찾아오는 나만의 특별한 날",
-        theme_color: "#faf7f3",
-        background_color: "#FFB43E",
-        display: "standalone",
-        start_url: "/",
-        scope: "/",
-        orientation: "portrait",
-        dir: "ltr",
-        icons: [
-          {
-            src: "/icons/icon_48.png",
-            type: "image/png",
-            sizes: "48x48",
-            purpose: "maskable",
-          },
-          {
-            src: "/icons/icon_72.png",
-            type: "image/png",
-            sizes: "72x72",
-            purpose: "maskable",
-          },
-          {
-            src: "/icons/icon_96.png",
-            type: "image/png",
-            sizes: "96x96",
-            purpose: "maskable",
-          },
-          {
-            src: "/icons/icon_144.png",
-            type: "image/png",
-            sizes: "144x144",
-            purpose: "maskable",
-          },
-          {
-            src: "/icons/icon_152.png",
-            type: "image/png",
-            sizes: "152x152",
-            purpose: "maskable",
-          },
-          {
-            src: "/icons/icon_192.png",
-            type: "image/png",
-            sizes: "192x192",
-            purpose: "any",
-          },
-          {
-            src: "/icons/icon_192.png",
-            type: "image/png",
-            sizes: "192x192",
-            purpose: "maskable",
-          },
-          {
-            src: "/icons/icon_512.png",
-            type: "image/png",
-            sizes: "512x512",
-            purpose: "any",
-          },
-          {
-            src: "/icons/icon_512.png",
-            type: "image/png",
-            sizes: "512x512",
-            purpose: "maskable",
-          },
-        ],
-        lang: "ko",
-      },
       workbox: {
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        globPatterns: [
+          "**/*.{js,css,html,ico,png,svg,webp,woff,woff2}",
+          "splash_screens/*.png",
+        ],
         runtimeCaching: [
+          {
+            urlPattern: /\.(png|jpg|jpeg|gif|webp)$/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "images-cache",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
           {
             urlPattern:
               /^https:\/\/developers\.kakao\.com\/sdk\/js\/kakao\.min\.js$/,
@@ -111,7 +64,7 @@ export default defineConfig((env: ConfigEnv): UserConfig => {
               cacheName: "local-assets",
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 30 * 24 * 60 * 60, // 30일
+                maxAgeSeconds: 30 * 24 * 60 * 60,
               },
             },
           },
