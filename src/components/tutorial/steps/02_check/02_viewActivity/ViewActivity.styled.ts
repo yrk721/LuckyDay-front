@@ -3,12 +3,10 @@ import styled from "@emotion/styled";
 import * as S from "pages/viewLuckyActivity/ViewLuckyActivityPage.styled";
 
 export const Container = styled.div`
-  position: relative;
-  width: 100%;
-  min-height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: calc(var(--vh, 1vh) * 100);
   align-items: center;
 `;
 
@@ -27,28 +25,27 @@ export const LuckydayDetailInfo = styled(S.LuckydayDetailInfo)`
 `;
 
 export const ButtonContainer = styled.div`
-  position: absolute;
-  bottom: -40px;
-  left: 0;
-  right: 0;
   display: flex;
+  align-items: center;
   justify-content: center;
+  margin-top: 25px;
 `;
 
-export const Button = styled(S.Button)`
+export const Button = styled.button`
   ${({ theme }) => css`
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100px;
+    height: 42px;
 
     & > span {
       position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 100%;
-      text-align: center;
       ${theme.fonts.headline2};
     }
 
