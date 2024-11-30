@@ -5,19 +5,21 @@ import * as S from "pages/viewLuckyActivity/ViewLuckyActivityPage.styled";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: calc(var(--vh, 1vh) * 100);
   align-items: center;
-`;
-
-export const ViewActivity = styled(S.ViewLuckyActivityPage)`
-  position: relative;
+  justify-content: center;
+  text-align: center;
+  min-height: 83vh;
   width: 100%;
-  height: 50vh;
-  margin-bottom: 25%;
+
+  @media (min-height: 945px) {
+    min-height: 90vh;
+  }
 `;
 
 export const LuckydayDetailInfo = styled(S.LuckydayDetailInfo)`
+  height: auto;
+  min-height: 350px;
+
   p:last-of-type {
     white-space: pre-line;
     width: 100%;
@@ -25,10 +27,12 @@ export const LuckydayDetailInfo = styled(S.LuckydayDetailInfo)`
 `;
 
 export const ButtonContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 25px;
+  width: 100%;
 `;
 
 export const Button = styled.button`
@@ -56,11 +60,6 @@ export const Button = styled.button`
   `}
 `;
 
-export const Img = styled(S.Img)``;
-export const LuckydayInfo = styled(S.LuckydayInfo)``;
-export const svgFrame = S.svgFrame;
-export const HighlightButtonWrapper = styled(ButtonContainer)``;
-
 export const BackButton = styled.button`
   position: absolute;
   bottom: 5%;
@@ -84,3 +83,8 @@ export const arrowIcon = css`
   width: 24px;
   height: 24px;
 `;
+
+export const Img = styled(S.Img)``;
+export const LuckydayInfo = styled(S.LuckydayInfo)``;
+export const svgFrame = S.svgFrame;
+export const HighlightButtonWrapper = styled(ButtonContainer)``;
