@@ -13,6 +13,10 @@ export default function NoticeListPage() {
     <SingleButtonLayout>
       <S.TitleBox>공지사항</S.TitleBox>
       <S.ContentsBox>
+        <S.MenuBox onClick={() => handleMoveToNoticeDetail("4")}>
+          럭키데이 웹사이트를 스마트폰 홈 화면에서 만나보세요.
+          <S.DateBox>2024년 11월 30일</S.DateBox>
+        </S.MenuBox>
         {/* NOTE: 튜토리얼 기능 추가 후 주석 해제 */}
 
         {/* <S.MenuBox onClick={() => handleMoveToNoticeDetail("3")}>
