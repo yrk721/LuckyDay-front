@@ -2,23 +2,35 @@ import { SvgFrame } from "components";
 import { ArrowIcon, CircleBoxIcon, LargeBoxIcon, LongBoxIcon } from "assets";
 import useCalendar from "./hooks/useCalendar";
 import * as S from "./Calendar.styled";
+import dayjs from "dayjs";
 
 interface CalendarProps {
+  isThisMonth?: boolean;
+  isDatesLastSubStep?: boolean;
   dates: string;
   expDates: string[];
   makeExpDates: (dates: string) => void;
 }
 
-const Calendar = ({ dates, expDates, makeExpDates }: CalendarProps) => {
+const Calendar = ({
+  isThisMonth = false,
+  isDatesLastSubStep,
+  dates,
+  expDates,
+  makeExpDates,
+}: CalendarProps) => {
+  const isSelectable12th = dayjs().date() > 12;
+
   const {
     currentMonth,
     monthsData,
     disabled,
+    emptyDates,
     calendarList,
     handleMoveToPrevMonth,
     handleMoveToNextMonth,
     handleDisabledCheck,
-  } = useCalendar(dates, expDates, makeExpDates);
+  } = useCalendar(isThisMonth, isSelectable12th, dates, expDates, makeExpDates);
 
   const dayWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
 
@@ -53,9 +65,18 @@ const Calendar = ({ dates, expDates, makeExpDates }: CalendarProps) => {
 
               return (
                 <S.DayButton
+                  className={
+                    isThisMonth && i === 12 + emptyDates.length + 2
+                      ? "calendar"
+                      : ""
+                  }
                   key={i}
                   isSelected={monthsData.includes(formattedDate)}
-                  isExceptDate={isExceptDate}
+                  isExceptDate={
+                    (formattedDate.split("-")[2] === "12" &&
+                      isDatesLastSubStep) ||
+                    isExceptDate
+                  }
                   isChecked={!monthsData.includes(formattedDate)}
                   onClick={handleDisabledCheck(date)}
                 >

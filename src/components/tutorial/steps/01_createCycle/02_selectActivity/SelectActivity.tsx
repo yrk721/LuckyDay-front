@@ -1,1 +1,389 @@
-export default function SelectActivity() {}
+import { useRef, useState } from "react";
+
+import {
+  Input,
+  SvgFrame,
+  TUTORIAL_STEP_ORDER,
+  TUTORIAL_STEPS,
+  useTutorial,
+  useTutorialStep,
+} from "components";
+import { useToast } from "hooks";
+import {
+  activities,
+  ArrowIcon,
+  CheckIcon,
+  CloseIcon,
+  ShortBoxIcon,
+} from "assets";
+import { useGetLuckyDaysActivities } from "services";
+import CreateLuckyDay from "../createLuckyday/CreateLuckyDay";
+import * as S from "./SelectActivity.styled";
+
+export default function SelectActivity() {
+  const { data } = useGetLuckyDaysActivities();
+
+  const { handleSubStepClick, currentStep, subStep, nextStep } = useTutorial();
+
+  //추후 상태 설정 코드 추가 예정
+  const [, setSelected] = useState<string[]>([]);
+  const [customed, setCustomed] = useState<string[]>([
+    "치즈김치볶음밥 만들어 먹기",
+    "그림일기로 하루 되돌아보기",
+  ]);
+  const [allSelected, setAllSelected] = useState<string[]>([]);
+  const [text, setText] = useState("");
+
+  const spanRef = useRef<HTMLSpanElement>(null);
+  const activityRef = useRef<HTMLButtonElement>(null);
+
+  const inputWidth = text.length
+    ? spanRef.current?.getBoundingClientRect().width
+    : 0;
+  const { addToast } = useToast();
+
+  const handleCustomItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length > 14) return;
+
+    setText(e.target.value);
+  };
+
+  const handleAddCustomActivity = (e: React.MouseEvent): void => {
+    e.stopPropagation();
+
+    const checkSameActivity = customed.includes(text);
+
+    if (checkSameActivity) {
+      addToast({ content: "이미 추가된 활동입니다." });
+      setText("");
+
+      return;
+    }
+    setCustomed([...customed, text]);
+    setText("");
+  };
+
+  const handleEnterCustomItemChange = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      handleAddCustomActivity(e as unknown as React.MouseEvent);
+    }
+  };
+
+  const DeleteCustomActivity = (selectedActivity: string) => (): void => {
+    const filteredActivities = customed?.filter(
+      (item) => item !== selectedActivity
+    );
+
+    setCustomed(filteredActivities);
+  };
+
+  const handleSelected = (item: string) => () => {
+    setSelected((prev) => {
+      const isSelected = prev.includes(item);
+      const updated = isSelected
+        ? prev.filter((select) => select !== item)
+        : [...prev, item];
+
+      return updated;
+    });
+
+    handleSubStepClick(4);
+  };
+
+  const handleCustomed = (item: string) => () => {
+    setCustomed((prev) => {
+      const isSelected = prev.includes(item);
+      const updated = isSelected
+        ? prev.filter((select) => select !== item)
+        : [...prev, item];
+
+      return updated;
+    });
+  };
+
+  const handleAllSelected = (item: string) => () => {
+    setAllSelected((prev) => {
+      const isSelected = prev.includes(item);
+      const updated = isSelected
+        ? prev.filter((select) => select !== item)
+        : [...prev, item];
+
+      return updated;
+    });
+
+    handleSubStepClick(6);
+  };
+
+  const handleStopPropagation = (e: React.MouseEvent): void => {
+    e.stopPropagation();
+  };
+
+  const isSecondSubStep =
+    TUTORIAL_STEP_ORDER[currentStep] ===
+      TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY && subStep === 2;
+
+  const isThirdSubStep =
+    TUTORIAL_STEP_ORDER[currentStep] ===
+      TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY && subStep === 3;
+
+  const isFourthSubStep =
+    TUTORIAL_STEP_ORDER[currentStep] ===
+      TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY && subStep === 4;
+
+  const isFifthSubStep =
+    TUTORIAL_STEP_ORDER[currentStep] ===
+      TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY && subStep === 5;
+
+  const isSixthSubStep =
+    TUTORIAL_STEP_ORDER[currentStep] ===
+      TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY && subStep === 6;
+
+  const isSeventhSubStep =
+    TUTORIAL_STEP_ORDER[currentStep] ===
+      TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY && subStep === 7;
+
+  const isLastSubStep =
+    TUTORIAL_STEP_ORDER[currentStep] ===
+      TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY && subStep === 8;
+
+  useTutorialStep(TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY, {
+    position: {
+      top: subStep === 8 ? "80%" : "17%",
+    },
+    textBoxProps: {
+      isClickable:
+        subStep !== 2 && subStep !== 4 && subStep !== 5 && subStep !== 8,
+      showNextIcon: subStep === 1 || subStep === 6 || subStep === 7,
+      onClick: () => handleSubStepClick(8),
+    },
+    ...(isSecondSubStep && {
+      highlight: {
+        selector: ".tutoral_selectActivity_02",
+        component: (
+          <S.ActivitiesRow onClick={() => handleSubStepClick(3)}>
+            <S.ActivityButton isOpen={false}>
+              <S.Img src={"images/img_empty_longBox.webp"} />
+              <S.ActivityBox isOpen={false}>
+                <S.ActivityInfo isOpen={false} isChecked>
+                  {activities[1].icon}
+                  <S.ActivityTitle>{activities[1].label}</S.ActivityTitle>
+                  <S.CheckboxWrapper isOpen={false} isDisabled>
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      checked={false}
+                      onChange={() => {}}
+                    />
+                    <label htmlFor="checkbox" />
+                  </S.CheckboxWrapper>
+                  <ArrowIcon css={S.arrowIcon(false)} />
+                </S.ActivityInfo>
+              </S.ActivityBox>
+            </S.ActivityButton>
+          </S.ActivitiesRow>
+        ),
+      },
+    }),
+    ...(isThirdSubStep && {
+      highlight: {
+        selector: ".tutoral_selectActivity_02",
+        component: (
+          <S.ActivityButton isOpen>
+            <S.Img src={"images/img_empty_mediumBox.webp"} />
+            <S.ActivityBox isOpen>
+              <S.ActivityInfo isOpen isChecked>
+                {activities[1].icon}
+                <S.ActivityTitle>{activities[1].label}</S.ActivityTitle>
+                <S.CheckboxWrapper isOpen isDisabled>
+                  <input
+                    type="checkbox"
+                    checked={false}
+                    disabled
+                    id="checkbox"
+                    onChange={() => {}}
+                  />
+                  <label htmlFor="checkbox" />
+                </S.CheckboxWrapper>
+                <ArrowIcon css={S.arrowIcon(true)} />
+              </S.ActivityInfo>
+              <S.Activities>
+                {data?.resData[2].actList?.map((item) => {
+                  return (
+                    <S.Activity
+                      key={item.keyword}
+                      isSelected={false}
+                      isClickable={item.keyword === "치킨"}
+                      disabled={item.keyword !== "치킨"}
+                      onClick={handleSelected(item.keyword)}
+                    >
+                      <CheckIcon css={S.icon} />
+                      {item.keyword}
+                    </S.Activity>
+                  );
+                })}
+              </S.Activities>
+            </S.ActivityBox>
+          </S.ActivityButton>
+        ),
+      },
+    }),
+    ...(isFourthSubStep && {
+      highlight: {
+        selector: ".tutoral_selectActivity_05",
+        component: (
+          <S.ActivitiesRow onClick={() => handleSubStepClick(5)}>
+            <S.ActivityButton isOpen={false}>
+              <S.Img src={"images/img_empty_longBox.webp"} />
+              <S.ActivityBox isOpen={false}>
+                <S.ActivityInfo isOpen={false} isChecked>
+                  {activities[2].icon}
+                  <S.ActivityTitle>{activities[2].label}</S.ActivityTitle>
+                  <S.CheckboxWrapper isOpen={false} isDisabled>
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      checked={false}
+                      onChange={() => {}}
+                    />
+                    <label htmlFor="checkbox" />
+                  </S.CheckboxWrapper>
+                  <ArrowIcon css={S.arrowIcon(false)} />
+                </S.ActivityInfo>
+              </S.ActivityBox>
+            </S.ActivityButton>
+          </S.ActivitiesRow>
+        ),
+      },
+    }),
+    ...(isFifthSubStep && {
+      highlight: {
+        selector: ".tutoral_selectActivity_05",
+        component: (
+          <S.ActivityButton isOpen>
+            <S.Img src={"images/img_empty_mediumBox.webp"} />
+            <S.ActivityBox isOpen>
+              <S.ActivityInfo isOpen isChecked>
+                {activities[2].icon}
+                <S.ActivityTitle>{activities[2].label}</S.ActivityTitle>
+                <S.CheckboxWrapper isOpen isDisabled={false}>
+                  <input
+                    type="checkbox"
+                    checked={allSelected.includes(activities[2].label)}
+                    id="checkbox"
+                    onChange={handleAllSelected(activities[2].label)}
+                  />
+                  <label htmlFor="checkbox" />
+                </S.CheckboxWrapper>
+                <ArrowIcon css={S.arrowIcon(true)} />
+              </S.ActivityInfo>
+              <S.Activities>
+                {data?.resData[3].actList?.map((item) => {
+                  return (
+                    <S.Activity
+                      key={item.keyword}
+                      isSelected={false}
+                      disabled
+                      onClick={handleSelected(item.keyword)}
+                    >
+                      <CheckIcon css={S.icon} />
+                      {item.keyword}
+                    </S.Activity>
+                  );
+                })}
+              </S.Activities>
+            </S.ActivityBox>
+          </S.ActivityButton>
+        ),
+      },
+    }),
+    ...(isSixthSubStep && {
+      onClick: () => handleSubStepClick(7),
+    }),
+    ...(isSeventhSubStep && {
+      highlight: {
+        selector: ".tutoral_selectActivity_07",
+        component: (
+          <S.ActivityButton isOpen isDisabled>
+            <S.Img src="images/img_empty_mediumBox.webp" />
+            <S.ActivityBox isOpen>
+              <S.ActivityInfo isOpen isChecked={false}>
+                {activities[5].icon}
+                <S.ActivityTitle>{activities[5].label}</S.ActivityTitle>
+                <ArrowIcon css={S.arrowIcon(true)} />
+              </S.ActivityInfo>
+              <S.Activities>
+                <S.CustomActivityWrapper>
+                  <S.customActiviyItem ref={spanRef}>
+                    {text}
+                  </S.customActiviyItem>
+                  <S.CustomActivity
+                    ref={activityRef}
+                    key={activities[5].label}
+                    onClick={handleStopPropagation}
+                  >
+                    <Input
+                      // value={text}
+                      css={S.input(inputWidth)}
+                      placeholder=""
+                      handleChange={handleCustomItemChange}
+                      handleKeyDown={handleEnterCustomItemChange}
+                    />
+                  </S.CustomActivity>
+                  {customed.map((item, i) => {
+                    return (
+                      <S.CustomActivity
+                        key={i}
+                        isSelected
+                        hasValue
+                        onClick={handleStopPropagation}
+                      >
+                        {item}
+                        <CloseIcon onClick={DeleteCustomActivity(item)} />
+                      </S.CustomActivity>
+                    );
+                  })}
+                </S.CustomActivityWrapper>
+              </S.Activities>
+            </S.ActivityBox>
+            <S.CustomInfo isCustom>
+              <S.ContentLength>{text.length}/14</S.ContentLength>
+              <S.AddButton onClick={handleCustomed(text)}>추가</S.AddButton>
+            </S.CustomInfo>
+          </S.ActivityButton>
+        ),
+      },
+    }),
+    ...(isLastSubStep && {
+      highlight: {
+        selector: ".button",
+        component: (
+          <S.ButtonWrapper>
+            <S.Button onClick={nextStep}>
+              <SvgFrame css={S.beigeIcon} icon={<ShortBoxIcon />} />
+              <S.ButtonBox>
+                next <ArrowIcon css={S.buttonArrowIcon} />
+              </S.ButtonBox>
+            </S.Button>
+          </S.ButtonWrapper>
+        ),
+      },
+    }),
+  });
+
+  return (
+    <S.Container className={isLastSubStep ? "button" : ""}>
+      <CreateLuckyDay
+        isThirdSubStep={isThirdSubStep}
+        isFourthSubStep={isFourthSubStep}
+        isFifthSubStep={isFifthSubStep}
+        isSixthSubStep={isSixthSubStep}
+        isSeventhSubStep={isSeventhSubStep}
+        isActivityLastSubStep={isLastSubStep}
+        nextProgress={0}
+        data={data}
+      />
+    </S.Container>
+  );
+}
