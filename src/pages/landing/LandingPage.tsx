@@ -1,7 +1,7 @@
 import * as S from "./LandingPage.styled";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Carousel, KakaoLogin } from "components";
+import { Carousel, KakaoLogin, TutorialStartButton } from "components";
 import { LANDING_CONTENTS } from "constants/landing";
 import Cookies from "js-cookie";
 
@@ -23,8 +23,7 @@ export default function LandingPage() {
           texts={LANDING_CONTENTS.texts}
         />
         {!Cookies.get("accessToken") && <KakaoLogin />}
-        {/* NOTE: 튜토리얼 기능 추가 후 주석 해제 */}
-        {/* <TutorialStartButton /> */}
+        <TutorialStartButton />
       </S.ContentsBox>
     </S.Landing>
   );

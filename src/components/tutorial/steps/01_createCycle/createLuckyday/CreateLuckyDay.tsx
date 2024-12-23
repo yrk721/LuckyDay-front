@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import {
@@ -13,17 +12,46 @@ import {
 } from "components";
 import { ArrowIcon } from "assets";
 import { useModal, useToast } from "hooks";
-import { useGetLuckyDaysActivities } from "services";
-import type { CreateLuckyDayForm } from "types";
-import * as S from "./CreateLuckyDayPage.styled";
+import type { ActivitiesServerModel, CreateLuckyDayForm } from "types";
+import * as S from "./CreateLuckyDay.styled";
 
-function CreateLuckyDayPage() {
-  const navigate = useNavigate();
+interface CreateLuckyDayProps {
+  isThirdSubStep?: boolean;
+  isFourthSubStep?: boolean;
+  isFifthSubStep?: boolean;
+  isSixthSubStep?: boolean;
+  isSeventhSubStep?: boolean;
+  isDateLastSubStep?: boolean;
+  isCountFirstSubStep?: boolean;
+  isCountLastSubStep?: boolean;
+  isDatesFirstSubStep?: boolean;
+  isDatesLastSubStep?: boolean;
+  isConfirmLastSubStep?: boolean;
+  isActivityLastSubStep?: boolean;
+  nextProgress?: number;
+  selectableDate?: number;
+  data?: ActivitiesServerModel;
+}
 
+function CreateLuckyDay({
+  isThirdSubStep,
+  isFourthSubStep,
+  isFifthSubStep,
+  isSixthSubStep,
+  isSeventhSubStep,
+  isDateLastSubStep,
+  isCountFirstSubStep,
+  isCountLastSubStep,
+  isDatesFirstSubStep,
+  isDatesLastSubStep,
+  isConfirmLastSubStep,
+  isActivityLastSubStep,
+  nextProgress,
+  selectableDate,
+  data,
+}: CreateLuckyDayProps) {
   const [currentProgress, setCurrentProgress] = useState(0);
   const [, setSelectedItems] = useState<number[]>([]);
-
-  const { data } = useGetLuckyDaysActivities();
 
   const { setValue, watch, handleSubmit } = useForm<CreateLuckyDayForm>({
     defaultValues: {
@@ -63,14 +91,41 @@ function CreateLuckyDayPage() {
             getSelectItems={getSelectItems}
             setValue={setValue}
             watch={watch}
+            isThirdSubStep={isThirdSubStep}
+            isFourthSubStep={isFourthSubStep}
+            isFifthSubStep={isFifthSubStep}
+            isSixthSubStep={isSixthSubStep}
+            isSeventhSubStep={isSeventhSubStep}
+            isLastSubStep={isActivityLastSubStep}
           />
         );
       case 1:
-        return <SelectPeriod setValue={setValue} watch={watch} />;
+        return (
+          <SelectPeriod
+            isLastSubStep={isDateLastSubStep ?? false}
+            setValue={setValue}
+            watch={watch}
+          />
+        );
       case 2:
-        return <SelectCount setValue={setValue} watch={watch} />;
+        return (
+          <SelectCount
+            selectableDate={selectableDate ?? 0}
+            isCountFirstSubStep={isCountFirstSubStep}
+            isCountLastSubStep={isCountLastSubStep}
+            setValue={setValue}
+            watch={watch}
+          />
+        );
       case 3:
-        return <SelectExceptDate setValue={setValue} watch={watch} />;
+        return (
+          <SelectExceptDate
+            isDatesFirstSubStep={isDatesFirstSubStep}
+            isDatesLastSubStep={isDatesLastSubStep || isConfirmLastSubStep}
+            setValue={setValue}
+            watch={watch}
+          />
+        );
     }
   };
 
@@ -94,7 +149,11 @@ function CreateLuckyDayPage() {
     if (currentProgress !== 3) return changeCurrentProgress(+1)();
 
     handleOpenModal(
-      <CreateLuckyDayModal watch={watch} handleSubmit={handleSubmit} />
+      <CreateLuckyDayModal
+        className={isConfirmLastSubStep ? "confirm" : ""}
+        watch={watch}
+        handleSubmit={handleSubmit}
+      />
     );
   };
 
@@ -113,15 +172,6 @@ function CreateLuckyDayPage() {
     );
   }, [data]);
 
-  useEffect(() => {
-    const hasLuckyday = sessionStorage.getItem("hasLuckyday");
-
-    if (hasLuckyday === "1") {
-      navigate("/luckyboard");
-      return addToast({ content: "이미 생성된 럭키데이가 있어요." });
-    }
-  }, []);
-
   return (
     <ButtonLayout
       variant="hasIcon"
@@ -132,11 +182,11 @@ function CreateLuckyDayPage() {
       handleClickSecondButton={handleClickNextButton}
     >
       <S.CreateLuckyDay>
-        <ProgressBar progressState={currentProgress} />
-        {changePage(currentProgress)}
+        <ProgressBar progressState={nextProgress ?? currentProgress} />
+        {changePage(nextProgress ?? currentProgress)}
       </S.CreateLuckyDay>
     </ButtonLayout>
   );
 }
 
-export default CreateLuckyDayPage;
+export default CreateLuckyDay;
