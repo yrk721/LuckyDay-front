@@ -23,7 +23,10 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response?.status === 401) {
+    if (
+      error.response?.status === 401 ||
+      error.response?.data?.code === "1001"
+    ) {
       const event = new CustomEvent("TOKEN_EXPIRED");
       window.dispatchEvent(event);
     }
