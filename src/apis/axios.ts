@@ -31,6 +31,14 @@ instance.interceptors.response.use(
       window.dispatchEvent(event);
     }
 
+    if (
+      error.response?.status === 403 ||
+      error.response?.data?.code === "1004"
+    ) {
+      const event = new CustomEvent("ACCESS_DENIED");
+      window.dispatchEvent(event);
+    }
+
     return Promise.reject(error);
   }
 );
