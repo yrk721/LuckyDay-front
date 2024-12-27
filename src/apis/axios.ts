@@ -13,32 +13,28 @@ instance.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
+    if (response.data?.code === "1004") {
+      window.dispatchEvent(new CustomEvent("ACCESS_DENIED"));
+      return Promise.reject();
+    }
+    if (response.data?.code === "1001") {
+      window.dispatchEvent(new CustomEvent("TOKEN_EXPIRED"));
+      return Promise.reject();
+    }
     return response;
   },
   (error) => {
-    if (
-      error.response?.status === 401 ||
-      error.response?.data?.code === "1001"
-    ) {
-      const event = new CustomEvent("TOKEN_EXPIRED");
-      window.dispatchEvent(event);
+    if (error.response?.status === 403) {
+      window.dispatchEvent(new CustomEvent("ACCESS_DENIED"));
     }
-
-    if (
-      error.response?.status === 403 ||
-      error.response?.data?.code === "1004"
-    ) {
-      const event = new CustomEvent("ACCESS_DENIED");
-      window.dispatchEvent(event);
+    if (error.response?.status === 401) {
+      window.dispatchEvent(new CustomEvent("TOKEN_EXPIRED"));
     }
-
     return Promise.reject(error);
   }
 );
