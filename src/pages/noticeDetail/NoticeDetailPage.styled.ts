@@ -66,10 +66,15 @@ export const NoticeContent = styled.div`
       color: ${theme.colors.lightOrange};
     }
 
-    ul {
+    ul,
+    ol {
       list-style-type: disc;
       margin-left: 10px;
       padding: 0px 10px;
+    }
+
+    ol {
+      list-style-type: decimal;
     }
 
     li {

@@ -1,6 +1,7 @@
 import { Global, ThemeProvider } from "@emotion/react";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useTokenExpiration } from "hooks";
 
 import { TutorialProvider, TutorialLayout, Modal, Toast } from "components";
 import { globalStyle, theme } from "styles";
@@ -21,6 +22,8 @@ dayjs.locale("ko");
 const queryClient = new QueryClient();
 
 export default function App() {
+  useTokenExpiration();
+
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
@@ -33,7 +36,6 @@ export default function App() {
             </Router>
             <TutorialLayout />
           </TutorialProvider>
-          {/* Fix: 레이아웃 수정 예정 */}
         </ThemeProvider>
       </QueryClientProvider>
     </RecoilRoot>

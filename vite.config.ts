@@ -20,6 +20,7 @@ export default defineConfig((env: ConfigEnv): UserConfig => {
         includes: ["log", "warn", "error"],
       }),
     VitePWA({
+      manifest: false,
       registerType: "autoUpdate",
       injectRegister: "auto",
       strategies: "generateSW",

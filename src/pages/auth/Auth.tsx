@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useToast } from "hooks";
 
 export default function Auth() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { addToast } = useToast();
 
   const token = searchParams.get("token")!;
   const email = searchParams.get("email")!;
@@ -42,23 +40,6 @@ export default function Auth() {
     expirationTime,
     navigate,
   ]);
-
-  useEffect(() => {
-    const checkTokenExpiration = () => {
-      const currentTime = Math.floor(Date.now() / 1000);
-      const expiration = parseInt(expirationTime);
-
-      if (currentTime >= expiration) {
-        addToast({ content: "토큰이 만료되었습니다. 다시 로그인해 주세요." });
-        sessionStorage.clear();
-        navigate("/");
-      }
-    };
-
-    const interval = setInterval(checkTokenExpiration, 5 * 60 * 1000);
-
-    return () => clearInterval(interval);
-  }, [expirationTime, navigate, addToast]);
 
   return !token ? <div>로그인이 필요합니다.</div> : null;
 }
