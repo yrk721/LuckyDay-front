@@ -1,7 +1,7 @@
 import { Global, ThemeProvider } from "@emotion/react";
 import { RecoilRoot } from "recoil";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useTokenExpiration } from "hooks";
+import { useAccessDenied, useTokenExpiration } from "hooks";
 
 import { TutorialProvider, TutorialLayout, Modal, Toast } from "components";
 import { globalStyle, theme } from "styles";
@@ -22,6 +22,7 @@ dayjs.locale("ko");
 const queryClient = new QueryClient();
 
 export default function App() {
+  useAccessDenied();
   useTokenExpiration();
 
   return (

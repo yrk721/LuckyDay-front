@@ -24,11 +24,15 @@ export default function NoticeListPage() {
     navigate(`/notice/${id}`);
   };
 
+  const sortedNotices = [...NOTICE_DETAILS].sort((a, b) => {
+    return Number(b.id) - Number(a.id);
+  });
+
   return (
     <SingleButtonLayout>
       <S.TitleBox>공지사항</S.TitleBox>
       <S.ContentsBox>
-        {NOTICE_DETAILS.map((notice) => (
+        {sortedNotices.map((notice) => (
           <NoticeMenu
             key={notice.id}
             id={notice.id}
