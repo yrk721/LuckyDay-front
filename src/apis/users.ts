@@ -1,12 +1,12 @@
 import { ax } from "./axios";
+import { BASE_URL } from "config";
 
 export const logout = async () => {
   await ax.get("/users/sign-out");
 };
 
 export const deleteUser = async () => {
-  const baseUrl = import.meta.env.VITE_BASE_URL;
-  await ax.delete(`${baseUrl}/users`, {
+  await ax.delete(`${BASE_URL}/users`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
