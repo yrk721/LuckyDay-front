@@ -1,25 +1,11 @@
-import { css, Theme } from "@emotion/react";
 import styled from "@emotion/styled";
-import * as S from "pages/luckyBoard/luckyBoardBefore/LuckyBoardBeforePage.styled";
+import { Theme, css } from "@emotion/react";
 
-export const Container = styled(S.Container)``;
-
-export const ActivitiesRow = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const ActivityButton = styled.div<{
-  isOpen: boolean;
-  isDisabled?: boolean;
-}>`
-  ${({ isOpen, isDisabled }) => css`
+export const ActivityButton = styled.div<{ isOpen: boolean }>`
+  ${({ isOpen }) => css`
     position: relative;
     width: ${isOpen ? "382px" : "368px"};
     height: fit-content;
-    cursor: ${isDisabled && "not-allowed"};
 
     @media (max-width: 380px) {
       width: ${isOpen ? "328px" : "328px"};
@@ -105,11 +91,8 @@ export const Activities = styled.div`
   }
 `;
 
-export const Activity = styled.button<{
-  isClickable?: boolean;
-  isSelected?: boolean;
-}>`
-  ${({ theme, isClickable, isSelected }) => css`
+export const Activity = styled.button<{ isSelected?: boolean }>`
+  ${({ theme, isSelected }) => css`
     ${theme.fonts.body1};
     display: flex;
     align-items: center;
@@ -117,24 +100,17 @@ export const Activity = styled.button<{
     width: fit-content;
     border-radius: 30px;
     padding: ${isSelected ? "0 11px 0 6px" : "0 11px"};
-    //TODO: 선택 불가능한 버튼 disabled 효과 추가 필요(현재 임시컬러)
-    color: ${isSelected
-      ? theme.colors.black
-      : !isClickable
-      ? theme.colors.lightGray
-      : theme.colors.gray};
+    color: ${!isSelected && theme.colors.gray};
     background-color: ${isSelected
       ? theme.colors.lightOrange
-      : isClickable
-      ? theme.colors.lightBeige
-      : theme.colors.gray};
+      : theme.colors.lightBeige};
 
     svg {
       display: ${!isSelected && "none"};
     }
 
     &:hover {
-      color: ${isClickable && theme.colors.orange};
+      color: ${theme.colors.orange};
 
       & > svg > path {
         fill: ${theme.colors.orange};
@@ -171,7 +147,7 @@ export const CustomInfo = styled.div<{ isCustom?: boolean }>`
   ${({ theme, isCustom }) => css`
     ${theme.fonts.body1};
     position: absolute;
-    bottom: 60px; //NOTE: 확인필요
+    bottom: -30px; //NOTE: 확인필요
     left: 0;
     display: ${isCustom ? "flex" : "none"};
     width: 100%;
@@ -201,12 +177,9 @@ export const AddButton = styled.button`
 `;
 
 export const CustomActivity = styled(Activity)<{ hasValue?: boolean }>`
-  ${({ hasValue, isSelected, theme }) => css`
+  ${({ hasValue }) => css`
     height: 20px;
     padding: ${hasValue && "0 6px 0 11px"};
-    background-color: ${isSelected
-      ? theme.colors.lightOrange
-      : theme.colors.lightBeige};
 
     svg {
       width: 15px;
@@ -224,11 +197,8 @@ export const CustomActivityWrapper = styled.div`
   overflow-y: auto;
 `;
 
-export const CheckboxWrapper = styled.div<{
-  isOpen: boolean;
-  isDisabled: boolean;
-}>`
-  ${({ isOpen, isDisabled }) => css`
+export const CheckboxWrapper = styled.div<{ isOpen: boolean }>`
+  ${({ isOpen }) => css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -244,7 +214,7 @@ export const CheckboxWrapper = styled.div<{
           ? `url("images/ic_uncheckedOrange.svg")`
           : `url("images/ic_uncheckedBeige.svg")`}
         no-repeat;
-      cursor: ${isDisabled ? "not-allowed" : "pointer"};
+      cursor: pointer;
     }
     input:checked + label {
       width: 24px;
@@ -255,44 +225,4 @@ export const CheckboxWrapper = styled.div<{
         no-repeat;
     }
   `}
-`;
-
-export const ButtonBox = styled.div`
-  ${({ theme }) => css`
-    ${theme.fonts.headline2};
-    position: absolute;
-    top: 8px;
-    left: 21px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 6px;
-  `}
-`;
-
-export const ButtonWrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  height: calc(var(--vh, 1vh) * 100 - 80px);
-  min-height: calc(100% - 80px);
-`;
-
-export const Button = styled.button`
-  position: absolute;
-  bottom: 7%;
-  right: 5%;
-  width: 90px;
-`;
-
-export const beigeIcon = (theme: Theme) => css`
-  path {
-    fill: ${theme.colors.beige};
-  }
-`;
-
-export const buttonArrowIcon = css`
-  width: 24px;
-  height: 24px;
-  rotate: 90deg;
 `;
