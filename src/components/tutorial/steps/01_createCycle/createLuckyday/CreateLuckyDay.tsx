@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 
-import {
-  SelectActivity,
-  SelectCount,
-  SelectPeriod,
-  SelectExceptDate,
-  ProgressBar,
-  ButtonLayout,
-  CreateLuckyDayModal,
-} from "components";
+import { ButtonLayout } from "components";
 import { ArrowIcon } from "assets";
-import { useModal, useToast } from "hooks";
-import type { ActivitiesServerModel, CreateLuckyDayForm } from "types";
+import { useToast } from "hooks";
+import SelectActivity from "./selectActivity/SelectActivity";
+import SelectPeriod from "./selectPeriod/SelectPeriod";
+import SelectCount from "./selectCount/SelectCount";
+import SelectExceptDate from "./selectExceptDate/SelectExceptDate";
+import { CreateLuckyDayModal, ProgressBar } from "./container";
 import * as S from "./CreateLuckyDay.styled";
 
 interface CreateLuckyDayProps {
@@ -23,14 +18,12 @@ interface CreateLuckyDayProps {
   isSeventhSubStep?: boolean;
   isDateLastSubStep?: boolean;
   isCountFirstSubStep?: boolean;
-  isCountLastSubStep?: boolean;
   isDatesFirstSubStep?: boolean;
   isDatesLastSubStep?: boolean;
   isConfirmLastSubStep?: boolean;
   isActivityLastSubStep?: boolean;
   nextProgress?: number;
   selectableDate?: number;
-  data?: ActivitiesServerModel;
 }
 
 function CreateLuckyDay({
@@ -41,30 +34,14 @@ function CreateLuckyDay({
   isSeventhSubStep,
   isDateLastSubStep,
   isCountFirstSubStep,
-  isCountLastSubStep,
   isDatesFirstSubStep,
   isDatesLastSubStep,
   isConfirmLastSubStep,
   isActivityLastSubStep,
   nextProgress,
-  selectableDate,
-  data,
 }: CreateLuckyDayProps) {
   const [currentProgress, setCurrentProgress] = useState(0);
-  const [, setSelectedItems] = useState<number[]>([]);
 
-  const { setValue, watch, handleSubmit } = useForm<CreateLuckyDayForm>({
-    defaultValues: {
-      customActList: [],
-      period: 0,
-      cnt: 1,
-      expDTList: [],
-      acts: [],
-    },
-    mode: "onTouched",
-  });
-
-  const { handleOpenModal } = useModal();
   const { addToast } = useToast();
 
   const changeCurrentProgress = (progress: number) => (): void => {
@@ -78,19 +55,11 @@ function CreateLuckyDay({
     setCurrentProgress(changedProgress);
   };
 
-  const getSelectItems = (value: number[]): void => {
-    setSelectedItems(value);
-  };
-
   const changePage = (current: number): React.ReactNode => {
     switch (current) {
       case 0:
         return (
           <SelectActivity
-            data={data}
-            getSelectItems={getSelectItems}
-            setValue={setValue}
-            watch={watch}
             isThirdSubStep={isThirdSubStep}
             isFourthSubStep={isFourthSubStep}
             isFifthSubStep={isFifthSubStep}
@@ -100,77 +69,20 @@ function CreateLuckyDay({
           />
         );
       case 1:
-        return (
-          <SelectPeriod
-            isLastSubStep={isDateLastSubStep ?? false}
-            setValue={setValue}
-            watch={watch}
-          />
-        );
+        return <SelectPeriod isLastSubStep={isDateLastSubStep ?? false} />;
       case 2:
-        return (
-          <SelectCount
-            selectableDate={selectableDate ?? 0}
-            isCountFirstSubStep={isCountFirstSubStep}
-            isCountLastSubStep={isCountLastSubStep}
-            setValue={setValue}
-            watch={watch}
-          />
-        );
+        return <SelectCount isCountFirstSubStep={isCountFirstSubStep} />;
       case 3:
         return (
           <SelectExceptDate
             isDatesFirstSubStep={isDatesFirstSubStep}
             isDatesLastSubStep={isDatesLastSubStep || isConfirmLastSubStep}
-            setValue={setValue}
-            watch={watch}
           />
         );
     }
   };
 
-  const handleClickNextButton = () => {
-    const emptyActList = watch("acts")
-      .filter(({ actList }) => !!actList)
-      .flatMap((item) => item.actList);
-
-    if (
-      currentProgress === 0 &&
-      !emptyActList?.length &&
-      !watch("customActList")?.length
-    ) {
-      return addToast({ content: "최소 1개의 카테고리를 선택해 주세요." });
-    }
-
-    if (currentProgress === 1 && watch("period") === 0) {
-      return addToast({ content: "최소 1개의 기간을 선택해 주세요." });
-    }
-
-    if (currentProgress !== 3) return changeCurrentProgress(+1)();
-
-    handleOpenModal(
-      <CreateLuckyDayModal
-        className={isConfirmLastSubStep ? "confirm" : ""}
-        watch={watch}
-        handleSubmit={handleSubmit}
-      />
-    );
-  };
-
-  useEffect(() => {
-    if (!data) return;
-
-    setValue(
-      "acts",
-      data.resData
-        .map((item) => ({
-          category: item.category,
-          actList: [],
-          checked: false,
-        }))
-        .filter(({ category }) => category !== "직접 입력")
-    );
-  }, [data]);
+  const handleClickNextButton = () => {};
 
   return (
     <ButtonLayout
@@ -184,6 +96,9 @@ function CreateLuckyDay({
       <S.CreateLuckyDay>
         <ProgressBar progressState={nextProgress ?? currentProgress} />
         {changePage(nextProgress ?? currentProgress)}
+        {isConfirmLastSubStep && (
+          <CreateLuckyDayModal isConfirmLastSubStep={isConfirmLastSubStep} />
+        )}
       </S.CreateLuckyDay>
     </ButtonLayout>
   );
