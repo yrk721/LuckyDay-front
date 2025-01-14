@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import { useTutorial } from "components/tutorial/hooks";
 import { TutorialSteps } from "components/tutorial/steps";
 import { TUTORIAL_STEPS } from "components/tutorial/steps/constants";
-import { PageSpinner } from "components";
 
 export default function TutorialPage() {
   const { currentStep } = useTutorial();
@@ -11,7 +10,7 @@ export default function TutorialPage() {
   const renderCurrentStep = (): React.ReactNode => {
     const CurrentStepComponent = TutorialSteps[currentStep];
     return CurrentStepComponent ? (
-      <Suspense fallback={<PageSpinner />}>
+      <Suspense>
         <CurrentStepComponent />
       </Suspense>
     ) : null;
