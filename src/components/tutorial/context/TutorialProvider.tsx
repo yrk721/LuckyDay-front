@@ -1,5 +1,5 @@
 import { ReactNode, useState, useEffect, useCallback } from "react";
-import { TOTAL_STEPS } from "components";
+import { TOTAL_STEPS, TUTORIAL_STEPS } from "components";
 
 import {
   TutorialTextBoxPosition,
@@ -14,7 +14,9 @@ interface TutorialProviderProps {
 
 export default function TutorialProvider({ children }: TutorialProviderProps) {
   const [isTutorialActive, setIsTutorialActive] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState<TUTORIAL_STEPS>(
+    TUTORIAL_STEPS.WELCOME
+  );
   const [isLastStep, setIsLastStep] = useState(false);
   const [subStep, setSubStep] = useState(1);
   const [tutorialTextBoxPosition, setTutorialTextBoxPosition] =

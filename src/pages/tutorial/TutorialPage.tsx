@@ -1,6 +1,7 @@
 import * as S from "./TutorialPage.styled";
 import { useTutorial } from "components/tutorial/hooks";
 import { TutorialSteps } from "components/tutorial/steps";
+import { TUTORIAL_STEPS } from "components/tutorial/steps/constants";
 
 export default function TutorialPage() {
   const { currentStep } = useTutorial();
@@ -12,7 +13,8 @@ export default function TutorialPage() {
 
   return (
     <>
-      {currentStep === 0 || currentStep === 24 ? (
+      {currentStep === TUTORIAL_STEPS.WELCOME ||
+      currentStep === TUTORIAL_STEPS.FINISH ? (
         renderCurrentStep()
       ) : (
         <S.TutorialLayoutContainer>
