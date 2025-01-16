@@ -38,35 +38,35 @@ export const TUTORIAL_STEP_ORDER = [
 // 컴포넌트 매핑
 export const TUTORIAL_COMPONENTS: Record<TUTORIAL_STEPS, React.ComponentType> =
   {
-    [TUTORIAL_STEPS.WELCOME]: React.lazy(() => import("./00_welcome/Welcome")),
+    [TUTORIAL_STEPS.WELCOME]: React.lazy(() => import("../00_welcome/Welcome")),
     [TUTORIAL_STEPS.CREATE_CYCLE_BEFORE_BOARD]: React.lazy(
-      () => import("./01_createCycle/01_beforeBoard/BeforeBoard")
+      () => import("../01_createCycle/01_beforeBoard/BeforeBoard")
     ),
     [TUTORIAL_STEPS.CREATE_CYCLE_SELECT_ACTIVITY]: React.lazy(
-      () => import("./01_createCycle/02_selectActivity/SelectActivity")
+      () => import("../01_createCycle/02_selectActivity/SelectActivity")
     ),
     [TUTORIAL_STEPS.CREATE_CYCLE_SET_DATE]: React.lazy(
-      () => import("./01_createCycle/03_setDate/SetDate")
+      () => import("../01_createCycle/03_setDate/SetDate")
     ),
     [TUTORIAL_STEPS.CREATE_CYCLE_SET_NUMBER]: React.lazy(
-      () => import("./01_createCycle/04_setNumber/SetNumber")
+      () => import("../01_createCycle/04_setNumber/SetNumber")
     ),
     [TUTORIAL_STEPS.CREATE_CYCLE_EXCEPT_DATE]: React.lazy(
-      () => import("./01_createCycle/05_exceptDate/ExceptDate")
+      () => import("../01_createCycle/05_exceptDate/ExceptDate")
     ),
     [TUTORIAL_STEPS.CREATE_CYCLE_CONFIRM]: React.lazy(
-      () => import("./01_createCycle/06_confirm/Confirm")
+      () => import("../01_createCycle/06_confirm/Confirm")
     ),
     [TUTORIAL_STEPS.CHECK_AFTER_BOARD]: React.lazy(
-      () => import("./02_check/01_afterBoard/AfterBoard")
+      () => import("../02_check/01_afterBoard/AfterBoard")
     ),
     [TUTORIAL_STEPS.CHECK_VIEW_ACTIVITY]: React.lazy(
-      () => import("./02_check/02_viewActivity/ViewActivity")
+      () => import("../02_check/02_viewActivity/ViewActivity")
     ),
     [TUTORIAL_STEPS.CHECK_REVIEW]: React.lazy(
-      () => import("./02_check/03_review/Review")
+      () => import("../02_check/03_review/Review")
     ),
-    [TUTORIAL_STEPS.FINISH]: React.lazy(() => import("./03_finish/Finish")),
+    [TUTORIAL_STEPS.FINISH]: React.lazy(() => import("../03_finish/Finish")),
   };
 
 export const TOTAL_STEPS = TUTORIAL_STEP_ORDER.length;

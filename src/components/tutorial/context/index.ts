@@ -1,4 +1,2 @@
-export {
-  default as TutorialProvider,
-  TutorialContext,
-} from "./TutorialContext";
+export { TutorialContext } from "./TutorialContext";
+export { default as TutorialProvider } from "./TutorialProvider";
