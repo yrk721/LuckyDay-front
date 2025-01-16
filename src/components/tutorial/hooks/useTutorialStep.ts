@@ -1,10 +1,7 @@
 import { useMemo, useEffect, useRef, useCallback } from "react";
 import { useTutorial } from ".";
-import {
-  TUTORIAL_TEXTS,
-  TUTORIAL_STEPS,
-  TUTORIAL_STEP_ORDER,
-} from "components";
+import { TUTORIAL_STEPS, TUTORIAL_STEP_ORDER } from "components";
+import { TUTORIAL_TEXTS } from "components/tutorial/steps/constants";
 import {
   TutorialStepConfig,
   HighlightedButton,

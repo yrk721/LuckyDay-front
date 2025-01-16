@@ -1,4 +1,4 @@
-import { TUTORIAL_STEPS } from "components";
+import { TUTORIAL_STEPS } from "./tutorialSteps";
 
 type TutorialTextType = {
   [key in TUTORIAL_STEPS]?: string | { [key: string]: string };
