@@ -7,34 +7,35 @@ import { useVisibility } from "./hooks";
 import { useDeleteLuckyBoard } from "services";
 import { ResetLuckyBoardModal, SvgButton, SvgFrame } from "components";
 import { CircleBoxIcon, ShortBoxIcon } from "assets";
-import type { GetLuckyDayCycleDetail } from "types";
+import { formatDate } from "utils";
+import type { GetLuckyDayCycleDetail, GetLuckyDayCycleInfo } from "types";
 
 interface ArchiveModalProps {
   className?: string;
-  moreInfo?: React.ReactElement;
+  cycleInfo?: GetLuckyDayCycleInfo;
   lastInfo?: GetLuckyDayCycleDetail[];
   isMoreInfoModal?: boolean;
+  onClose: () => void;
 }
 
 export default function ArchiveModal({
   className,
-  moreInfo,
+  cycleInfo,
   lastInfo,
   isMoreInfoModal = false,
+  onClose,
 }: ArchiveModalProps) {
   const { isVisible, show, hide } = useVisibility(false);
   const { mutate: deleteLuckyBoardMutate } = useDeleteLuckyBoard();
-
-  const { handleOpenModal, handleModalClose } = useModal();
+  const { handleOpenModal } = useModal();
   const { addToast } = useToast();
-
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
   const closeModal = () => {
     hide();
-    handleModalClose();
+    onClose();
   };
 
   const moveToDetail = (dtlNo: number) => () => {
@@ -46,7 +47,7 @@ export default function ArchiveModal({
     deleteLuckyBoardMutate(undefined, {
       onSuccess: () => {
         sessionStorage.setItem("hasLuckyday", "0");
-        handleModalClose();
+        onClose();
         window.location.reload();
       },
       onError: () => {
@@ -55,8 +56,31 @@ export default function ArchiveModal({
     });
   };
 
-  const openResetLuckyBoardrModal = () => {
+  const openResetLuckyBoardModal = () => {
     handleOpenModal(<ResetLuckyBoardModal onReset={resetLuckyBoard} />);
+  };
+
+  const formatCycleInfo = () => {
+    if (!cycleInfo) return null;
+
+    const expDatesString = cycleInfo.expDtList
+      ?.map((item) => `${formatDate(item, "YYYY-MM-DD")}\n`)
+      .join("")
+      ?.replace(/,/g, "");
+
+    return (
+      <p>
+        생성 옵션:
+        <br />
+        {formatDate(cycleInfo.startDt, "YYYY-MM-DD")} ~{" "}
+        {formatDate(cycleInfo.endDt, "YYYY-MM-DD")}
+        <br />
+        <strong>{cycleInfo.period}</strong>일 동안{" "}
+        <strong>{cycleInfo.cnt}</strong>개의 럭키 데이
+        <br />
+        {expDatesString ? `\n제외 날짜:\n${expDatesString}` : ""}
+      </p>
+    );
   };
 
   useEffect(() => {
@@ -71,11 +95,11 @@ export default function ArchiveModal({
 
   return (
     <S.ArchiveModal
-      hasPadding={!!moreInfo}
+      hasPadding={!!cycleInfo}
       className={className}
       isVisible={isVisible}
     >
-      {moreInfo && <div>{moreInfo}</div>}
+      {cycleInfo && <div>{formatCycleInfo()}</div>}
       {lastInfo && (
         <>
           {lastInfo?.length ? (
@@ -109,7 +133,7 @@ export default function ArchiveModal({
 
       <S.ButtonWrapper>
         {isMoreInfoModal && (
-          <S.BottomButton onClick={openResetLuckyBoardrModal}>
+          <S.BottomButton onClick={openResetLuckyBoardModal}>
             <SvgFrame css={S.BasicSvgFrame} icon={<ShortBoxIcon />} />
             <span>럭키보드 초기화</span>
           </S.BottomButton>
