@@ -1,12 +1,13 @@
 import * as S from "./ArchiveModal.styled";
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 import { useModal, useToast } from "hooks";
 import { useVisibility } from "./hooks";
 import { useDeleteLuckyBoard } from "services";
-import type { GetLuckyDayCycleDetail } from "types";
-import { ResetLuckyBoardModal, SvgFrame } from "components";
+import { ResetLuckyBoardModal, SvgButton, SvgFrame } from "components";
 import { CircleBoxIcon, ShortBoxIcon } from "assets";
+import type { GetLuckyDayCycleDetail } from "types";
 
 interface ArchiveModalProps {
   className?: string;
@@ -27,6 +28,7 @@ export default function ArchiveModal({
   const { handleOpenModal, handleModalClose } = useModal();
   const { addToast } = useToast();
 
+  const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -78,13 +80,21 @@ export default function ArchiveModal({
         <>
           {lastInfo?.length ? (
             <S.LuckyDayButtonWrapper>
-              {lastInfo?.map((item) => (
-                <S.LuckyDayButton
-                  key={item.dtlNo}
-                  onClick={moveToDetail(item.dtlNo)}
-                >
-                  <SvgFrame css={S.PurpleSvgFrame} icon={<CircleBoxIcon />} />
-                  <span>{item.date}</span>
+              {lastInfo.map((item) => (
+                <S.LuckyDayButton key={item.dtlNo}>
+                  <SvgButton
+                    label={item.date}
+                    icon={<CircleBoxIcon />}
+                    width="100%"
+                    height="100%"
+                    textColor={theme.colors.white}
+                    fillColor={
+                      item.reviewCheck === 1
+                        ? theme.colors.lightOrange
+                        : theme.colors.purple
+                    }
+                    onClick={moveToDetail(item.dtlNo)}
+                  />
                 </S.LuckyDayButton>
               ))}
             </S.LuckyDayButtonWrapper>
@@ -99,18 +109,18 @@ export default function ArchiveModal({
 
       <S.ButtonWrapper>
         {isMoreInfoModal && (
-          <S.Button onClick={openResetLuckyBoardrModal}>
+          <S.BottomButton onClick={openResetLuckyBoardrModal}>
             <SvgFrame css={S.BasicSvgFrame} icon={<ShortBoxIcon />} />
             <span>럭키보드 초기화</span>
-          </S.Button>
+          </S.BottomButton>
         )}
-        <S.Button onClick={closeModal}>
+        <S.BottomButton onClick={closeModal}>
           <SvgFrame
             css={isMoreInfoModal ? S.PurpleSvgFrame : S.BasicSvgFrame}
             icon={<ShortBoxIcon />}
           />
           <span>닫기</span>
-        </S.Button>
+        </S.BottomButton>
       </S.ButtonWrapper>
     </S.ArchiveModal>
   );
