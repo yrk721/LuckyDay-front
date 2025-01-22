@@ -59,7 +59,7 @@ export const ButtonWrapper = styled.div`
   }
 `;
 
-export const Button = styled.button`
+export const BottomButton = styled.button`
   ${({ theme }) => css`
     flex: 0 0 auto;
     position: relative;
@@ -84,40 +84,27 @@ export const LuckyDayButtonWrapper = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 21px 20px;
   width: 100%;
+
+  @media (max-width: 405px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
-export const LuckyDayButton = styled.button`
-  ${({ theme }) => css`
-    position: relative;
-    width: 75px;
-    height: 75px;
-    margin: 8px 4px;
+export const LuckyDayButton = styled.div`
+  position: relative;
+  width: 75px;
+  height: 75px;
+  margin: 8px 4px;
 
-    @media (max-width: 412px) {
-      width: 72px;
-      height: 72px;
-    }
+  @media (max-width: 412px) {
+    width: 72px;
+    height: 72px;
+  }
 
-    @media (max-width: 405px) {
-      width: 68px;
-      height: 68px;
-    }
-
-    & > div {
-      width: 100%;
-      height: 100%;
-    }
-
-    & > span {
-      position: absolute;
-      width: 100%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      ${theme.fonts.headline2};
-      color: ${theme.colors.white};
-    }
-  `}
+  @media (max-width: 405px) {
+    width: 68px;
+    height: 68px;
+  }
 `;
 
 export const BasicSvgFrame = (theme: Theme) => css`
