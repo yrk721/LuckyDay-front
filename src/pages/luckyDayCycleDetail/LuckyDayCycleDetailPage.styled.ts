@@ -5,7 +5,7 @@ export const ContentsBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0px 10px 0px 10px;
+  margin: 0px 10px;
   padding: 20px;
 `;
 

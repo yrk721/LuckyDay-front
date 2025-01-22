@@ -53,7 +53,7 @@ export interface GetLuckyDayDetailServerModel extends CommonServerModel {
   resData: GetLuckyDayDetail;
 }
 
-interface GetLuckyDayCycleInfo {
+export interface GetLuckyDayCycleInfo {
   startDt: string;
   endDt: string;
   period: number;
