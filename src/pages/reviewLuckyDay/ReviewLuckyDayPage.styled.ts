@@ -60,9 +60,9 @@ export const ReviewTextarea = styled.textarea`
   text-align: center;
   width: 270px;
   height: 120px;
-  padding: 5px 20px;
-  margin-top: 70px;
-  margin-bottom: 35px;
+  padding: 5px 10px;
+  margin-top: 60px;
+  margin-bottom: 45px;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.black};
   ${({ theme }) => theme.fonts.headline2};
@@ -112,8 +112,8 @@ export const CharCount = styled.div`
     position: relative;
     align-self: flex-end;
     right: 42px;
-    bottom: 35px;
-    ${theme.fonts.body1};
+    bottom: 32px;
+    ${theme.fonts.body2};
     color: ${theme.colors.black};
   `}
 `;

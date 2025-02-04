@@ -95,8 +95,8 @@ export const ReviewTextBox = styled.div`
     display: flex;
     justify-content: center;
     width: 270px;
-    height: 100px;
-    padding: 10px 20px;
+    height: 110px;
+    padding: 10px 10px;
     margin-top: 180px;
     color: ${theme.colors.black};
     ${theme.fonts.headline2}
