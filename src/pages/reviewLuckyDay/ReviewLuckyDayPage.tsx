@@ -133,7 +133,7 @@ export default function ReviewLuckyDayPage() {
   useEffect(() => {
     if (
       review &&
-      review.length <= 100 &&
+      review.length <= 200 &&
       (isDirty || image || isImageDeleted)
     ) {
       setIsButtonDisabled(false);
@@ -191,13 +191,13 @@ export default function ReviewLuckyDayPage() {
             {...register("review", {
               required: "리뷰를 작성해 주세요.",
               maxLength: {
-                value: 100,
-                message: "리뷰는 100자 이내로 작성해 주세요.",
+                value: 200,
+                message: "리뷰는 200자 이내로 작성해 주세요.",
               },
             })}
-            placeholder="100자 이내로 럭키 데이를 기록해 보세요 :)"
+            placeholder="200자 이내로 럭키 데이를 기록해 보세요 :)"
           />
-          <S.CharCount>{review.length}/100</S.CharCount>
+          <S.CharCount>{review.length}/200</S.CharCount>
           <S.ErrorContainer>
             {errors.review && (
               <S.ErrorText>{errors.review.message as string}</S.ErrorText>
