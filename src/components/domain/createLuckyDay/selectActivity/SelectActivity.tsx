@@ -1,73 +1,28 @@
-import React, { useState } from "react";
-import type { UseFormSetValue, UseFormWatch } from "react-hook-form";
+import React, { Fragment } from "react";
+import { useFormContext } from "react-hook-form";
 
 import { activities, CheckIcon } from "assets";
-import type {
-  Activities,
-  ActivitiesServerModel,
-  CreateLuckyDayForm,
-} from "types";
+import type { ActivitiesServerModel, CreateLuckyDayForm } from "types";
 import { ActivityToggle } from "./container";
+import { useSelectActivity } from "./hooks";
 import * as S from "./SelectActivity.styled";
 
 interface SelectActivityProps {
   data?: ActivitiesServerModel;
-  setValue: UseFormSetValue<CreateLuckyDayForm>;
-  watch: UseFormWatch<CreateLuckyDayForm>;
-  getSelectItems: (value: number[]) => void;
 }
 
-function SelectActivity({
-  data,
-  getSelectItems,
-  watch,
-  setValue,
-}: SelectActivityProps) {
-  const [toggle, setToggle] = useState<string | null>(null);
+function SelectActivity({ data }: SelectActivityProps) {
+  const { watch } = useFormContext<CreateLuckyDayForm>();
 
   const actNos = data?.resData.flatMap((activity) =>
-    activity.actList.map((item) => item.actNo)
+    activity.actList.map(({ actNo }) => actNo)
   );
-
   const currentActsUnChecked = watch("acts")?.filter(({ checked }) => !checked);
 
-  const handleToggle = (toggleLabel: string | null): void =>
-    setToggle(toggleLabel);
-
-  const changeIndex = (
-    arr: Activities[] | undefined,
-    idx1: number,
-    idx2: number
-  ) => {
-    if (!arr) return [];
-
-    const newArr = [...arr];
-    [newArr[idx1], newArr[idx2]] = [newArr[idx2], newArr[idx1]];
-
-    return newArr;
-  };
-
-  const arr = changeIndex(data?.resData, 2, 3);
-
-  const handleCheckAllBoxes = () => {
-    const acts = arr
-      .map((activity) => {
-        return {
-          category: activity.category ?? "",
-          actList:
-            activity.actList.length > 0 &&
-            watch("acts").flatMap((item) => item.actList).length === 0
-              ? activity.actList.map((act) => act.actNo)
-              : [],
-          checked: currentActsUnChecked?.length === 5 ? true : false,
-        };
-      })
-      .filter(({ category }) => category !== "직접 입력");
-
-    if (!acts) return;
-
-    setValue("acts", acts.reverse());
-  };
+  const { toggle, handleToggle, handleCheckAllBoxes } = useSelectActivity({
+    serverActivities: data?.resData,
+    currentActsUnChecked,
+  });
 
   return (
     <>
@@ -93,25 +48,31 @@ function SelectActivity({
         {activities.map((activity, i) => {
           if (!actNos) return null;
 
+          const checked = watch(`acts.${i}.checked`);
+          const selectedActivity = data?.resData?.find(
+            (item) => item.category === activity.label
+          );
+          const isOpen =
+            toggle === activity.label ||
+            (activity.label === toggle && toggle === activities[5].label);
+
           return (
-            <ActivityToggle
-              key={activity.label}
-              activity={activity}
-              getSelectItems={getSelectItems}
-              setValue={setValue}
-              watch={watch}
-              data={data?.resData?.find(
-                (item) => item.category === activity.label
+            <Fragment key={activity.label}>
+              <ActivityToggle
+                activity={activity}
+                data={selectedActivity}
+                checked={checked}
+                index={i}
+                toggle={toggle}
+                isOpen={isOpen}
+                handleToggle={handleToggle}
+              />
+              {toggle === activities[5].label && i === 5 && (
+                <S.CustomInfoText>
+                  직접 입력 활동은 최대 <strong>5개</strong>까지 추가 가능해요.
+                </S.CustomInfoText>
               )}
-              checked={watch(`acts.${i}.checked`)}
-              index={i}
-              toggle={toggle}
-              isOpen={
-                toggle === activity.label ||
-                (activity.label === toggle && toggle === "+) 직접 입력")
-              }
-              handleToggle={handleToggle}
-            />
+            </Fragment>
           );
         })}
       </S.Activities>

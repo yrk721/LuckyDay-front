@@ -1,18 +1,15 @@
 import React, { useRef, useState } from "react";
-import type { UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 import { useToast } from "hooks";
 import type { CreateLuckyDayForm } from "types";
 
-interface useCustomInputProps {
-  setValue: UseFormSetValue<CreateLuckyDayForm>;
-  watch: UseFormWatch<CreateLuckyDayForm>;
-}
-
-const useCustomInput = ({ setValue, watch }: useCustomInputProps) => {
+const useCustomInput = () => {
   const [text, setText] = useState("");
 
   const spanRef = useRef<HTMLSpanElement>(null);
+
+  const { watch, setValue } = useFormContext<CreateLuckyDayForm>();
 
   const inputWidth = text.length
     ? spanRef.current?.getBoundingClientRect().width
@@ -28,7 +25,7 @@ const useCustomInput = ({ setValue, watch }: useCustomInputProps) => {
   const handleAddCustomActivity = (e: React.MouseEvent): void => {
     e.stopPropagation();
 
-    const checkSameActivity = watch("customActList")?.includes(text);
+    const checkSameActivity = watch("customActs")?.includes(text);
 
     if (checkSameActivity) {
       addToast({ content: "이미 추가된 활동입니다." });
@@ -37,7 +34,7 @@ const useCustomInput = ({ setValue, watch }: useCustomInputProps) => {
       return;
     }
 
-    setValue("customActList", [...(watch("customActList") ?? ""), text]);
+    setValue("customActs", [...(watch("customActs") ?? ""), text]);
     setText("");
   };
 
@@ -50,18 +47,22 @@ const useCustomInput = ({ setValue, watch }: useCustomInputProps) => {
   };
 
   const DeleteCustomActivity = (selectedActivity: string) => (): void => {
-    const filteredActivities = watch("customActList")?.filter(
+    const filteredActivities = watch("customActs")?.filter(
       (item) => item !== selectedActivity
     );
 
-    setValue("customActList", filteredActivities);
+    setValue("customActs", filteredActivities);
+  };
+
+  const handleEnterText = (text: string): void => {
+    setText(text);
   };
 
   return {
     spanRef,
     inputWidth,
     text,
-    setText,
+    handleEnterText,
     handleCustomItemChange,
     handleEnterCustomItemChange,
     handleAddCustomActivity,
