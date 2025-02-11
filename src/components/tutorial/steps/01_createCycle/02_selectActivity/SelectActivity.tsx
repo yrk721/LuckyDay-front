@@ -74,20 +74,13 @@ export default function SelectActivity() {
         component: (
           <S.ActivitiesRow onClick={() => handleSubStepClick(3)}>
             <S.ActivityButton isOpen={false}>
-              <S.Img src={"images/img_empty_longBox.webp"} />
+              <S.Img src="images/img_empty_longBox.webp" />
               <S.ActivityBox isOpen={false}>
                 <S.ActivityInfo isOpen={false} isChecked>
                   {activities[1].icon}
                   <S.ActivityTitle>{activities[1].label}</S.ActivityTitle>
                   <S.CheckboxWrapper isOpen={false} isDisabled>
-                    <input
-                      type="checkbox"
-                      id="checkbox"
-                      checked={false}
-                      onChange={() => {}}
-                      disabled
-                    />
-                    <label htmlFor="checkbox" />
+                    <img alt="unChecked" src="images/ic_uncheckedBeige.svg" />
                   </S.CheckboxWrapper>
                   <ArrowIcon css={S.arrowIcon(false)} />
                 </S.ActivityInfo>
@@ -108,32 +101,23 @@ export default function SelectActivity() {
                 {activities[1].icon}
                 <S.ActivityTitle>{activities[1].label}</S.ActivityTitle>
                 <S.CheckboxWrapper isOpen isDisabled>
-                  <input
-                    type="checkbox"
-                    checked={false}
-                    disabled
-                    id="checkbox"
-                    onChange={() => {}}
-                  />
-                  <label htmlFor="checkbox" />
+                  <img alt="unChecked" src="images/ic_uncheckedOrange.svg" />
                 </S.CheckboxWrapper>
                 <ArrowIcon css={S.arrowIcon(true)} />
               </S.ActivityInfo>
               <S.Activities>
-                {luckydayActs[1].actList?.map((item) => {
-                  return (
-                    <S.Activity
-                      key={item.keyword}
-                      isSelected={false}
-                      isClickable={item.keyword === "치킨"}
-                      disabled={item.keyword !== "치킨"}
-                      onClick={handleSelected}
-                    >
-                      <CheckIcon css={S.icon} />
-                      {item.keyword}
-                    </S.Activity>
-                  );
-                })}
+                {luckydayActs[1].actList?.map((item) => (
+                  <S.Activity
+                    key={item.keyword}
+                    isSelected={false}
+                    isClickable={item.keyword === "치킨"}
+                    disabled={item.keyword !== "치킨"}
+                    onClick={handleSelected}
+                  >
+                    <CheckIcon css={S.icon} />
+                    {item.keyword}
+                  </S.Activity>
+                ))}
               </S.Activities>
             </S.ActivityBox>
           </S.ActivityButton>
@@ -152,13 +136,7 @@ export default function SelectActivity() {
                   {activities[2].icon}
                   <S.ActivityTitle>{activities[2].label}</S.ActivityTitle>
                   <S.CheckboxWrapper isOpen={false} isDisabled>
-                    <input
-                      type="checkbox"
-                      id="checkbox"
-                      checked={false}
-                      onChange={() => {}}
-                    />
-                    <label htmlFor="checkbox" />
+                    <img alt="unChecked" src="images/ic_uncheckedBeige.svg" />
                   </S.CheckboxWrapper>
                   <ArrowIcon css={S.arrowIcon(false)} />
                 </S.ActivityInfo>
@@ -237,7 +215,7 @@ export default function SelectActivity() {
               </S.Activities>
             </S.ActivityBox>
             <S.CustomInfo isCustom>
-              <S.ContentLength>0/14</S.ContentLength>
+              <S.ContentLength>0/14자</S.ContentLength>
               <S.AddButton>추가</S.AddButton>
             </S.CustomInfo>
           </S.ActivityButton>
